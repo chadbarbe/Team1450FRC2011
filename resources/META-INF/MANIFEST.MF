@@ -1,6 +1,5 @@
 MIDlet-Name: Team1450FRC2011
 MIDlet-Version: 1.0.0
 MIDlet-Vendor: FIRST
-MIDlet-1: MrRoboto, , edu.wpi.first.wpilibj.templates.MrRoboto
 MicroEdition-Profile: IMP-1.0
 MicroEdition-Configuration: CLDC-1.1
