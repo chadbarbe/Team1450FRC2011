@@ -52,7 +52,7 @@ public class BotMain extends SimpleRobot {
 
     public void disabled()
     {
-        myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "LET'S GO XQ!!!!!!");
+        myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "suttin else");
         myStationLCD.updateLCD();
     }
 }
