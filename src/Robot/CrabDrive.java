@@ -28,7 +28,7 @@ public class CrabDrive
 
     private short m_potTurns = 1;
 
-    public CrabDrive()
+    public CrabDrive() throws edu.wpi.first.wpilibj.can.CANTimeoutException
     {
         System.out.println("CrabDrive()");
         leftFrontDrive = new CANJaguar(5);
@@ -46,7 +46,7 @@ public class CrabDrive
         testPID = new PIDTuner(turningMotor, new Joystick(3));
     }
 
-    public void SetupSteeringControl()
+    public void SetupSteeringControl() throws edu.wpi.first.wpilibj.can.CANTimeoutException
     {
         turningMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
         //turningMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);

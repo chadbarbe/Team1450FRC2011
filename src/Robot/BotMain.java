@@ -141,7 +141,7 @@ public class BotMain extends SimpleRobot {
         }
         lowDashData.finalizeCluster();
 
-        lowDashData.addByte(Solenoid.getAll());
+       // lowDashData.addByte(Solenoid.getAll());
     }
     lowDashData.finalizeCluster();
     lowDashData.commit();

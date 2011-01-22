@@ -46,12 +46,26 @@ public class OldBotMain extends IterativeRobot {
         driveStick = new Joystick(1);
         kickStick = new Joystick(2);
 
-        turnMotor = new CANJaguar(2);
+        try {
+            turnMotor = new CANJaguar(2);
+        }
+        catch (edu.wpi.first.wpilibj.can.CANTimeoutException e)
+        {
+            
+        }
+
+        try {
 
         //spaceInvaders = new SingleStickDrive(driveStick, kickStick);
         drive = new SWCrabDrive(turnMotor, new AnalogChannel(1), driveStick,
                                 new CANJaguar(5), new CANJaguar(8),
                                 new CANJaguar(7), new CANJaguar(4));
+
+        }
+        catch (edu.wpi.first.wpilibj.can.CANTimeoutException e)
+        {
+
+        }
 
         ronaldinho = new Kicker(kickStick);
         skynet = new Autonomous(drive, ronaldinho);
@@ -99,8 +113,14 @@ public class OldBotMain extends IterativeRobot {
                     for (int i = 1; i <= 5; i++) {
                         lowDashData.addFloat((float) AnalogModule.getInstance(1).getAverageVoltage(i));
                     }
-                    lowDashData.addFloat((float)turnMotor.getOutputCurrent());
-                    lowDashData.addFloat((float)turnMotor.getTemperature());
+                    try {
+                        lowDashData.addFloat((float)turnMotor.getOutputCurrent());
+                        lowDashData.addFloat((float)turnMotor.getTemperature());
+                    }
+                    catch (edu.wpi.first.wpilibj.can.CANTimeoutException e)
+                    {
+
+                    }
                     lowDashData.addFloat((float) AnalogModule.getInstance(1).getAverageVoltage(8));
                 }
                 lowDashData.finalizeCluster();
@@ -161,7 +181,7 @@ public class OldBotMain extends IterativeRobot {
             }
             lowDashData.finalizeCluster();
 
-            lowDashData.addByte(Solenoid.getAll());
+       //     lowDashData.addByte(Solenoid.getAll());
         }
         lowDashData.finalizeCluster();
         lowDashData.commit();
