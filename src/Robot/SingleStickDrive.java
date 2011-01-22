@@ -17,7 +17,7 @@ public class SingleStickDrive {
     double m_defaultTurnSpeed, m_defaultRotateBotSpeed;
     
     
-    public SingleStickDrive(Joystick stick1, Joystick stick2)
+    public SingleStickDrive(Joystick stick1, Joystick stick2) throws edu.wpi.first.wpilibj.can.CANTimeoutException
     {
         System.out.println("SingleStickDrive()");
         m_defaultTurnSpeed = 0.2;
