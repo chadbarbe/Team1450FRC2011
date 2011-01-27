@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DigitalModule;
 import edu.wpi.first.wpilibj.Dashboard;
 //import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.AnalogModule;
+import edu.wpi.first.wpilibj.Encoder;
 
 //import edu.wpi.first.wpilibj.CANJaguar;
 //import edu.wpi.first.wpilibj.AnalogChannel;
@@ -33,10 +34,14 @@ import edu.wpi.first.wpilibj.AnalogModule;
  * directory.
  */
 public class BotMain extends SimpleRobot {
+    private double ticksPerRev = 250.0;
+    private double wheelDiameter = 20.25;
     private RobotDrive drive = new RobotDrive(1,2);
     private Joystick leftStick = new Joystick(1);
     private Joystick rightStick = new Joystick(2);
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
+    private Encoder encoder1 = new Encoder(1,2);
+    private Encoder encoder2 = new Encoder(3,4);
 
     public BotMain()
     {
@@ -47,6 +52,31 @@ public class BotMain extends SimpleRobot {
      */
     public void autonomous() {
         System.out.println("Autonomous Control");
+        encoder1.start();
+        encoder1.reset();
+        encoder1.setDistancePerPulse(wheelDiameter / ticksPerRev);
+        while(encoder1.getDistance() < 230)
+        {
+            drive.tankDrive(-0.7, -0.7);
+            myStationLCD.println(DriverStationLCD.Line.kUser3, 1, "DistanceTravelled = " + encoder1.getDistance());
+            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "Encoder1Ticks = " + encoder1.get());
+
+            myStationLCD.updateLCD();
+        }
+        int ctr = 0;
+        while(ctr < 100000)
+        {
+            ctr++;
+        }
+        while(encoder1.getDistance() > 0)
+        {
+            drive.tankDrive(0.5, 0.5);
+            myStationLCD.println(DriverStationLCD.Line.kUser3, 1, "DistanceTravelled = " + encoder1.getDistance());
+            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "Encoder1Ticks = " + encoder1.get());
+
+            myStationLCD.updateLCD();
+        }
+        drive.tankDrive(0, 0);
     }
 
     /**
@@ -54,18 +84,20 @@ public class BotMain extends SimpleRobot {
      */
     public void operatorControl() {
         System.out.println("Operator Control!");
+        encoder1.start();
         while(true)
         {
             drive.tankDrive(leftStick, rightStick);
             Timer.delay(0.005);
-            //updateDashboard();
+            Integer encoderTicks = new Integer(encoder1.get());
+            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "Encoder1Ticks = " + encoderTicks);
+            myStationLCD.updateLCD();
         }
     }
 
     public void disabled()
     {
-        myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "Good luck XQ!");
-        myStationLCD.updateLCD();
+        encoder1.stop();
     }
 
     public void updateDashboard() {
