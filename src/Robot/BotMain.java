@@ -14,12 +14,13 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DigitalModule;
-import edu.wpi.first.wpilibj.Dashboard;
 //import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.AnalogModule;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.SpeedController;
 
 //import edu.wpi.first.wpilibj.CANJaguar;
 //import edu.wpi.first.wpilibj.AnalogChannel;
@@ -36,47 +37,70 @@ import edu.wpi.first.wpilibj.Encoder;
 public class BotMain extends SimpleRobot {
     private double ticksPerRev = 250.0;
     private double wheelDiameter = 20.25;
-    private RobotDrive drive = new RobotDrive(1,2);
-    private Joystick leftStick = new Joystick(1);
-    private Joystick rightStick = new Joystick(2);
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
-    private Encoder encoder1 = new Encoder(1,2);
-    private Encoder encoder2 = new Encoder(3,4);
+    private Encoder encoder1 = new Encoder(3,4);
+    private PIDSource autonomousPIDSourceDistance1;
+    private PIDController autonomousPIDDistance1;
+    private SpeedController jag1 = new Jaguar(1);
+    private DrivePIDOutput pidDrive1 = new DrivePIDOutput(jag1, false);
+
+    private Encoder encoder2 = new Encoder(1,2);
+    private PIDSource autonomousPIDSourceDistance2;
+    private PIDController autonomousPIDDistance2;
+    private SpeedController jag2 = new Jaguar(2);
+    private DrivePIDOutput pidDrive2 = new DrivePIDOutput(jag2, true);
+   
+   
 
     public BotMain()
     {
-        drive.setSafetyEnabled(false);
+       // drive.setSafetyEnabled(false);
+
+        autonomousPIDSourceDistance1 = new EncoderPIDSource(encoder1);
+        autonomousPIDDistance1 = new PIDController(0.2, 0, 0, autonomousPIDSourceDistance1, pidDrive1);
+
+        autonomousPIDSourceDistance2 = new EncoderPIDSource(encoder2);
+        autonomousPIDDistance2 = new PIDController(0.2, 0, 0, autonomousPIDSourceDistance2, pidDrive2);
+        
     }
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
         System.out.println("Autonomous Control");
-        encoder1.start();
-        encoder1.reset();
         encoder1.setDistancePerPulse(wheelDiameter / ticksPerRev);
-        while(encoder1.getDistance() < 230)
-        {
-            drive.tankDrive(-0.7, -0.7);
-            myStationLCD.println(DriverStationLCD.Line.kUser3, 1, "DistanceTravelled = " + encoder1.getDistance());
-            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "Encoder1Ticks = " + encoder1.get());
+        encoder1.reset();
+        encoder1.start();
+        encoder2.setDistancePerPulse(wheelDiameter / ticksPerRev);
+        encoder2.reset();
+        encoder2.start();
+        encoder2.setReverseDirection(true);
 
-            myStationLCD.updateLCD();
-        }
-        int ctr = 0;
-        while(ctr < 100000)
-        {
-            ctr++;
-        }
-        while(encoder1.getDistance() > 0)
-        {
-            drive.tankDrive(0.5, 0.5);
-            myStationLCD.println(DriverStationLCD.Line.kUser3, 1, "DistanceTravelled = " + encoder1.getDistance());
-            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "Encoder1Ticks = " + encoder1.get());
+//        autonomousPIDDistance1.setTolerance(2);
+//        autonomousPIDDistance1.setSetpoint(230);
+//        autonomousPIDDistance1.setOutputRange(-0.7, 0.7);
+//        autonomousPIDDistance1.enable();
+//
+//        autonomousPIDDistance2.setTolerance(2);
+//        autonomousPIDDistance2.setSetpoint(230);
+//        autonomousPIDDistance2.setOutputRange(-0.7, 0.7);
+//        autonomousPIDDistance2.enable();
 
-            myStationLCD.updateLCD();
-        }
-        drive.tankDrive(0, 0);
+        VelocityDrive myVelocityDrive = new VelocityDrive(encoder1, jag1, 75, DriverStationLCD.Line.kUser2, "1");
+        myVelocityDrive.start();
+        myVelocityDrive.setTarget(50);
+
+        VelocityDrive myVelocityDrive2 = new VelocityDrive(encoder2, jag2, 75, DriverStationLCD.Line.kUser3, "2");
+        myVelocityDrive2.start();
+        myVelocityDrive2.setTarget(-50);
+//
+//        while(true)
+//        {
+//            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "E1D = " + encoder1.getDistance());
+//            myStationLCD.println(DriverStationLCD.Line.kUser3, 1, "E2D = " + encoder2.getDistance());
+//            myStationLCD.updateLCD();
+//        }
+
     }
 
     /**
@@ -85,12 +109,13 @@ public class BotMain extends SimpleRobot {
     public void operatorControl() {
         System.out.println("Operator Control!");
         encoder1.start();
+        encoder2.start();
         while(true)
         {
-            drive.tankDrive(leftStick, rightStick);
             Timer.delay(0.005);
-            Integer encoderTicks = new Integer(encoder1.get());
-            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "Encoder1Ticks = " + encoderTicks);
+            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "E1D = " + encoder1.getDistance());
+            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "E2D = " + encoder2.getDistance());
+            
             myStationLCD.updateLCD();
         }
     }
@@ -98,86 +123,16 @@ public class BotMain extends SimpleRobot {
     public void disabled()
     {
         encoder1.stop();
+        encoder2.stop();
+
+        autonomousPIDDistance1.disable();
+        autonomousPIDDistance2.disable();
     }
 
-    public void updateDashboard() {
-    Dashboard lowDashData = DriverStation.getInstance().getDashboardPackerLow();
-    lowDashData.addCluster();
-    {
-        lowDashData.addCluster();
-        {     //analog modules
-            lowDashData.addCluster();
-            {
-                for (int i = 1; i <= 5; i++) {
-                    lowDashData.addFloat((float) AnalogModule.getInstance(1).getAverageVoltage(i));
-                }
-                //lowDashData.addFloat((float)turnMotor.getOutputCurrent());
-                //lowDashData.addFloat((float)turnMotor.getTemperature());
-                lowDashData.addFloat((float) AnalogModule.getInstance(1).getAverageVoltage(8));
-            }
-            lowDashData.finalizeCluster();
-            lowDashData.addCluster();
-            {
-                for (int i = 1; i <= 8; i++) {
-                    lowDashData.addFloat((float) AnalogModule.getInstance(2).getAverageVoltage(i));
-                }
-            }
-            lowDashData.finalizeCluster();
-        }
-        lowDashData.finalizeCluster();
+    protected void robotInit() {
 
-        lowDashData.addCluster();
-        { //digital modules
-            lowDashData.addCluster();
-            {
-                lowDashData.addCluster();
-                {
-                    int module = 4;
-                    lowDashData.addByte(DigitalModule.getInstance(module).getRelayForward());
-                    lowDashData.addByte(DigitalModule.getInstance(module).getRelayForward());
-                    lowDashData.addShort(DigitalModule.getInstance(module).getAllDIO());
-                    lowDashData.addShort(DigitalModule.getInstance(module).getDIODirection());
-                    lowDashData.addCluster();
-                    {
-                        for (int i = 1; i <= 10; i++) {
-                            lowDashData.addByte((byte) DigitalModule.getInstance(module).getPWM(i));
-                        }
-                    }
-                    lowDashData.finalizeCluster();
-                }
-                lowDashData.finalizeCluster();
-            }
-            lowDashData.finalizeCluster();
-
-            lowDashData.addCluster();
-            {
-                lowDashData.addCluster();
-                {
-                    int module = 6;
-                    lowDashData.addByte(DigitalModule.getInstance(module).getRelayForward());
-                    lowDashData.addByte(DigitalModule.getInstance(module).getRelayReverse());
-                    lowDashData.addShort(DigitalModule.getInstance(module).getAllDIO());
-                    lowDashData.addShort(DigitalModule.getInstance(module).getDIODirection());
-                    lowDashData.addCluster();
-                    {
-                        for (int i = 1; i <= 10; i++) {
-                            lowDashData.addByte((byte) DigitalModule.getInstance(module).getPWM(i));
-                        }
-                    }
-                    lowDashData.finalizeCluster();
-                }
-                lowDashData.finalizeCluster();
-            }
-            lowDashData.finalizeCluster();
-
-        }
-        lowDashData.finalizeCluster();
-
-       // lowDashData.addByte(Solenoid.getAll());
     }
-    lowDashData.finalizeCluster();
-    lowDashData.commit();
 
-}
+ 
 
 }
