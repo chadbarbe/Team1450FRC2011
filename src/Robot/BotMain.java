@@ -45,6 +45,7 @@ public class BotMain extends SimpleRobot {
     private Encoder encoder1 = new Encoder(3,4);
     private PIDSource autonomousPIDSourceDistance1;
     private PIDController autonomousPIDDistance1;
+    private Console console = new Console();
     private SpeedController jag1 = new Jaguar(1);
     private SpeedController jag2 = new Jaguar(2);
     private DrivePIDOutput pidDrive1 = new DrivePIDOutput(jag1, false);
@@ -76,6 +77,7 @@ public class BotMain extends SimpleRobot {
      */
     public void autonomous() {
         System.out.println("Autonomous Control");
+        console.start();
         windtunnel.start();
         encoder1.setDistancePerPulse(wheelDiameter / ticksPerRev);
         encoder1.reset();
