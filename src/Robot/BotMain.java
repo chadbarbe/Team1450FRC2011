@@ -8,6 +8,7 @@
 package Robot;
 
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -16,10 +17,12 @@ import edu.wpi.first.wpilibj.Timer;
 
 //import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 
 //import edu.wpi.first.wpilibj.CANJaguar;
@@ -43,12 +46,15 @@ public class BotMain extends SimpleRobot {
     private PIDController autonomousPIDDistance1;
     private SpeedController jag1 = new Jaguar(1);
     private DrivePIDOutput pidDrive1 = new DrivePIDOutput(jag1, false);
-
+    private Joystick joy1  = new Joystick(1);
     private Encoder encoder2 = new Encoder(1,2);
     private PIDSource autonomousPIDSourceDistance2;
     private PIDController autonomousPIDDistance2;
     private SpeedController jag2 = new Jaguar(2);
     private DrivePIDOutput pidDrive2 = new DrivePIDOutput(jag2, true);
+    private Compressor fang = new Compressor(12,1);
+    private Solenoid sole1 = new Solenoid(1);
+    private Solenoid sole2 = new Solenoid(2);
    
    
 
@@ -68,6 +74,7 @@ public class BotMain extends SimpleRobot {
      */
     public void autonomous() {
         System.out.println("Autonomous Control");
+        fang.start();
         encoder1.setDistancePerPulse(wheelDiameter / ticksPerRev);
         encoder1.reset();
         encoder1.start();
@@ -86,13 +93,17 @@ public class BotMain extends SimpleRobot {
 //        autonomousPIDDistance2.setOutputRange(-0.7, 0.7);
 //        autonomousPIDDistance2.enable();
 
-        VelocityDrive myVelocityDrive = new VelocityDrive(encoder1, jag1, 75, DriverStationLCD.Line.kUser2, "1");
-        myVelocityDrive.start();
-        myVelocityDrive.setTarget(50);
+//        VelocityDrive myVelocityDrive = new VelocityDrive(encoder2, jag2, 75, DriverStationLCD.Line.kUser2, "1");
+//        myVelocityDrive.start();
+//        myVelocityDrive.setTarget(50);
+//
+//        VelocityDrive myVelocityDrive2 = new VelocityDrive(encoder2, jag2, 75, DriverStationLCD.Line.kUser3, "2");
+//        myVelocityDrive2.start();
+//        myVelocityDrive2.setTarget(-50);
 
-        VelocityDrive myVelocityDrive2 = new VelocityDrive(encoder2, jag2, 75, DriverStationLCD.Line.kUser3, "2");
-        myVelocityDrive2.start();
-        myVelocityDrive2.setTarget(-50);
+//        VelocityDrive myVelocityDrive2 = new VelocityDrive(encoder2, jag2, 75, DriverStationLCD.Line.kUser3, "2");
+//        myVelocityDrive2.start();
+//        myVelocityDrive2.setTarget(-50);
 //
 //        while(true)
 //        {
@@ -110,6 +121,7 @@ public class BotMain extends SimpleRobot {
         System.out.println("Operator Control!");
         encoder1.start();
         encoder2.start();
+        fang.start();
         while(true)
         {
             Timer.delay(0.005);
@@ -117,6 +129,18 @@ public class BotMain extends SimpleRobot {
             myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "E2D = " + encoder2.getDistance());
             
             myStationLCD.updateLCD();
+
+            if(joy1.getTrigger(Hand.kLeft))
+            {
+                System.out.println("TRIGGER!");
+                sole1.set(false);
+                sole2.set(true);
+            }
+            else
+            {
+                sole1.set(true);
+                sole2.set(false);
+            }
         }
     }
 

@@ -26,8 +26,13 @@ public class VelocityDrive implements PIDOutput, PIDSource{
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
     private DriverStationLCD.Line line;
     private String message;
+    private boolean reversed;
 
-    VelocityDrive(Encoder encoder, SpeedController drive, double maxVelocity, DriverStationLCD.Line line, String message)
+    VelocityDrive(Encoder encoder,
+                  SpeedController drive,
+                  double maxVelocity,
+                  DriverStationLCD.Line line,
+                  String message)
     {
         this.encoder = encoder;
         this.drive = drive;
@@ -35,8 +40,6 @@ public class VelocityDrive implements PIDOutput, PIDSource{
         this.pid.setOutputRange(-maxVelocity, maxVelocity);
         this.line = line;
         this.message = message;
-
-
     }
     
     void setTarget(double target)
