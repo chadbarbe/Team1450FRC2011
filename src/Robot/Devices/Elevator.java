@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+package Robot.Devices;
 
-package Robot;
-
+import Robot.Utils.DrivePIDOutput;
+import Robot.Utils.PIDTuner;
+import Robot2011.Constants;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,7 +17,7 @@ import edu.wpi.first.wpilibj.PIDSource;
  *
  * @author chad
  */
-public class Elevator implements PIDSource{
+public class Elevator implements PIDSource {
 
     private class ElevatorThread extends Thread {
 
@@ -31,8 +33,8 @@ public class Elevator implements PIDSource{
         public void run() {
             while (m_run) {
                 double joyPositionPercent = (elevator.getZAxis() + 1) / 2;
-                double drivePosition = joyPositionPercent * distanceToTop * -1;
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Target = " + drivePosition);
+                double drivePosition = (joyPositionPercent * distanceToTop * 1);
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 1, "Target = " + drivePosition);
                 DriverStationLCD.getInstance().updateLCD();
                 elevator.setTarget(drivePosition);
 
@@ -43,8 +45,6 @@ public class Elevator implements PIDSource{
             }
         }
     }
-
-
     private Joystick stick;
     private Thread m_task;
     private Encoder encoder;
@@ -52,39 +52,41 @@ public class Elevator implements PIDSource{
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
     private PIDTuner pidTuner;
 
-    Elevator(Joystick _stick,
-             Encoder _encoder,
-             DrivePIDOutput _drive,
-             double _distanceToTop)
-    {
+    public Elevator(Joystick _stick,
+            Encoder _encoder,
+            DrivePIDOutput _drive,
+            double _distanceToTop) {
         stick = _stick;
         pid = new PIDController(0.01, 0, 0, this, _drive);
         pid.setTolerance(1);
-        pid.setOutputRange(-0.5, 0.5);
-        pidTuner = new PIDTuner(pid, stick, 0.01, 0, 0);
+        pid.setOutputRange(-1, 1);
+        pidTuner = new PIDTuner(pid, stick, .04, 0, 0);
         m_task = new ElevatorThread(this, _distanceToTop);
         encoder = _encoder;
+
+        encoder.setDistancePerPulse(Constants.elevatorDistancePerPulse);
     }
 
-    public void start()
-    {
+    public void start() {
+        encoder.reset();
+        //encoder.setReverseDirection(true);
+        encoder.start();
         m_task.start();
         pid.enable();
         pidTuner.start();
+
     }
 
-    public double getZAxis()
-    {
-        return stick.getZ();
+    public double getZAxis() {
+        return -stick.getZ();
     }
 
-    public void setTarget(double target)
-    {
-        pid.setSetpoint(target);
+    public void setTarget(double target) {
+        pid.setSetpoint(-target);
     }
 
     public double pidGet() {
-        myStationLCD.println(DriverStationLCD.Line.kUser3, 1, "Position = " + encoder.getDistance());
+        myStationLCD.println(DriverStationLCD.Line.kUser5, 1, "Position = " + encoder.getDistance());
         myStationLCD.updateLCD();
         return encoder.getDistance();
     }

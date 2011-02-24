@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package Robot;
+package Robot.Devices;
 
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
@@ -16,7 +15,8 @@ import edu.wpi.first.wpilibj.SpeedController;
  *
  * @author chad
  */
-public class VelocityDrive implements PIDOutput, PIDSource{
+public class VelocityDrive implements PIDOutput, PIDSource {
+
     double currentDriveValue = 0;
     private Encoder encoder;
     private SpeedController drive;
@@ -31,15 +31,14 @@ public class VelocityDrive implements PIDOutput, PIDSource{
     private boolean reversed;
     private double maxVelocity;
 
-    VelocityDrive(Encoder encoder,
-                  SpeedController drive,
-                  double maxVelocity,
-                  boolean reversed,
-                  DriverStationLCD.Line line1,
-                  DriverStationLCD.Line line2,
-                  DriverStationLCD.Line line3,
-                  String message)
-    {
+    public VelocityDrive(Encoder encoder,
+            SpeedController drive,
+            double maxVelocity,
+            boolean reversed,
+            DriverStationLCD.Line line1,
+            DriverStationLCD.Line line2,
+            DriverStationLCD.Line line3,
+            String message) {
         this.encoder = encoder;
         this.drive = drive;
         this.pid = new PIDController(0.002, 0, 0, this, this);
@@ -48,28 +47,26 @@ public class VelocityDrive implements PIDOutput, PIDSource{
         this.line2 = line2;
         this.line3 = line3;
         this.message = message;
-        this.maxVelocity= maxVelocity;
+        this.maxVelocity = maxVelocity;
         this.reversed = reversed;
     }
-    
-    void setTarget(double percentFullSpeed)
-    {
+
+    void setTarget(double percentFullSpeed) {
         double target = percentFullSpeed / 100.0 * this.maxVelocity;
         myStationLCD.println(line1, 1, "Target" + message + " = " + target);
         myStationLCD.updateLCD();
         System.out.println("Target = " + target);
-        if(reversed)
+        if (reversed) {
             target = -target;
+        }
         this.pid.setSetpoint(target);
     }
 
-    void start()
-    {
+    void start() {
         this.pid.enable();
     }
 
-    void end()
-    {
+    void end() {
         this.pid.disable();
     }
 
@@ -88,5 +85,4 @@ public class VelocityDrive implements PIDOutput, PIDSource{
         myStationLCD.updateLCD();
         return velocity;
     }
-
 }

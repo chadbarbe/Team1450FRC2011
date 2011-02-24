@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package Robot;
+package Robot.Utils;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -12,12 +11,11 @@ import edu.wpi.first.wpilibj.PIDSource;
  *
  * @author chad
  */
-public class EncoderPIDSource implements PIDSource{
+public class EncoderPIDSource implements PIDSource {
+
     private Encoder encoder1;
 
-
-    public EncoderPIDSource(Encoder encoder1)
-    {
+    public EncoderPIDSource(Encoder encoder1) {
         this.encoder1 = encoder1;
     }
 
@@ -26,6 +24,4 @@ public class EncoderPIDSource implements PIDSource{
 
         return encoder1Distance;
     }
-
-
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Robot;
+package Robot.Utils;
 
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
@@ -52,7 +52,7 @@ public class PIDTuner {
         }
     }
 
-        private void updateD() {
+    private void updateD() {
         if (!(control.getRawButton(8) && control.getRawButton(9))) {
             dDebounced = true;
         }
@@ -70,8 +70,6 @@ public class PIDTuner {
 
         }
     }
-
-   
     private int menuSize = 3;
     private double increment;
     private double pValue, iValue, dValue;
@@ -82,7 +80,6 @@ public class PIDTuner {
     private PIDController pid;
     private Thread m_task;
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
-
 
     public PIDTuner(PIDController _pid, Joystick stick, double initP, double initI, double initD) {
         control = stick;
@@ -119,33 +116,27 @@ public class PIDTuner {
         }
     }
 
-
     public void run() {
         updateP();
         updateI();
         updateD();
-        myStationLCD.println(DriverStationLCD.Line.kUser4, 1, "kP = " + pValue);
-        myStationLCD.println(DriverStationLCD.Line.kUser5, 1, "ki = " + iValue);
-        myStationLCD.println(DriverStationLCD.Line.kUser6, 1, "kd = " + dValue);
-        myStationLCD.updateLCD();
+    //    myStationLCD.println(DriverStationLCD.Line.kUser4, 1, "kP = " + pValue);
+    //    myStationLCD.println(DriverStationLCD.Line.kUser5, 1, "ki = " + iValue);
+    //    myStationLCD.println(DriverStationLCD.Line.kUser6, 1, "kd = " + dValue);
+    //    myStationLCD.updateLCD();
 
         if (control.getRawButton(2)) {
             UpdatePID();
         }
     }
 
-
-
- 
-
     public void UpdatePID() {
-        
+
         pid.setPID(pValue, iValue, dValue);
-        
+
     }
 
-    public void start()
-    {
+    public void start() {
         m_task.start();
     }
 }
