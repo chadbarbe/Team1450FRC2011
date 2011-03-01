@@ -25,9 +25,9 @@ public class Elevator implements PIDSource {
         private boolean m_run = true;
         private double distanceToTop;
 
-        ElevatorThread(Elevator _elevator, double _distanceToTop) {
+        ElevatorThread(Elevator _elevator) {
             elevator = _elevator;
-            distanceToTop = _distanceToTop;
+            distanceToTop = Constants.elevatorDistanceToTop;
         }
 
         public void run() {
@@ -54,14 +54,13 @@ public class Elevator implements PIDSource {
 
     public Elevator(Joystick _stick,
             Encoder _encoder,
-            DrivePIDOutput _drive,
-            double _distanceToTop) {
+            DrivePIDOutput _drive) {
         stick = _stick;
         pid = new PIDController(0.01, 0, 0, this, _drive);
         pid.setTolerance(1);
         pid.setOutputRange(-1, 1);
         pidTuner = new PIDTuner(pid, stick, .04, 0, 0);
-        m_task = new ElevatorThread(this, _distanceToTop);
+        m_task = new ElevatorThread(this);
         encoder = _encoder;
 
         encoder.setDistancePerPulse(Constants.elevatorDistancePerPulse);

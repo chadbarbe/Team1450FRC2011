@@ -76,7 +76,7 @@ public class BotMain extends SimpleRobot {
     private XQDrives xqDrives = new XQDrives(drives, joy1);
     //Operator Mode Elevator Control
     private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(elevatorDrive, false, elevatorLimitUp, elevatorLimitDown);
-    private Elevator elevator = new Elevator(joy2, elevatorDriveEncoder, elevatorPIDOutput, 42);
+    private Elevator elevator = new Elevator(joy2, elevatorDriveEncoder, elevatorPIDOutput);
     //Solenoids
     SolenoidSwitcher gripperGuy = new SolenoidSwitcher(gripperGrab,
             gripperRelease,
