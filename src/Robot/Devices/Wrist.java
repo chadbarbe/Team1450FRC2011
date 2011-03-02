@@ -5,6 +5,7 @@
 package Robot.Devices;
 
 import Robot.Utils.DrivePIDOutput;
+import Robot2011.Constants;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Joystick;
@@ -36,7 +37,7 @@ public class Wrist {
                 wrist.run();
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(Constants.Wrist.loopTime);
                 } catch (InterruptedException e) {
                 }
             }
@@ -50,7 +51,7 @@ public class Wrist {
         wristDrive = _wristDrive;
         stick = _stick;
         pid = new PIDController(0.001, 0, 0, pot, wristDrive);
-        pid.setSetpoint(379);
+        pid.setSetpoint(Constants.Wrist.initialPosition);
         pid.setOutputRange(-0.5, 0.5);
         m_thread = new WristThread(this);
     }
@@ -65,11 +66,18 @@ public class Wrist {
         m_thread.start();
     }
 
+    public void setPosition(double position) {
+        pid.setSetpoint(position);
+    }
+
     private void run() {
         double joyPositionPercent = (stick.getAxis(Joystick.AxisType.kY) + 1) / 2;
-        double driveTarget = (joyPositionPercent * 555 + 215);
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "Target = " + driveTarget);
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Pot = " + pot.getAverageValue());
+        double driveTarget = (joyPositionPercent * Constants.Wrist.potRange +
+                Constants.Wrist.lowerLimitPotVal);
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1,
+                "Target = " + driveTarget);
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1,
+                "Pot = " + pot.getAverageValue());
         DriverStationLCD.getInstance().updateLCD();
         pid.setSetpoint(driveTarget);
     }

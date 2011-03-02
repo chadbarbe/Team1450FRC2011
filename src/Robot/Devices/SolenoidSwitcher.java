@@ -56,13 +56,31 @@ public class SolenoidSwitcher {
 
     public void checkAndActuate() {
         if (joystick.getRawButton(sole1ActivateButton)) {
-            sole1.set(true);
-            sole2.set(false);
+            actuate1();
         } else if (joystick.getRawButton(sole2ActivateButton)) {
-            sole2.set(true);
-            sole1.set(false);
+            actuate2();
         }
 
+    }
+
+    public void actuate(Solenoid _sole) {
+        if (_sole == sole1) {
+            actuate1();
+        }
+        else if (_sole == sole2) {
+            actuate2();
+        }
+        
+    }
+
+    private void actuate1() {
+        sole1.set(true);
+        sole2.set(false);
+    }
+
+    private void actuate2() {
+        sole1.set(false);
+        sole2.set(true);
     }
 
     public void start() {

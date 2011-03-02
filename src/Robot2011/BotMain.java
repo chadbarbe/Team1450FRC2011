@@ -36,68 +36,86 @@ import edu.wpi.first.wpilibj.DigitalInput;
  * directory.
  */
 public class BotMain extends SimpleRobot {
-    //Speed Controllers
-
-    private SpeedController leftDrive = new Jaguar(IODefines.LEFT_DRIVE);
-    private SpeedController rightDrive = new Jaguar(IODefines.RIGHT_DRIVE);
-    private SpeedController wristDrive = new Jaguar(IODefines.WRIST_DRIVE);
-    private SpeedController elevatorDrive = new Jaguar(IODefines.ELEVATOR_DRIVE);
-    //Encoders
-    private Encoder leftDriveEncoder = new Encoder(IODefines.LEFT_DRIVE_ENCODER_A,
-            IODefines.LEFT_DRIVE_ENCODER_B);
-    private Encoder rightDriveEncoder = new Encoder(IODefines.RIGHT_DRIVE_ENCODER_A,
-            IODefines.RIGHT_DRIVE_ENCODER_B);
-    private Encoder elevatorDriveEncoder = new Encoder(IODefines.ELEVATOR_DRIVE_ENCODER_A,
-            IODefines.ELEVATOR_DRIVE_ENCODER_B);
-    //Limit Switches
-    private DigitalInput wristLimitUp = new DigitalInput(IODefines.WRIST_LIMIT_UP);
-    private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
-    private DigitalInput elevatorLimitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
-    private DigitalInput elevatorLimitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
-    //Compressor
-    private Compressor compressor = new Compressor(IODefines.PRESSURE_SWITCH,
-            IODefines.COMPRESSOR_POWER);
-    //Analogs
-    private AnalogChannel wristPot = new AnalogChannel(IODefines.WRIST_POT);
-    //Solenoids
-    private Solenoid driveHighGear = new Solenoid(IODefines.DRIVE_HIGH);
-    private Solenoid driveLowGear = new Solenoid(IODefines.DRIVE_LOW);
-    private Solenoid gripperGrab = new Solenoid(IODefines.GRIPPER_GRAB);
-    private Solenoid gripperRelease = new Solenoid(IODefines.GRIPPER_RELEASE);
-    private Solenoid shoulderUp = new Solenoid(IODefines.SHOULDER_UP);
-    private Solenoid shoulderDown = new Solenoid(IODefines.SHOULDER_DOWN);
-    private Solenoid miniBotDeploy = new Solenoid(IODefines.MINI_BOT_DEPLOY);
-    private Solenoid miniBotRetract = new Solenoid(IODefines.MINI_BOT_RETRACT);
     //Joysticks
     private Joystick joy1 = new Joystick(1);
     private Joystick joy2 = new Joystick(2);
-    //Operator Mode Drive Control
-    private RobotDrive drives = new RobotDrive(leftDrive, rightDrive);
-    private XQDrives xqDrives = new XQDrives(drives, joy1);
-    //Operator Mode Elevator Control
-    private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(elevatorDrive, false, elevatorLimitUp, elevatorLimitDown);
-    private Elevator elevator = new Elevator(joy2, elevatorDriveEncoder, elevatorPIDOutput);
-    //Solenoids
-    SolenoidSwitcher gripperGuy = new SolenoidSwitcher(gripperGrab,
-            gripperRelease,
-            joy2,
-            IODefines.GRIPPER_GRAB_BUTTON,
-            IODefines.GRIPPER_RELEASE_BUTTON);
-    SolenoidSwitcher shoulderGuy = new SolenoidSwitcher(shoulderUp,
-            shoulderDown,
-            joy2,
-            IODefines.SHOULDER_UP_BUTTON,
-            IODefines.SHOULDER_DOWN_BUTTON);
+
+    //Transmission
+    private Solenoid driveHighGear = new Solenoid(IODefines.DRIVE_HIGH);
+    private Solenoid driveLowGear = new Solenoid(IODefines.DRIVE_LOW);
     SolenoidSwitcher transmissionGuy = new SolenoidSwitcher(driveHighGear,
             driveLowGear,
             joy1,
             IODefines.DRIVE_HIGH_BUTTON,
             IODefines.DRIVE_LOW_BUTTON);
+
+    //Drives
+    private SpeedController leftDrive = new Jaguar(IODefines.LEFT_DRIVE);
+    private SpeedController rightDrive = new Jaguar(IODefines.RIGHT_DRIVE);
+    private Encoder leftDriveEncoder = new Encoder(IODefines.LEFT_DRIVE_ENCODER_A,
+            IODefines.LEFT_DRIVE_ENCODER_B);
+    private Encoder rightDriveEncoder = new Encoder(IODefines.RIGHT_DRIVE_ENCODER_A,
+            IODefines.RIGHT_DRIVE_ENCODER_B);
+    private RobotDrive drives = new RobotDrive(leftDrive, rightDrive);
+    
+    //Elevator
+    private DigitalInput elevatorLimitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
+    private DigitalInput elevatorLimitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
+    private SpeedController elevatorDrive = new Jaguar(IODefines.ELEVATOR_DRIVE);
+    private Encoder elevatorDriveEncoder = new Encoder(IODefines.ELEVATOR_DRIVE_ENCODER_A,
+            IODefines.ELEVATOR_DRIVE_ENCODER_B);
+    
+    //Shoulder
+    private Solenoid shoulderUp = new Solenoid(IODefines.SHOULDER_UP);
+    private Solenoid shoulderDown = new Solenoid(IODefines.SHOULDER_DOWN);
+    SolenoidSwitcher shoulderGuy = new SolenoidSwitcher(shoulderUp,
+            shoulderDown,
+            joy2,
+            IODefines.SHOULDER_UP_BUTTON,
+            IODefines.SHOULDER_DOWN_BUTTON);
+
     //Wrist
-    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, true, wristLimitUp, wristLimitDown);
+    private DigitalInput wristLimitUp = new DigitalInput(IODefines.WRIST_LIMIT_UP);
+    private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
+    private AnalogChannel wristPot = new AnalogChannel(IODefines.WRIST_POT);
+    private SpeedController wristDrive = new Jaguar(IODefines.WRIST_DRIVE);
+    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, true,
+            wristLimitUp, wristLimitDown);
     Wrist wrist = new Wrist(wristPot, wristPIDOutput, joy2);
 
+    //Gripper
+    private Solenoid gripperGrab = new Solenoid(IODefines.GRIPPER_GRAB);
+    private Solenoid gripperRelease = new Solenoid(IODefines.GRIPPER_RELEASE);
+    SolenoidSwitcher gripperGuy = new SolenoidSwitcher(gripperGrab,
+            gripperRelease,
+            joy2,
+            IODefines.GRIPPER_GRAB_BUTTON,
+            IODefines.GRIPPER_RELEASE_BUTTON);
+
+    //Compressor
+    private Compressor compressor = new Compressor(IODefines.PRESSURE_SWITCH,
+            IODefines.COMPRESSOR_POWER);
+    
+    //Minibot
+    private Solenoid miniBotDeploy = new Solenoid(IODefines.MINI_BOT_DEPLOY);
+    private Solenoid miniBotRetract = new Solenoid(IODefines.MINI_BOT_RETRACT);
+    
+    //Operator Mode Drive Control
+    private XQDrives xqDrives = new XQDrives(drives, joy1);
+    
+    //Operator Mode Elevator Control
+    private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(elevatorDrive,
+            false, elevatorLimitUp, elevatorLimitDown);
+    private Elevator elevator = new Elevator(joy2, elevatorDriveEncoder, elevatorPIDOutput);
+
+    //Autonomous Drive Mode
+    private AutoDrive autoDrive = new AutoDrive(drives, leftDriveEncoder, rightDriveEncoder);
+
     public BotMain() {
+        leftDrive.disable();
+        rightDrive.disable();
+        wristDrive.disable();
+        elevatorDrive.disable();
     }
 
     /**
@@ -105,45 +123,16 @@ public class BotMain extends SimpleRobot {
      */
     public void autonomous() {
         System.out.println("Autonomous Control");
-//        compressor.start();
-//        encoder1.setDistancePerPulse(wheelDiameter / ticksPerRev);
-//        encoder1.reset();
-//        encoder1.start();
-//        encoder2.setDistancePerPulse(wheelDiameter / ticksPerRev);
-//        encoder2.reset();
-//        encoder2.start();
-//
-//        VelocityDrive myVelocityDrive = new VelocityDrive(encoder1,
-//                jag1,
-//                75,
-//                true,
-//                DriverStationLCD.Line.kUser2,
-//                DriverStationLCD.Line.kUser3,
-//                DriverStationLCD.Line.kUser4,
-//                "1");
-//        myVelocityDrive.setTarget(50);
-//        myVelocityDrive.start();
-//
-//        VelocityDrive myVelocityDrive2 = new VelocityDrive(encoder2,
-//                jag2,
-//                75,
-//                false,
-//                DriverStationLCD.Line.kUser4,
-//                DriverStationLCD.Line.kUser5,
-//                DriverStationLCD.Line.kUser6,
-//                "2");
-//        myVelocityDrive2.setTarget(50);
-//        myVelocityDrive2.start();
-//
-//
-//
-////        while(true)
-////        {
-////            myStationLCD.println(DriverStationLCD.Line.kUser2, 1, "E1D = " + encoder1.getDistance());
-////            myStationLCD.println(DriverStationLCD.Line.kUser3, 1, "E2D = " + encoder2.getDistance());
-////            myStationLCD.updateLCD();
-////        }
-//
+        transmissionGuy.actuate(driveHighGear);
+        gripperGuy.actuate(gripperGrab);
+        compressor.start();
+        wrist.setPosition(Constants.Wrist.initialPosition);
+        elevator.setTarget(Constants.Elevator.scoringPosition);
+        shoulderGuy.actuate(shoulderUp);
+        autoDrive.gotoScoringRack();
+        wrist.setPosition(Constants.Wrist.scoringPosition);
+        gripperGuy.actuate(gripperRelease);
+        //shoulderGuy.actuate(shoulderDown);
     }
 
     /**

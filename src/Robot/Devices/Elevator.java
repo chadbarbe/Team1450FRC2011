@@ -23,23 +23,22 @@ public class Elevator implements PIDSource {
 
         private Elevator elevator;
         private boolean m_run = true;
-        private double distanceToTop;
 
         ElevatorThread(Elevator _elevator) {
             elevator = _elevator;
-            distanceToTop = Constants.elevatorDistanceToTop;
         }
 
         public void run() {
             while (m_run) {
-                double joyPositionPercent = (elevator.getZAxis() + 1) / 2;
-                double drivePosition = (joyPositionPercent * distanceToTop * 1);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 1, "Target = " + drivePosition);
+                double drivePositionTarget = (getCommandPercent() *
+                        Constants.Elevator.distanceToTop);
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 
+                        1, "Target = " + drivePositionTarget);
                 DriverStationLCD.getInstance().updateLCD();
-                elevator.setTarget(drivePosition);
+                elevator.setTarget(drivePositionTarget);
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(Constants.Elevator.loopTime);
                 } catch (InterruptedException e) {
                 }
             }
@@ -63,7 +62,7 @@ public class Elevator implements PIDSource {
         m_task = new ElevatorThread(this);
         encoder = _encoder;
 
-        encoder.setDistancePerPulse(Constants.elevatorDistancePerPulse);
+        encoder.setDistancePerPulse(Constants.Elevator.distancePerPulse);
     }
 
     public void start() {
@@ -73,15 +72,22 @@ public class Elevator implements PIDSource {
         m_task.start();
         pid.enable();
         pidTuner.start();
-
     }
 
-    public double getZAxis() {
-        return -stick.getZ();
+    public double getCommandPercent() {
+        return (1 - stick.getZ()) / 2;
     }
 
     public void setTarget(double target) {
         pid.setSetpoint(-target);
+    }
+
+    public void driveUp() {
+        //pid.setSetpoint(-target);
+    }
+
+    public void driveDown() {
+        //pid.setSetpoint(-target);
     }
 
     public double pidGet() {

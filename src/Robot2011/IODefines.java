@@ -10,10 +10,8 @@ package Robot2011;
  * @author chad
  */
 public class IODefines {
-
     //Digitals Outs
     public static final int COMPRESSOR_POWER = 7;
-
 
     //Digital Ins
     public static final int LEFT_DRIVE_ENCODER_A = 13;
@@ -54,6 +52,4 @@ public class IODefines {
     public static final int SHOULDER_DOWN_BUTTON = 10;
     public static final int DRIVE_HIGH_BUTTON = 9;
     public static final int DRIVE_LOW_BUTTON = 8;
-
-    
 }
