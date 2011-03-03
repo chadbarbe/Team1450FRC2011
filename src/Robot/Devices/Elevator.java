@@ -32,8 +32,8 @@ public class Elevator implements PIDSource {
     private boolean manualCommandMode;
     private boolean pidMode;
 
-    //private DigitalInput limitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
-    //private DigitalInput limitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
+    private DigitalInput limitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
+    private DigitalInput limitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
     private SpeedController drives = new Jaguar(IODefines.ELEVATOR_DRIVE);
     private Encoder encoder = new Encoder(IODefines.ELEVATOR_DRIVE_ENCODER_A,
             IODefines.ELEVATOR_DRIVE_ENCODER_B);

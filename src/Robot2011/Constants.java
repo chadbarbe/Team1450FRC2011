@@ -37,7 +37,7 @@ public class Constants {
         private static final double inchesPerWheelRotation = 20.25;
         private static final double encoderTicksPerRev = 250.0;
         private static final double encoderGearTeeth = 12.0;
-        private static final double wheelGearTeeth = 36.0;
+        private static final double wheelGearTeeth = 26.0;
 
         // Public constants
         public static final double distancePerPulse = (inchesPerWheelRotation /

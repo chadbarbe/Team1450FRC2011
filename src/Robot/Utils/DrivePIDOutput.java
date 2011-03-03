@@ -17,9 +17,9 @@ public class DrivePIDOutput implements PIDOutput {
     private SpeedController drive;
     private boolean inverted;
 
-    public DrivePIDOutput(SpeedController drive, boolean inverted) {
-        drive = drive;
-        inverted = inverted;
+    public DrivePIDOutput(SpeedController _drive, boolean _inverted) {
+        drive = _drive;
+        inverted = _inverted;
     }
 
     public void pidWrite(double output) {

@@ -27,8 +27,8 @@ public class Wrist {
     private boolean manualCommandMode;
     private double manualCommandTarget;
 
-    //private DigitalInput wristLimitUp = new DigitalInput(IODefines.WRIST_LIMIT_UP);
-    //private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
+    private DigitalInput wristLimitUp = new DigitalInput(IODefines.WRIST_LIMIT_UP);
+    private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
     private AnalogChannel pot = new AnalogChannel(IODefines.WRIST_POT);
     private SpeedController wristDrive = new Jaguar(IODefines.WRIST_DRIVE);
     private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, true);
