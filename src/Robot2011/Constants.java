@@ -22,9 +22,12 @@ public class Constants {
         private static final double shaftGearTeeth = 21.0;
 
         // Public constants
+        public static final double distanceToTop = 42.0;
+        public static final double lowerLimit = 0;
+        public static final double upperLimit = distanceToTop;
+        public static final double initialPosition = lowerLimit;
         public static final double distancePerPulse = (inchesPerShaftRotation /
                 encoderTicksPerRev) * (encoderGearTeeth/shaftGearTeeth);
-        public static final double distanceToTop = 42.0;
         public static final double scoringPosition = 10.0;
         public static final long loopTime = 50;
     }
@@ -42,6 +45,7 @@ public class Constants {
         public static final double distancePerPulse_DEBUG_BOT = (inchesPerWheelRotation /
                 encoderTicksPerRev);
         public static final double distanceToScoringRack = 230;
+        public static final long loopTime = 50;
     }
 
     public class Wrist {
@@ -51,6 +55,10 @@ public class Constants {
         public static final double straightPosition = 379;
         public static final double scoringPosition = 250;
         public static final double potRange = upperLimitPotVal - lowerLimitPotVal;
+        public static final long loopTime = 50;
+    }
+
+    public class Solenoid {
         public static final long loopTime = 50;
     }
 

@@ -4,6 +4,7 @@
  */
 package Robot.Devices;
 
+import Robot2011.Constants;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -37,7 +38,7 @@ public class XQDrives {
                 xqDrives.drive();
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(Constants.Drives.loopTime);
                 } catch (InterruptedException e) {
                 }
             }

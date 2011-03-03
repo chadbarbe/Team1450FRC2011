@@ -4,6 +4,7 @@
  */
 package Robot.Devices;
 
+import Robot2011.Constants;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -33,7 +34,7 @@ public class SolenoidSwitcher {
             while (m_run) {
                 solenoidSwitcher.checkAndActuate();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(Constants.Solenoid.loopTime);
                 } catch (InterruptedException e) {
                 }
             }
@@ -54,7 +55,7 @@ public class SolenoidSwitcher {
 
     }
 
-    public void checkAndActuate() {
+    private void checkAndActuate() {
         if (joystick.getRawButton(sole1ActivateButton)) {
             actuate1();
         } else if (joystick.getRawButton(sole2ActivateButton)) {

@@ -7,17 +7,50 @@ package Robot.Devices;
 import Robot.Utils.DrivePIDOutput;
 import Robot.Utils.PIDTuner;
 import Robot2011.Constants;
+import Robot2011.IODefines;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  *
  * @author chad
  */
 public class Elevator implements PIDSource {
+
+    private Joystick stick;
+    private Thread m_task;
+    private PIDController pid;
+    private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
+    private PIDTuner pidTuner;
+    private double manualCommandTarget;
+    private boolean manualCommandMode;
+    private boolean pidMode;
+
+    private DigitalInput limitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
+    private DigitalInput limitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
+    private SpeedController drives = new Jaguar(IODefines.ELEVATOR_DRIVE);
+    private Encoder encoder = new Encoder(IODefines.ELEVATOR_DRIVE_ENCODER_A,
+            IODefines.ELEVATOR_DRIVE_ENCODER_B);
+    private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(drives,
+            false, limitUp, limitDown);
+
+    public Elevator(Joystick _stick) {
+        stick = _stick;
+        encoder.setDistancePerPulse(Constants.Elevator.distancePerPulse);
+
+        pid = new PIDController(0.01, 0, 0, this, elevatorPIDOutput);
+        pid.setTolerance(1);
+        pid.setOutputRange(-1, 1);
+        pidTuner = new PIDTuner(pid, stick, .04, 0, 0);
+
+        m_task = new ElevatorThread(this);
+    }
 
     private class ElevatorThread extends Thread {
 
@@ -30,12 +63,7 @@ public class Elevator implements PIDSource {
 
         public void run() {
             while (m_run) {
-                double drivePositionTarget = (getCommandPercent() *
-                        Constants.Elevator.distanceToTop);
-                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 
-                        1, "Target = " + drivePositionTarget);
-                DriverStationLCD.getInstance().updateLCD();
-                elevator.setTarget(drivePositionTarget);
+                elevator.run();
 
                 try {
                     Thread.sleep(Constants.Elevator.loopTime);
@@ -44,55 +72,78 @@ public class Elevator implements PIDSource {
             }
         }
     }
-    private Joystick stick;
-    private Thread m_task;
-    private Encoder encoder;
-    private PIDController pid;
-    private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
-    private PIDTuner pidTuner;
-
-    public Elevator(Joystick _stick,
-            Encoder _encoder,
-            DrivePIDOutput _drive) {
-        stick = _stick;
-        pid = new PIDController(0.01, 0, 0, this, _drive);
-        pid.setTolerance(1);
-        pid.setOutputRange(-1, 1);
-        pidTuner = new PIDTuner(pid, stick, .04, 0, 0);
-        m_task = new ElevatorThread(this);
-        encoder = _encoder;
-
-        encoder.setDistancePerPulse(Constants.Elevator.distancePerPulse);
-    }
 
     public void start() {
         encoder.reset();
         //encoder.setReverseDirection(true);
         encoder.start();
         m_task.start();
+        pidMode = true;
         pid.enable();
         pidTuner.start();
+
+        setManualPosition(Constants.Elevator.initialPosition);
     }
 
-    public double getCommandPercent() {
+    private double getCommandPercent() {
         return (1 - stick.getZ()) / 2;
     }
 
-    public void setTarget(double target) {
+    private void setPidTarget(double target) {
         pid.setSetpoint(-target);
     }
 
-    public void driveUp() {
-        //pid.setSetpoint(-target);
+    public void setManualPosition(double position) {
+        setManualCommandMode();
+        if (position < Constants.Elevator.lowerLimit) {
+            manualCommandTarget = Constants.Elevator.lowerLimit;
+        }
+        else if (position > Constants.Elevator.upperLimit) {
+            manualCommandTarget = Constants.Elevator.upperLimit;
+        }
+        else {
+            manualCommandTarget = position;
+        }
     }
 
-    public void driveDown() {
-        //pid.setSetpoint(-target);
+    public void setManualCommandMode() {
+        manualCommandMode = true;
+    }
+
+    public void setUserCommandMode() {
+        manualCommandMode = false;
+    }
+
+    public void atUpperLimit() {
+        
+    }
+
+    public void atLowerLimit() {
+
+    }
+
+    private void run() {
+        double driveTarget;
+        if (manualCommandMode) {
+            driveTarget = manualCommandTarget;
+        }
+        else {
+            driveTarget = (getCommandPercent() * Constants.Elevator.distanceToTop);
+        }
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4,
+                1, "Target = " + driveTarget);
+        DriverStationLCD.getInstance().updateLCD();
+        setPidTarget(driveTarget);
     }
 
     public double pidGet() {
-        myStationLCD.println(DriverStationLCD.Line.kUser5, 1, "Position = " + encoder.getDistance());
+        myStationLCD.println(DriverStationLCD.Line.kUser5, 1,
+                "Position = " + encoder.getDistance());
         myStationLCD.updateLCD();
         return encoder.getDistance();
+    }
+
+    public void disable() {
+        drives.disable();
     }
 }

@@ -52,4 +52,7 @@ public class IODefines {
     public static final int SHOULDER_DOWN_BUTTON = 10;
     public static final int DRIVE_HIGH_BUTTON = 9;
     public static final int DRIVE_LOW_BUTTON = 8;
+    public static final int MINI_BOT_DEPLOY_BUTTON = 2;
+    public static final int MINI_BOT_RETRACT_BUTTON = 3;
+
 }
