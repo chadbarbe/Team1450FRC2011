@@ -9,7 +9,6 @@ package Robot2011;
 import Robot.Devices.DrivePlatform;
 import Robot.Devices.SolenoidSwitcher;
 import Robot.Devices.Elevator;
-import Robot.Devices.LimitSwitchPoller;
 import Robot.Devices.Wrist;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,7 +32,6 @@ public class BotMain extends SimpleRobot {
     DrivePlatform drives = new DrivePlatform(joy1);
     Wrist wrist = new Wrist(joy2);
     Elevator elevator = new Elevator(joy1);
-    //LimitSwitchPoller limitSwitchPoller = new LimitSwitchPoller(elevator,wrist);
 
     //Compressor
     private Compressor compressor = new Compressor(IODefines.PRESSURE_SWITCH,
@@ -102,8 +100,6 @@ public class BotMain extends SimpleRobot {
         System.out.println("Compressor started");
         drives.start();
         System.out.println("Drives started");
-
-        //limitSwitchPoller.start();
     }
 
     /**
@@ -116,8 +112,6 @@ public class BotMain extends SimpleRobot {
         elevator.setManualPosition(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in position");
         wrist.setManualPosition(Constants.Wrist.upPosition);
-        //shoulderGuy.actuate(shoulderUp);
-        //System.out.println("Shoulder up.");
         drives.goToScoringRack();
         System.out.println("At scoring rack");
         wrist.setManualPosition(Constants.Wrist.scoringPosition);
@@ -130,7 +124,7 @@ public class BotMain extends SimpleRobot {
         gripperGuy.actuate(gripperRelease);
         System.out.println("Autonomous Complete.");
         elevator.setManualPosition(Constants.Elevator.initialPosition);
-        //wrist.setManualPosition(Constants.Wrist.initialPosition);
+        wrist.setManualPosition(Constants.Wrist.initialPosition);
     }
 
     /**
