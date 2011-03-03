@@ -31,7 +31,8 @@ public class Wrist {
     private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
     private AnalogChannel pot = new AnalogChannel(IODefines.WRIST_POT);
     private SpeedController wristDrive = new Jaguar(IODefines.WRIST_DRIVE);
-    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, true);
+
+    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, wristLimitUp, wristLimitDown, true, "Wrist");
 
     public Wrist(Joystick _stick) {
         stick = _stick;

@@ -4,6 +4,7 @@
  */
 
 package Robot.Utils;
+import Robot2011.Constants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -15,12 +16,14 @@ public class DigitalInputListener {
     private DigitalInput input;
     private DigitalInputNotify myNotify;
     private Thread m_task;
+    private String name;
 
     private class DigitalInputListenerThread extends Thread {
 
         private DigitalInputListener digiInListener;
         private DigitalInput input;
         private boolean m_run = true;
+        private boolean isHigh = false;
 
         DigitalInputListenerThread(DigitalInputListener _digiInListener, DigitalInput _input) {
             digiInListener = _digiInListener;
@@ -28,19 +31,33 @@ public class DigitalInputListener {
         }
 
         public void run() {
-            input.requestInterrupts();
             while (m_run) {
-                input.waitForInterrupt(300);
-                digiInListener.notifyClients();
+               if(!isHigh && !input.get()) {
+                   isHigh = true;
+                   digiInListener.notifyClients();
+                   System.out.println("InputWentHigh: " + name);
+               }
+               else if(isHigh && input.get() )
+               {
+                   System.out.println("InputWentLow: " + name);
+                   isHigh = false;
+               }
+
+                try {
+                Thread.sleep(Constants.LimitSwitches.loopTime);
+                } catch (InterruptedException e) {
+                }
             }
         }
     }
 
-    DigitalInputListener(DigitalInput _input,
-                         DigitalInputNotify _myNotify)
+    public DigitalInputListener(DigitalInput _input,
+                         DigitalInputNotify _myNotify,
+                         String _name)
     {
         input = _input;
         myNotify = _myNotify;
+        name = _name;
         m_task = new DigitalInputListenerThread(this, input);
     }
 
@@ -50,7 +67,7 @@ public class DigitalInputListener {
     }
 
     private void notifyClients() {
-        myNotify.digitalNotify();
+        myNotify.digitalNotify(input);
     }
 
 }

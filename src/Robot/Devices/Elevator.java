@@ -37,17 +37,16 @@ public class Elevator implements PIDSource {
     private SpeedController drives = new Jaguar(IODefines.ELEVATOR_DRIVE);
     private Encoder encoder = new Encoder(IODefines.ELEVATOR_DRIVE_ENCODER_A,
             IODefines.ELEVATOR_DRIVE_ENCODER_B);
-    private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(drives,true);
+    private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(drives, limitUp, limitDown, true, "Elevator");
 
     public Elevator(Joystick _stick) {
         stick = _stick;
         encoder.setDistancePerPulse(Constants.Elevator.distancePerPulse);
 
-        pid = new PIDController(0.01, 0, 0, this, elevatorPIDOutput);
+        pid = new PIDController(0.16, 0, 0, this, elevatorPIDOutput);
         pid.setTolerance(1);
         pid.setOutputRange(-1, 1);
         pidTuner = new PIDTuner(pid, stick, .04, 0, 0);
-
         m_task = new ElevatorThread(this);
     }
 
@@ -80,13 +79,7 @@ public class Elevator implements PIDSource {
         pidMode = true;
         pid.enable();
         pidTuner.start();
-//        boolean upperSwitch = false;
-//        boolean lowerSwitch = true;
-//
-//        tInterruptHandler interruptHandler = new tInterruptHandler();
-//
-//        limitUp.requestInterrupts(interruptHandler, upperSwitch);
-//        limitDown.requestInterrupts(interruptHandler, lowerSwitch);
+        elevatorPIDOutput.start();
 
         setManualPosition(Constants.Elevator.initialPosition);
     }

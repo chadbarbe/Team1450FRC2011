@@ -5,10 +5,12 @@
 
 package Robot.Utils;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+
 /**
  *
  * @author chad
  */
 public interface DigitalInputNotify {
-    public void digitalNotify();
+    public void digitalNotify(DigitalInput changedInput);
 }

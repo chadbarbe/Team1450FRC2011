@@ -62,5 +62,10 @@ public class Constants {
         public static final long loopTime = 50;
     }
 
+    public class LimitSwitches
+    {
+        public static final long loopTime = 50;
+    }
+
 }
 
