@@ -71,11 +71,11 @@ public class DrivePlatform {
         leftDriveEncoder.start();
         leftDriveEncoder.reset();
         leftDriveEncoder.setReverseDirection(true);
-        leftDriveEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse_DEBUG_BOT);  //FIXME for real bot
+        leftDriveEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse);
 
         rightDriveEncoder.start();
         rightDriveEncoder.reset();
-        rightDriveEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse_DEBUG_BOT);  //FIXME for real bot
+        rightDriveEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse);
 
         m_thread.start();
     }
@@ -94,7 +94,6 @@ public class DrivePlatform {
                     1, "Dist=" + leftDriveEncoder.getDistance());
             myStationLCD.updateLCD();
         }
-        //drives.drive(0,0);
         drives.stopMotor();
     }
 
