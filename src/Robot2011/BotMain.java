@@ -131,7 +131,7 @@ public class BotMain extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-        if(joy1.getRawButton(1))
+        if(joy2.getRawButton(1))
         {
             elevator.rehome();
         }
