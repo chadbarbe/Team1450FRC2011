@@ -46,6 +46,8 @@ public class Constants {
                 encoderTicksPerRev);
         public static final double distanceToScoringRack = 216;
         public static final long loopTime = 50;
+
+        public static final double maxVelocity = 75;
     }
 
     public class Wrist {

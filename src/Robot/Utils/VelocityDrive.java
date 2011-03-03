@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Robot.Devices;
+package Robot.Utils;
 
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
@@ -66,7 +66,7 @@ public class VelocityDrive implements PIDOutput, PIDSource {
         this.pid.enable();
     }
 
-    void end() {
+    void stop() {
         this.pid.disable();
     }
 
