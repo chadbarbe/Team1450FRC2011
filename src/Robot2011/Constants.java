@@ -44,7 +44,7 @@ public class Constants {
                 encoderTicksPerRev) * (encoderGearTeeth/wheelGearTeeth);
         public static final double distancePerPulse_DEBUG_BOT = (inchesPerWheelRotation /
                 encoderTicksPerRev);
-        public static final double distanceToScoringRack = 216;
+        public static final double distanceToScoringRack = 200;
         public static final long loopTime = 50;
 
         public static final double maxVelocity = 75;
