@@ -110,18 +110,27 @@ public class BotMain extends SimpleRobot {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        elevator.setManualPosition(Constants.Elevator.initialPosition);
+        wrist.setManualPosition(Constants.Wrist.initialPosition);
         System.out.println("Autonomous Control");
-        elevator.setManualPosition(Constants.Elevator.scoringPosition);
+        //elevator.setManualPosition(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in position");
-        shoulderGuy.actuate(shoulderUp);
+        wrist.setManualPosition(Constants.Wrist.upPosition);
+        //shoulderGuy.actuate(shoulderUp);
         System.out.println("Shoulder up.");
         drives.goToScoringRack();
         System.out.println("At scoring rack");
         wrist.setManualPosition(Constants.Wrist.scoringPosition);
         System.out.println("Wrist in scoring position.");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            System.out.println("Sleep timer caught some exception.");
+        }
         gripperGuy.actuate(gripperRelease);
         System.out.println("Autonomous Complete.");
         elevator.setManualPosition(Constants.Elevator.initialPosition);
+        //wrist.setManualPosition(Constants.Wrist.initialPosition);
     }
 
     /**

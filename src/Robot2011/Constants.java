@@ -25,10 +25,10 @@ public class Constants {
         public static final double distanceToTop = 42.0;
         public static final double lowerLimit = 0;
         public static final double upperLimit = distanceToTop;
-        public static final double initialPosition = lowerLimit;
+        public static final double initialPosition = 10;
         public static final double distancePerPulse = (inchesPerShaftRotation /
                 encoderTicksPerRev) * (encoderGearTeeth/shaftGearTeeth);
-        public static final double scoringPosition = 10.0;
+        public static final double scoringPosition = 0.0;
         public static final long loopTime = 50;
     }
 
@@ -44,16 +44,17 @@ public class Constants {
                 encoderTicksPerRev) * (encoderGearTeeth/wheelGearTeeth);
         public static final double distancePerPulse_DEBUG_BOT = (inchesPerWheelRotation /
                 encoderTicksPerRev);
-        public static final double distanceToScoringRack = 230;
+        public static final double distanceToScoringRack = 216;
         public static final long loopTime = 50;
     }
 
     public class Wrist {
         public static final double lowerLimitPotVal = 215;
         public static final double upperLimitPotVal = 770;
-        public static final double initialPosition = 379;
+        public static final double initialPosition = 750;
         public static final double straightPosition = 379;
-        public static final double scoringPosition = 600;
+        public static final double scoringPosition = 280;
+        public static final double upPosition = 600;
         public static final double potRange = upperLimitPotVal - lowerLimitPotVal;
         public static final long loopTime = 50;
     }
