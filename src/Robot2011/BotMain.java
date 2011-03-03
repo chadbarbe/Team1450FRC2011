@@ -113,11 +113,11 @@ public class BotMain extends SimpleRobot {
         elevator.setManualPosition(Constants.Elevator.initialPosition);
         wrist.setManualPosition(Constants.Wrist.initialPosition);
         System.out.println("Autonomous Control");
-        //elevator.setManualPosition(Constants.Elevator.scoringPosition);
+        elevator.setManualPosition(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in position");
         wrist.setManualPosition(Constants.Wrist.upPosition);
         //shoulderGuy.actuate(shoulderUp);
-        System.out.println("Shoulder up.");
+        //System.out.println("Shoulder up.");
         drives.goToScoringRack();
         System.out.println("At scoring rack");
         wrist.setManualPosition(Constants.Wrist.scoringPosition);

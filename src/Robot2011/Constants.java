@@ -25,10 +25,10 @@ public class Constants {
         public static final double distanceToTop = 42.0;
         public static final double lowerLimit = 0;
         public static final double upperLimit = distanceToTop;
-        public static final double initialPosition = 10;
+        public static final double initialPosition = 0;
         public static final double distancePerPulse = (inchesPerShaftRotation /
                 encoderTicksPerRev) * (encoderGearTeeth/shaftGearTeeth);
-        public static final double scoringPosition = 0.0;
+        public static final double scoringPosition = 10.0;
         public static final long loopTime = 50;
     }
 
