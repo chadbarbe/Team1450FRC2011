@@ -9,7 +9,7 @@ package Robot2011;
 import Robot.Devices.DrivePlatform;
 import Robot.Devices.SolenoidSwitcher;
 import Robot.Devices.Elevator;
-//import Robot.Devices.LimitSwitchPoller;
+import Robot.Devices.LimitSwitchPoller;
 import Robot.Devices.Wrist;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -32,7 +32,7 @@ public class BotMain extends SimpleRobot {
     //Device Instantiation
     DrivePlatform drives = new DrivePlatform(joy1);
     Wrist wrist = new Wrist(joy2);
-    Elevator elevator = new Elevator(joy2);
+    Elevator elevator = new Elevator(joy1);
     //LimitSwitchPoller limitSwitchPoller = new LimitSwitchPoller(elevator,wrist);
 
     //Compressor
@@ -102,6 +102,8 @@ public class BotMain extends SimpleRobot {
         System.out.println("Compressor started");
         drives.start();
         System.out.println("Drives started");
+
+        //limitSwitchPoller.start();
     }
 
     /**

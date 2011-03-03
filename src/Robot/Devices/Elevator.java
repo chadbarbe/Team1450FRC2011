@@ -32,13 +32,12 @@ public class Elevator implements PIDSource {
     private boolean manualCommandMode;
     private boolean pidMode;
 
-    private DigitalInput limitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
-    private DigitalInput limitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
+    //private DigitalInput limitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
+    //private DigitalInput limitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
     private SpeedController drives = new Jaguar(IODefines.ELEVATOR_DRIVE);
     private Encoder encoder = new Encoder(IODefines.ELEVATOR_DRIVE_ENCODER_A,
             IODefines.ELEVATOR_DRIVE_ENCODER_B);
-    private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(drives,
-            false, limitUp, limitDown);
+    private DrivePIDOutput elevatorPIDOutput = new DrivePIDOutput(drives,true);
 
     public Elevator(Joystick _stick) {
         stick = _stick;
@@ -81,16 +80,23 @@ public class Elevator implements PIDSource {
         pidMode = true;
         pid.enable();
         pidTuner.start();
+//        boolean upperSwitch = false;
+//        boolean lowerSwitch = true;
+//
+//        tInterruptHandler interruptHandler = new tInterruptHandler();
+//
+//        limitUp.requestInterrupts(interruptHandler, upperSwitch);
+//        limitDown.requestInterrupts(interruptHandler, lowerSwitch);
 
         setManualPosition(Constants.Elevator.initialPosition);
     }
 
-    private double getCommandPercent() {
+    private double getUserInput() {
         return (1 - stick.getZ()) / 2;
     }
 
     private void setPidTarget(double target) {
-        pid.setSetpoint(-target);
+        pid.setSetpoint(target);
     }
 
     public void setManualPosition(double position) {
@@ -115,11 +121,11 @@ public class Elevator implements PIDSource {
     }
 
     public void atUpperLimit() {
-        
+        System.out.println("Elevator Upper Limit.");
     }
 
     public void atLowerLimit() {
-
+        System.out.println("Elevator Lower Limit.");
     }
 
     private void run() {
@@ -128,17 +134,17 @@ public class Elevator implements PIDSource {
             driveTarget = manualCommandTarget;
         }
         else {
-            driveTarget = (getCommandPercent() * Constants.Elevator.distanceToTop);
+            driveTarget = (getUserInput() * Constants.Elevator.distanceToTop);
         }
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4,
-                1, "Target = " + driveTarget);
+                1, "Elevator Target = " + driveTarget);
         DriverStationLCD.getInstance().updateLCD();
         setPidTarget(driveTarget);
     }
 
     public double pidGet() {
         myStationLCD.println(DriverStationLCD.Line.kUser5, 1,
-                "Position = " + encoder.getDistance());
+                "Elevator Height = " + encoder.getDistance());
         myStationLCD.updateLCD();
         return encoder.getDistance();
     }

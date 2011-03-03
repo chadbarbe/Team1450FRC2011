@@ -4,7 +4,7 @@
  */
 package Robot.Utils;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+//import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -16,21 +16,10 @@ public class DrivePIDOutput implements PIDOutput {
 
     private SpeedController drive;
     private boolean inverted;
-    private DigitalInput forwardSwitch = null;
-    private DigitalInput backwardSwitch = null;
-
-    public DrivePIDOutput(SpeedController drive,
-            boolean inverted,
-            DigitalInput _forwardSwitch,
-            DigitalInput _backwardSwitch) {
-        this(drive, inverted);
-        forwardSwitch = _forwardSwitch;
-        backwardSwitch = _backwardSwitch;
-    }
 
     public DrivePIDOutput(SpeedController drive, boolean inverted) {
-        this.drive = drive;
-        this.inverted = inverted;
+        drive = drive;
+        inverted = inverted;
     }
 
     public void pidWrite(double output) {
@@ -39,10 +28,6 @@ public class DrivePIDOutput implements PIDOutput {
         if (inverted) {
             myOutput = -myOutput;
         }
-//
-//        if (output < 0 && !backwardSwitch.get() || output > 0 && !forwardSwitch.get()) {
-//            myOutput = 0;
-//        }
 
         drive.set(myOutput);
     }

@@ -33,7 +33,6 @@ public class LimitSwitchPoller {
 
     private class LimitSwitchThread extends Thread {
 
-        private DrivePlatform drives;
         private boolean m_run = true;
 
         LimitSwitchThread(LimitSwitchPoller _poller) {

@@ -27,12 +27,11 @@ public class Wrist {
     private boolean manualCommandMode;
     private double manualCommandTarget;
 
-    private DigitalInput wristLimitUp = new DigitalInput(IODefines.WRIST_LIMIT_UP);
-    private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
+    //private DigitalInput wristLimitUp = new DigitalInput(IODefines.WRIST_LIMIT_UP);
+    //private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
     private AnalogChannel pot = new AnalogChannel(IODefines.WRIST_POT);
     private SpeedController wristDrive = new Jaguar(IODefines.WRIST_DRIVE);
-    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, true,
-            wristLimitUp, wristLimitDown);
+    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, true);
 
     public Wrist(Joystick _stick) {
         stick = _stick;
@@ -100,10 +99,11 @@ public class Wrist {
     public void atUpperLimit() {
         //boolean currentDirection;
         //currentDirection = sign(wristDrive.get());
+        System.out.println("Wrist Upper Limit.");
     }
 
     public void atLowerLimit() {
-
+        System.out.println("Wrist Lower Limit.");
     }
 
     private void run() {
@@ -112,16 +112,20 @@ public class Wrist {
             driveTarget = manualCommandTarget;
         }
         else {
-            double cmdTargetPct = (stick.getAxis(Joystick.AxisType.kY) + 1) / 2;
-            driveTarget = (cmdTargetPct * Constants.Wrist.potRange +
+            driveTarget = (getUserInput() * Constants.Wrist.potRange +
                     Constants.Wrist.lowerLimitPotVal);
         }
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1,
-                "Target = " + driveTarget);
+                "Wrist Target = " + driveTarget);
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1,
-                "Pot = " + pot.getAverageValue());
+                "Wrist Value = " + pot.getAverageValue());
         DriverStationLCD.getInstance().updateLCD();
         pid.setSetpoint(driveTarget);
+    }
+
+    private double getUserInput() {
+        //return (stick.getAxis(Joystick.AxisType.kY) + 1) / 2;
+        return (1 - stick.getZ()) / 2;
     }
 
     public void disable() {
