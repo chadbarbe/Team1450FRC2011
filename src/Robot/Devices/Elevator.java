@@ -28,8 +28,8 @@ public class Elevator implements PIDSource {
     private PIDController pid;
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
     private PIDTuner pidTuner;
-    private double manualCommandTarget;
-    private boolean manualCommandMode;
+    private double autoCommandTarget;
+    private boolean autoCommandMode;
     private boolean pidMode;
 
     private DigitalInput limitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
@@ -93,33 +93,36 @@ public class Elevator implements PIDSource {
     }
 
     public void setManualPosition(double position) {
-        setManualCommandMode();
+        setAutoCommandMode();
         if (position < Constants.Elevator.lowerLimit) {
-            manualCommandTarget = Constants.Elevator.lowerLimit;
+            autoCommandTarget = Constants.Elevator.lowerLimit;
         }
         else if (position > Constants.Elevator.upperLimit) {
-            manualCommandTarget = Constants.Elevator.upperLimit;
+            autoCommandTarget = Constants.Elevator.upperLimit;
         }
         else {
-            manualCommandTarget = position;
+            autoCommandTarget = position;
         }
     }
 
     public void rehome() {
-        manualCommandTarget = -Constants.Elevator.upperLimit * 2;
+        pid.setOutputRange(-0.1, 0.1);
+        autoCommandTarget = -Constants.Elevator.upperLimit * 2;
 
         while (limitDown.get()) {
 
         }
+
         encoder.reset();
+        pid.setOutputRange(-1, 1);
     }
 
-    public void setManualCommandMode() {
-        manualCommandMode = true;
+    public void setAutoCommandMode() {
+        autoCommandMode = true;
     }
 
     public void setUserCommandMode() {
-        manualCommandMode = false;
+        autoCommandMode = false;
     }
 
     public void atUpperLimit() {
@@ -132,8 +135,8 @@ public class Elevator implements PIDSource {
 
     private void run() {
         double driveTarget;
-        if (manualCommandMode) {
-            driveTarget = manualCommandTarget;
+        if (autoCommandMode) {
+            driveTarget = autoCommandTarget;
         }
         else {
             driveTarget = (getUserInput() * Constants.Elevator.distanceToTop);

@@ -110,7 +110,6 @@ public class BotMain extends SimpleRobot {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        elevator.rehome();
         System.out.println("Autonomous Control");
         elevator.setManualPosition(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in position");
@@ -129,6 +128,11 @@ public class BotMain extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
+        if(joy1.getRawButton(1))
+        {
+            elevator.rehome();
+        }
+
         System.out.println("Operator Control!");
         elevator.setUserCommandMode();
         wrist.setUserCommandMode();
