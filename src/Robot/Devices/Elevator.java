@@ -105,6 +105,15 @@ public class Elevator implements PIDSource {
         }
     }
 
+    public void rehome() {
+        manualCommandTarget = -Constants.Elevator.upperLimit * 2;
+
+        while (limitDown.get()) {
+
+        }
+        encoder.reset();
+    }
+
     public void setManualCommandMode() {
         manualCommandMode = true;
     }

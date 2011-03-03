@@ -53,7 +53,7 @@ public class Constants {
         public static final double upperLimitPotVal = 770;
         public static final double initialPosition = 379;
         public static final double straightPosition = 379;
-        public static final double scoringPosition = 250;
+        public static final double scoringPosition = 600;
         public static final double potRange = upperLimitPotVal - lowerLimitPotVal;
         public static final long loopTime = 50;
     }

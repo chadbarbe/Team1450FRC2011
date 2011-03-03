@@ -110,6 +110,7 @@ public class BotMain extends SimpleRobot {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        elevator.rehome();
         System.out.println("Autonomous Control");
         elevator.setManualPosition(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in position");
@@ -121,6 +122,7 @@ public class BotMain extends SimpleRobot {
         System.out.println("Wrist in scoring position.");
         gripperGuy.actuate(gripperRelease);
         System.out.println("Autonomous Complete.");
+        elevator.setManualPosition(Constants.Elevator.initialPosition);
     }
 
     /**

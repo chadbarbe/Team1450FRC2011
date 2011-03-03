@@ -82,16 +82,20 @@ public class DrivePlatform {
 
     public void goToScoringRack() {
         double curve = 0;
-        double speed = 0.5;
+        double speed = -0.5;
 
         while(leftDriveEncoder.getDistance() < Constants.Drives.distanceToScoringRack)
         {
             //curve = encoder2.getDistance()/encoder1.getDistance();
             drives.drive(speed,curve);
             myStationLCD.println(DriverStationLCD.Line.kUser2,
-                    1, "Enc1Tks=" + leftDriveEncoder.get());
+                    1, "lEnc1Tks=" + leftDriveEncoder.get());
             myStationLCD.println(DriverStationLCD.Line.kUser3,
-                    1, "Dist=" + leftDriveEncoder.getDistance());
+                    1, "lDist=" + leftDriveEncoder.getDistance());
+            myStationLCD.println(DriverStationLCD.Line.kUser4,
+                    1, "rEnc1Tks=" + rightDriveEncoder.get());
+            myStationLCD.println(DriverStationLCD.Line.kUser5,
+                    1, "rDist=" + rightDriveEncoder.getDistance());
             myStationLCD.updateLCD();
         }
         drives.stopMotor();
