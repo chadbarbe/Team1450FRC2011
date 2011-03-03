@@ -39,8 +39,8 @@ public class DigitalInputListener {
                }
                else if(isHigh && input.get() )
                {
-                   System.out.println("InputWentLow: " + name);
                    isHigh = false;
+                   System.out.println("InputWentLow: " + name);
                }
 
                 try {

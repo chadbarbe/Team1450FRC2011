@@ -47,11 +47,14 @@ public class DrivePIDOutput implements PIDOutput, DigitalInputNotify {
             myOutput = -myOutput;
         }
 
-        if(upperLimitReached && myOutput > 0)
+        upperLimitReached = !limitUp.get();
+        lowerLimitReached = !limitDown.get();
+
+        if(upperLimitReached && myOutput < 0)
         {
             myOutput = 0;
         }
-        else if (lowerLimitReached && myOutput < 0) {
+        else if (lowerLimitReached && myOutput > 0) {
             myOutput = 0;
         }
 
@@ -59,6 +62,7 @@ public class DrivePIDOutput implements PIDOutput, DigitalInputNotify {
     }
 
     public void digitalNotify(DigitalInput changedInput) {
+        drive.set(0);
         if(changedInput == limitUp)
         {
             upperLimitReached = true;

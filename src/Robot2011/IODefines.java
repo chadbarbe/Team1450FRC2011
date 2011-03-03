@@ -18,12 +18,12 @@ public class IODefines {
     public static final int LEFT_DRIVE_ENCODER_B = 14;
     public static final int RIGHT_DRIVE_ENCODER_A = 11;
     public static final int RIGHT_DRIVE_ENCODER_B = 12;
-    public static final int WRIST_LIMIT_UP = 1;
-    public static final int WRIST_LIMIT_DOWN = 2;
+    public static final int WRIST_LIMIT_UP = 2;
+    public static final int WRIST_LIMIT_DOWN = 1;
     public static final int ELEVATOR_DRIVE_ENCODER_A = 3;
     public static final int ELEVATOR_DRIVE_ENCODER_B = 4;
-    public static final int ELEVATOR_LIMIT_UP = 10;
-    public static final int ELEVATOR_LIMIT_DOWN = 9;
+    public static final int ELEVATOR_LIMIT_UP = 9;
+    public static final int ELEVATOR_LIMIT_DOWN = 10;
     public static final int PRESSURE_SWITCH = 7;
 
     //PWMs

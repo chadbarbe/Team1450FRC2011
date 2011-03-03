@@ -32,15 +32,15 @@ public class Wrist {
     private AnalogChannel pot = new AnalogChannel(IODefines.WRIST_POT);
     private SpeedController wristDrive = new Jaguar(IODefines.WRIST_DRIVE);
 
-    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, wristLimitUp, wristLimitDown, true, "Wrist");
+    private DrivePIDOutput wristPIDOutput = new DrivePIDOutput(wristDrive, wristLimitUp, wristLimitDown, false, "Wrist");
 
     public Wrist(Joystick _stick) {
         stick = _stick;
         manualCommandMode = true;
 
-        pid = new PIDController(0.001, 0, 0, pot, wristPIDOutput);
+        pid = new PIDController(0.005, 0, 0, pot, wristPIDOutput);
         pid.setSetpoint(Constants.Wrist.initialPosition);
-        pid.setOutputRange(-0.5, 0.5);
+        pid.setOutputRange(-0.35, 0.35);
         m_thread = new WristThread(this);
     }
 
