@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -63,6 +64,8 @@ public class BotMain extends SimpleRobot {
             joy2,
             IODefines.GRIPPER_GRAB_BUTTON,
             IODefines.GRIPPER_RELEASE_BUTTON);
+
+    private AxisCamera camera = AxisCamera.getInstance();
 
 //    //Minibot
 //    private Solenoid miniBotDeploy = new Solenoid(IODefines.MINI_BOT_DEPLOY);
