@@ -116,8 +116,7 @@ public class Wrist {
             driveTarget = (getUserInput() * Constants.Wrist.potRange +
                     Constants.Wrist.lowerLimitPotVal);
         }
-        System.out.println("Wrist Target = " + driveTarget);
-        System.out.println("Wrist Position = " + pot.getAverageValue());
+        
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1,
                 "Wrist Target = " + driveTarget);
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1,
