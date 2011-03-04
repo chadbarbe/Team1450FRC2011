@@ -28,7 +28,7 @@ public class Constants {
         public static final double initialPosition = 0;
         public static final double distancePerPulse = (inchesPerShaftRotation /
                 encoderTicksPerRev) * (encoderGearTeeth/shaftGearTeeth);
-        public static final double scoringPosition = 10.0;
+        public static final double scoringPosition = 10;
         public static final long loopTime = 50;
     }
 
@@ -40,7 +40,7 @@ public class Constants {
         private static final double wheelGearTeeth = 26.0;
         private static final double startToDriverStation = 216.4;
         private static final double scoringPegLength = 19.5;
-        private static final double robotPegClearance = 6;
+        private static final double robotPegClearance = 10;
 
         // Public constants
         public static final double distancePerPulse = (inchesPerWheelRotation /
@@ -50,6 +50,7 @@ public class Constants {
         public static final double distanceToScoringRack = (startToDriverStation - 
                 (scoringPegLength + robotPegClearance));
         public static final long loopTime = 50;
+        public static final double distanceBackFromScoringRack = distanceToScoringRack - 36;
 
     }
 

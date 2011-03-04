@@ -38,6 +38,27 @@ public class DrivePlatform {
         joy = _joy;
     }
 
+    public void backOffScoringRack() {
+        double curve = 0;
+        double speed = 0.5;
+
+        while(leftDriveEncoder.getDistance() > Constants.Drives.distanceBackFromScoringRack)
+        {
+            //curve = encoder2.getDistance()/encoder1.getDistance();
+            drives.drive(speed,curve);
+            myStationLCD.println(DriverStationLCD.Line.kUser2,
+                    1, "lEnc1Tks=" + leftDriveEncoder.get());
+            myStationLCD.println(DriverStationLCD.Line.kUser3,
+                    1, "lDist=" + leftDriveEncoder.getDistance());
+            myStationLCD.println(DriverStationLCD.Line.kUser4,
+                    1, "rEnc1Tks=" + rightDriveEncoder.get());
+            myStationLCD.println(DriverStationLCD.Line.kUser5,
+                    1, "rDist=" + rightDriveEncoder.getDistance());
+            myStationLCD.updateLCD();
+        }
+        drives.stopMotor();
+    }
+
     private class DrivesThread extends Thread {
 
         private DrivePlatform drives;

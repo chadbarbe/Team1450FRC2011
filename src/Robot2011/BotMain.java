@@ -124,6 +124,13 @@ public class BotMain extends SimpleRobot {
         }
         System.out.println("Dropping yellow tube!");
         gripperGuy.actuate(gripperRelease);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            System.out.println("Sleep timer caught some exception.");
+        }
+        System.out.println("Backing up the bot.");
+        drives.backOffScoringRack();
         System.out.println("Setting wrist and elevator back to initial positions.");
         wrist.setManualPosition(Constants.Wrist.initialPosition);
         try {
