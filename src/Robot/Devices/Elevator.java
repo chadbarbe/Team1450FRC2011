@@ -106,15 +106,20 @@ public class Elevator implements PIDSource {
     }
 
     public void rehome() {
-        pid.setOutputRange(-0.1, 0.1);
+        pid.disable();
+        pid.setOutputRange(-0.3, 0.3);
         autoCommandTarget = -Constants.Elevator.upperLimit * 2;
+        pid.enable();
 
         while (limitDown.get()) {
 
         }
 
         encoder.reset();
+        pid.disable();
+        autoCommandTarget = 0;
         pid.setOutputRange(-1, 1);
+        pid.enable();
     }
 
     public void setAutoCommandMode() {
@@ -141,16 +146,16 @@ public class Elevator implements PIDSource {
         else {
             driveTarget = (getUserInput() * Constants.Elevator.distanceToTop);
         }
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4,
-                1, "Elevator Target = " + driveTarget);
-        DriverStationLCD.getInstance().updateLCD();
+      //  DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4,
+      //          1, "Elevator Target = " + driveTarget);
+      //  DriverStationLCD.getInstance().updateLCD();
         setPidTarget(driveTarget);
     }
 
     public double pidGet() {
-        myStationLCD.println(DriverStationLCD.Line.kUser5, 1,
-                "Elevator Height = " + encoder.getDistance());
-        myStationLCD.updateLCD();
+        //myStationLCD.println(DriverStationLCD.Line.kUser5, 1,
+        //        "Elevator Height = " + encoder.getDistance());
+       // myStationLCD.updateLCD();
         return encoder.getDistance();
     }
 

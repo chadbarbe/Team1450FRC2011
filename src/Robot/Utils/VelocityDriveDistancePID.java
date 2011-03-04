@@ -21,20 +21,27 @@ public class VelocityDriveDistancePID implements PIDOutput{
         velocityDrive = _velocityDrive;
         pidSource = _pidSource;
         pidController = new PIDController(1.5, 0, 0, pidSource, this);
+        pidController.setOutputRange(-75, 75);
     }
 
     public void pidWrite(double output) {
+        System.out.println("Drive Velocity = " + output);
+        System.out.println("Drive Distance Target = " + pidController.getSetpoint());
+        System.out.println("Drive Distance Actual = " + pidSource.getDistance());
         velocityDrive.setTarget(output);
     }
 
     public void start()
     {
         pidSource.setPIDSourceParameter(Encoder.PIDSourceParameter.kDistance);
-        pidController.setSetpoint(0);
+        pidController.setInputRange(0, 265);
+        pidController.setTolerance(1);
         pidController.enable();
+        velocityDrive.start();
     }
 
     public void stop(){
+        velocityDrive.stop();
         pidController.disable();
     }
 

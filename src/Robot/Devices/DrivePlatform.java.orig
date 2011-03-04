@@ -48,7 +48,7 @@ public class DrivePlatform {
             rightDriveEncoder,
             rightDrive,
             Constants.Drives.maxVelocity,
-            false,
+            true,
             DriverStationLCD.Line.kUser2,
             DriverStationLCD.Line.kUser3,
             DriverStationLCD.Line.kUser4,
@@ -91,6 +91,7 @@ public class DrivePlatform {
     }
 
     public void start() {
+        //pid.enable();
         leftDriveEncoder.start();
         leftDriveEncoder.reset();
         leftDriveEncoder.setReverseDirection(true);
@@ -104,26 +105,21 @@ public class DrivePlatform {
     }
 
     public void goToScoringRack() {
-        userMode = false;
-        distanceDriverLeft.setTarget(-Constants.Drives.distanceToScoringRack);
-        distanceDriverRight.setTarget(Constants.Drives.distanceToScoringRack);
-        
-        distanceDriverLeft.start();
-        distanceDriverRight.start();
 
-        double error = Math.abs(Constants.Drives.distanceToScoringRack - leftDriveEncoder.getDistance());
-        while(error > 5)
-        {
-            error = Math.abs(Constants.Drives.distanceToScoringRack - leftDriveEncoder.getDistance());
-        }
-        distanceDriverLeft.stop();
-        distanceDriverRight.stop();
-        drives.stopMotor();
+//        distanceDriverLeft.setTarget(Constants.Drives.distanceToScoringRack);
+//        distanceDriverRight.setTarget(Constants.Drives.distanceToScoringRack);
+//        distanceDriverLeft.start();
+//        distanceDriverRight.start();
+//        while(!distanceDriverLeft.atTarget() && !distanceDriverRight.atTarget())
+//        {
+//            System.out.println("We're driving!!!");
+//        }
+//        distanceDriverLeft.stop();
+//        distanceDriverRight.stop();
+//        drives.stopMotor();
     }
 
     public void setUserCommandMode() {
-        distanceDriverRight.stop();
-        distanceDriverLeft.stop();
         userMode = true;
     }
 
