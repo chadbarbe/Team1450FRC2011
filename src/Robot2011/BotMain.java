@@ -118,7 +118,7 @@ public class BotMain extends SimpleRobot {
         wrist.setManualPosition(Constants.Wrist.scoringPosition);
         System.out.println("Wrist in scoring position.");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(300);
         } catch (InterruptedException ex) {
             System.out.println("Sleep timer caught some exception.");
         }
