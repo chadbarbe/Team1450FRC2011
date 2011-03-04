@@ -5,8 +5,6 @@
 
 package Robot.Devices;
 
-import Robot.Utils.VelocityDrive;
-import Robot.Utils.VelocityDriveDistancePID;
 import Robot2011.Constants;
 import Robot2011.IODefines;
 import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -35,28 +33,6 @@ public class DrivePlatform {
             IODefines.RIGHT_DRIVE_ENCODER_B);
     private RobotDrive drives = new RobotDrive(leftDrive, rightDrive);
 
-    private VelocityDrive velocityDriveLeft = new VelocityDrive(
-            leftDriveEncoder,
-            leftDrive,
-            Constants.Drives.maxVelocity,
-            false,
-            DriverStationLCD.Line.kUser2,
-            DriverStationLCD.Line.kUser3,
-            DriverStationLCD.Line.kUser4,
-            "Left");
-    private VelocityDrive velocityDriveRight = new VelocityDrive(
-            rightDriveEncoder,
-            rightDrive,
-            Constants.Drives.maxVelocity,
-            false,
-            DriverStationLCD.Line.kUser2,
-            DriverStationLCD.Line.kUser3,
-            DriverStationLCD.Line.kUser4,
-            "Right");
-
-    private VelocityDriveDistancePID distanceDriverLeft = new VelocityDriveDistancePID(leftDriveEncoder, velocityDriveLeft);
-    private VelocityDriveDistancePID distanceDriverRight = new VelocityDriveDistancePID(rightDriveEncoder, velocityDriveRight);
-
     public DrivePlatform(Joystick _joy){
         m_thread = new DrivesThread(this);
         joy = _joy;
@@ -83,7 +59,6 @@ public class DrivePlatform {
         }
     }
 
-
     private void run() {
         if (userMode) {
             drives.arcadeDrive(joy);
@@ -104,26 +79,27 @@ public class DrivePlatform {
     }
 
     public void goToScoringRack() {
-        userMode = false;
-        distanceDriverLeft.setTarget(-Constants.Drives.distanceToScoringRack);
-        distanceDriverRight.setTarget(Constants.Drives.distanceToScoringRack);
-        
-        distanceDriverLeft.start();
-        distanceDriverRight.start();
+        double curve = 0;
+        double speed = -0.5;
 
-        double error = Math.abs(Constants.Drives.distanceToScoringRack - leftDriveEncoder.getDistance());
-        while(error > 5)
+        while(leftDriveEncoder.getDistance() < Constants.Drives.distanceToScoringRack)
         {
-            error = Math.abs(Constants.Drives.distanceToScoringRack - leftDriveEncoder.getDistance());
+            //curve = encoder2.getDistance()/encoder1.getDistance();
+            drives.drive(speed,curve);
+            myStationLCD.println(DriverStationLCD.Line.kUser2,
+                    1, "lEnc1Tks=" + leftDriveEncoder.get());
+            myStationLCD.println(DriverStationLCD.Line.kUser3,
+                    1, "lDist=" + leftDriveEncoder.getDistance());
+            myStationLCD.println(DriverStationLCD.Line.kUser4,
+                    1, "rEnc1Tks=" + rightDriveEncoder.get());
+            myStationLCD.println(DriverStationLCD.Line.kUser5,
+                    1, "rDist=" + rightDriveEncoder.getDistance());
+            myStationLCD.updateLCD();
         }
-        distanceDriverLeft.stop();
-        distanceDriverRight.stop();
         drives.stopMotor();
     }
 
     public void setUserCommandMode() {
-        distanceDriverRight.stop();
-        distanceDriverLeft.stop();
         userMode = true;
     }
 

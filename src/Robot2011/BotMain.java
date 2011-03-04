@@ -106,11 +106,12 @@ public class BotMain extends SimpleRobot {
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
+        System.out.println("Entering autonomous control.");
         elevator.setManualPosition(Constants.Elevator.initialPosition);
         wrist.setManualPosition(Constants.Wrist.initialPosition);
-        System.out.println("Autonomous Control");
+        System.out.println("Wrist and elevator set to initial positions.");
         elevator.setManualPosition(Constants.Elevator.scoringPosition);
-        System.out.println("Elevator in position");
+        System.out.println("Elevator in scoring position");
         wrist.setManualPosition(Constants.Wrist.upPosition);
         drives.goToScoringRack();
         System.out.println("At scoring rack");
@@ -121,10 +122,17 @@ public class BotMain extends SimpleRobot {
         } catch (InterruptedException ex) {
             System.out.println("Sleep timer caught some exception.");
         }
+        System.out.println("Dropping yellow tube!");
         gripperGuy.actuate(gripperRelease);
-        System.out.println("Autonomous Complete.");
-        elevator.setManualPosition(Constants.Elevator.initialPosition);
+        System.out.println("Setting wrist and elevator back to initial positions.");
         wrist.setManualPosition(Constants.Wrist.initialPosition);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            System.out.println("Second sleep timer caught some exception.");
+        }
+        elevator.setManualPosition(Constants.Elevator.initialPosition);
+        System.out.println("Autonomous Complete.");
     }
 
     /**

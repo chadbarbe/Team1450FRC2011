@@ -116,11 +116,11 @@ public class Wrist {
             driveTarget = (getUserInput() * Constants.Wrist.potRange +
                     Constants.Wrist.lowerLimitPotVal);
         }
-    //    DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1,
-    //            "Wrist Target = " + driveTarget);
-    //    DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1,
-    //            "Wrist Value = " + pot.getAverageValue());
-    //    DriverStationLCD.getInstance().updateLCD();
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1,
+                "Wrist Target = " + driveTarget);
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1,
+                "Wrist Value = " + pot.getAverageValue());
+        DriverStationLCD.getInstance().updateLCD();
         pid.setSetpoint(driveTarget);
     }
 

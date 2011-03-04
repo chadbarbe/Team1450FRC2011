@@ -146,16 +146,16 @@ public class Elevator implements PIDSource {
         else {
             driveTarget = (getUserInput() * Constants.Elevator.distanceToTop);
         }
-      //  DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4,
-      //          1, "Elevator Target = " + driveTarget);
-      //  DriverStationLCD.getInstance().updateLCD();
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4,
+                1, "Elevator Target = " + driveTarget);
+        DriverStationLCD.getInstance().updateLCD();
         setPidTarget(driveTarget);
     }
 
     public double pidGet() {
-        //myStationLCD.println(DriverStationLCD.Line.kUser5, 1,
-        //        "Elevator Height = " + encoder.getDistance());
-       // myStationLCD.updateLCD();
+        myStationLCD.println(DriverStationLCD.Line.kUser5, 1,
+                "Elevator Height = " + encoder.getDistance());
+        myStationLCD.updateLCD();
         return encoder.getDistance();
     }
 
