@@ -164,7 +164,7 @@ public class Elevator implements PIDSource {
 
         //wish we could encoder.set(Constants.Elevator.upperLimit) here,
         //    maybe we need an encoder wrapper?
-        autoCommandTarget = 0;
+        autoCommandTarget = Constants.Elevator.upperLimit;
         pid.setOutputRange(-1, 1);
         pid.reset();
         pid.enable();
