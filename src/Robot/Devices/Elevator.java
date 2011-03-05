@@ -122,6 +122,54 @@ public class Elevator implements PIDSource {
         pid.enable();
     }
 
+    private void goAllTheWayDown() {
+        //Requires testing before use.
+        //If it works reliably, we can call this in rehome()
+        //Hopefully, this can be called whenever user command is < 2
+        pid.disable();
+
+        drives.set(1);
+        while (limitDown.get()) {
+            if (encoder.get() < 5.0 && drives.get() != 0.5)  {
+                drives.set(0.5);
+            }
+            else if(encoder.get() < 1.0  && drives.get() != 0.2) {
+                drives.set(0.2);
+            }
+        }
+
+        encoder.reset();
+        autoCommandTarget = 0;
+        pid.setOutputRange(-1, 1);
+        pid.reset();
+        pid.enable();
+    }
+
+    private void goAllTheWayUp() {
+        //Requires testing before use.
+        //Hopefully, this can be called whenever user command is > 40
+        pid.disable();
+
+        drives.set(-1);
+        while (limitDown.get()) {
+            if (encoder.get() > Constants.Elevator.upperLimit - 5.0
+                    && drives.get() != -0.5)  {
+                drives.set(-0.5);
+            }
+            else if(encoder.get() > Constants.Elevator.upperLimit - 1.0
+                    && drives.get() != -0.2) {
+                drives.set(-0.2);
+            }
+        }
+
+        //wish we could encoder.set(Constants.Elevator.upperLimit) here,
+        //    maybe we need an encoder wrapper?
+        autoCommandTarget = 0;
+        pid.setOutputRange(-1, 1);
+        pid.reset();
+        pid.enable();
+    }
+
     public void setAutoCommandMode() {
         autoCommandMode = true;
     }
