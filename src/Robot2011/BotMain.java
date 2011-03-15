@@ -74,32 +74,6 @@ public class BotMain extends SimpleRobot {
 //            IODefines.MINI_BOT_RETRACT_BUTTON);
     
     public BotMain() {
-        System.out.println("Disabling motors.");
-        drives.disable();
-        wrist.disable();
-        elevator.disable();
-
-        System.out.println("Starting solenoid guys");
-        gripperGuy.start();
-        shoulderGuy.start();
-        transmissionGuy.start();
-        //miniBotGuy.start();
-        //miniBotGuy.actuate(miniBotRetract);
-
-        System.out.println("Setting actuation position");
-        gripperGuy.actuate(gripperGrab);
-        shoulderGuy.actuate(shoulderDown);
-        transmissionGuy.actuate(driveHighGear);
-
-        System.out.println("Starting devices");
-        wrist.start();
-        System.out.println("Wrist started");
-        elevator.start();
-        System.out.println("Elevator started");
-        compressor.start();
-        System.out.println("Compressor started");
-        drives.start();
-        System.out.println("Drives started");
     }
 
     /**
@@ -164,5 +138,31 @@ public class BotMain extends SimpleRobot {
     }
 
     protected void robotInit() {
+        System.out.println("Disabling motors.");
+        drives.disable();
+        wrist.disable();
+        elevator.disable();
+
+        System.out.println("Starting solenoid guys");
+        gripperGuy.start();
+        shoulderGuy.start();
+        transmissionGuy.start();
+        //miniBotGuy.start();
+        //miniBotGuy.actuate(miniBotRetract);
+
+        System.out.println("Setting actuation position");
+        gripperGuy.actuate(gripperGrab);
+        shoulderGuy.actuate(shoulderDown);
+        transmissionGuy.actuate(driveHighGear);
+
+        System.out.println("Starting devices");
+        wrist.start();
+        System.out.println("Wrist started");
+        elevator.start();
+        System.out.println("Elevator started");
+        compressor.start();
+        System.out.println("Compressor started");
+        drives.start();
+        System.out.println("Drives started");
     }
 }
