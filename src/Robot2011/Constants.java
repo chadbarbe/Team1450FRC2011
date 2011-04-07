@@ -55,12 +55,12 @@ public class Constants {
     }
 
     public class Wrist {
-        public static final double lowerLimitPotVal = 215;
-        public static final double upperLimitPotVal = 770;
-        public static final double initialPosition = 750;
-        public static final double straightPosition = 379;
-        public static final double scoringPosition = 500;
-        public static final double upPosition = 600;
+        public static final double lowerLimitPotVal = 143;
+        public static final double upperLimitPotVal = 743;
+        public static final double initialPosition = 743;
+        public static final double straightPosition = 333;
+        public static final double scoringPosition = 484;
+        public static final double upPosition = 300;
         public static final double potRange = upperLimitPotVal - lowerLimitPotVal;
         public static final long loopTime = 50;
     }

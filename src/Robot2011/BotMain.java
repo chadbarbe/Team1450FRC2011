@@ -9,6 +9,7 @@ package Robot2011;
 import Robot.Devices.DrivePlatform;
 import Robot.Devices.SolenoidSwitcher;
 import Robot.Devices.Elevator;
+import Robot.Devices.SingleButtonSolenoidSwitcher;
 import Robot.Devices.Wrist;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -40,11 +41,10 @@ public class BotMain extends SimpleRobot {
     //Transmission
     private Solenoid driveHighGear = new Solenoid(IODefines.DRIVE_HIGH);
     private Solenoid driveLowGear = new Solenoid(IODefines.DRIVE_LOW);
-    private SolenoidSwitcher transmissionGuy = new SolenoidSwitcher(driveHighGear,
+    private SingleButtonSolenoidSwitcher transmissionGuy = new SingleButtonSolenoidSwitcher(driveHighGear,
             driveLowGear,
             joy1,
-            IODefines.DRIVE_HIGH_BUTTON,
-            IODefines.DRIVE_LOW_BUTTON);
+            IODefines.DRIVE_TRANSMISSION_BUTTON);
 
     //Shoulder
     private Solenoid shoulderUp = new Solenoid(IODefines.SHOULDER_UP);
@@ -82,14 +82,14 @@ public class BotMain extends SimpleRobot {
     public void autonomous() {
         System.out.println("Entering autonomous control.");
         elevator.setAutonomousPosition(Constants.Elevator.initialPosition);
-        wrist.setManualPosition(Constants.Wrist.initialPosition);
+        wrist.setManualPosition(500);
         System.out.println("Wrist and elevator set to initial positions.");
         elevator.setAutonomousPosition(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in scoring position");
-        wrist.setManualPosition(Constants.Wrist.upPosition);
+       // wrist.setManualPosition(Constants.Wrist.upPosition);
         drives.goToScoringRack();
         System.out.println("At scoring rack");
-        wrist.setManualPosition(Constants.Wrist.scoringPosition);
+       // wrist.setManualPosition(Constants.Wrist.scoringPosition);
         System.out.println("Wrist in scoring position.");
         try {
             Thread.sleep(300);
@@ -106,7 +106,7 @@ public class BotMain extends SimpleRobot {
         System.out.println("Backing up the bot.");
         drives.backOffScoringRack();
         System.out.println("Setting wrist and elevator back to initial positions.");
-        wrist.setManualPosition(Constants.Wrist.initialPosition);
+       // wrist.setManualPosition(Constants.Wrist.initialPosition);
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -152,7 +152,6 @@ public class BotMain extends SimpleRobot {
         System.out.println("Setting actuation position");
         gripperGuy.actuate(gripperGrab);
         shoulderGuy.actuate(shoulderDown);
-        transmissionGuy.actuate(driveHighGear);
 
         System.out.println("Starting devices");
         wrist.start();
