@@ -81,10 +81,10 @@ public class BotMain extends SimpleRobot {
      */
     public void autonomous() {
         System.out.println("Entering autonomous control.");
-        elevator.setManualPosition(Constants.Elevator.initialPosition);
+        elevator.setAutonomousPosition(Constants.Elevator.initialPosition);
         wrist.setManualPosition(Constants.Wrist.initialPosition);
         System.out.println("Wrist and elevator set to initial positions.");
-        elevator.setManualPosition(Constants.Elevator.scoringPosition);
+        elevator.setAutonomousPosition(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in scoring position");
         wrist.setManualPosition(Constants.Wrist.upPosition);
         drives.goToScoringRack();
@@ -112,7 +112,7 @@ public class BotMain extends SimpleRobot {
         } catch (InterruptedException ex) {
             System.out.println("Second sleep timer caught some exception.");
         }
-        elevator.setManualPosition(Constants.Elevator.initialPosition);
+        elevator.setAutonomousPosition(Constants.Elevator.initialPosition);
         System.out.println("Autonomous Complete.");
     }
 
@@ -126,7 +126,6 @@ public class BotMain extends SimpleRobot {
         }
 
         System.out.println("Operator Control!");
-        elevator.setUserCommandMode();
         wrist.setUserCommandMode();
         drives.setUserCommandMode();
     }

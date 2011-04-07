@@ -10,6 +10,7 @@ import Robot2011.Constants;
 import Robot2011.IODefines;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStationLCD;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,7 +29,7 @@ public class Elevator implements PIDSource {
     private PIDController pid;
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
     private PIDTuner pidTuner;
-    private double autoCommandTarget;
+    private double autonomousTarget;
     private boolean autoCommandMode;
     private boolean pidMode;
 
@@ -81,7 +82,7 @@ public class Elevator implements PIDSource {
         pidTuner.start();
         elevatorPIDOutput.start();
 
-        setManualPosition(Constants.Elevator.initialPosition);
+        setAutonomousPosition(Constants.Elevator.initialPosition);
     }
 
     private double getUserInput() {
@@ -92,23 +93,22 @@ public class Elevator implements PIDSource {
         pid.setSetpoint(target);
     }
 
-    public void setManualPosition(double position) {
-        setAutoCommandMode();
+    public void setAutonomousPosition(double position) {
         if (position < Constants.Elevator.lowerLimit) {
-            autoCommandTarget = Constants.Elevator.lowerLimit;
+            autonomousTarget = Constants.Elevator.lowerLimit;
         }
         else if (position > Constants.Elevator.upperLimit) {
-            autoCommandTarget = Constants.Elevator.upperLimit;
+            autonomousTarget = Constants.Elevator.upperLimit;
         }
         else {
-            autoCommandTarget = position;
+            autonomousTarget = position;
         }
     }
 
     public void rehome() {
         pid.disable();
         pid.setOutputRange(-0.3, 0.3);
-        autoCommandTarget = -Constants.Elevator.upperLimit * 2;
+        autonomousTarget = -Constants.Elevator.upperLimit * 2;
         pid.enable();
 
         while (limitDown.get()) {
@@ -117,7 +117,7 @@ public class Elevator implements PIDSource {
 
         encoder.reset();
         pid.disable();
-        autoCommandTarget = 0;
+        autonomousTarget = 0;
         pid.setOutputRange(-1, 1);
         pid.enable();
     }
@@ -139,7 +139,7 @@ public class Elevator implements PIDSource {
         }
 
         encoder.reset();
-        autoCommandTarget = 0;
+        autonomousTarget = 0;
         pid.setOutputRange(-1, 1);
         pid.reset();
         pid.enable();
@@ -164,18 +164,10 @@ public class Elevator implements PIDSource {
 
         //wish we could encoder.set(Constants.Elevator.upperLimit) here,
         //    maybe we need an encoder wrapper?
-        autoCommandTarget = Constants.Elevator.upperLimit;
+        autonomousTarget = Constants.Elevator.upperLimit;
         pid.setOutputRange(-1, 1);
         pid.reset();
         pid.enable();
-    }
-
-    public void setAutoCommandMode() {
-        autoCommandMode = true;
-    }
-
-    public void setUserCommandMode() {
-        autoCommandMode = false;
     }
 
     public void atUpperLimit() {
@@ -188,8 +180,8 @@ public class Elevator implements PIDSource {
 
     private void run() {
         double driveTarget;
-        if (autoCommandMode) {
-            driveTarget = autoCommandTarget;
+        if (DriverStation.getInstance().isAutonomous()) {
+            driveTarget = autonomousTarget;
         }
         else {
             driveTarget = (getUserInput() * Constants.Elevator.distanceToTop);
