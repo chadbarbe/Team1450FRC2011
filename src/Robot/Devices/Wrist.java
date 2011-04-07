@@ -9,6 +9,7 @@ import Robot2011.Constants;
 import Robot2011.IODefines;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
@@ -24,8 +25,7 @@ public class Wrist {
     private Thread m_thread;
     private Joystick stick;
     private PIDController pid;
-    private boolean manualCommandMode;
-    private double manualCommandTarget;
+    private double autonomousTarget;
 
     private DigitalInput wristLimitUp = new DigitalInput(IODefines.WRIST_LIMIT_UP);
     private DigitalInput wristLimitDown = new DigitalInput(IODefines.WRIST_LIMIT_DOWN);
@@ -36,7 +36,6 @@ public class Wrist {
 
     public Wrist(Joystick _stick) {
         stick = _stick;
-        manualCommandMode = true;
 
         pid = new PIDController(0.005, 0, 0, pot, wristPIDOutput);
         pid.setSetpoint(Constants.Wrist.initialPosition);
@@ -70,31 +69,23 @@ public class Wrist {
     }
 
     public void start() {
+        setAutonomousTarget(Constants.Wrist.initialPosition);
         pot.resetAccumulator();
         pid.enable();
         m_thread.start();
-        setManualPosition(Constants.Wrist.initialPosition);
+        
     }
 
-    public void setManualPosition(double position) {
-        setManualCommandMode();
+    public void setAutonomousTarget(double position) {
         if (position < Constants.Wrist.lowerLimitPotVal) {
-            manualCommandTarget = Constants.Wrist.lowerLimitPotVal;
+            autonomousTarget = Constants.Wrist.lowerLimitPotVal;
         }
         else if (position > Constants.Wrist.upperLimitPotVal) {
-            manualCommandTarget = Constants.Wrist.upperLimitPotVal;
+            autonomousTarget = Constants.Wrist.upperLimitPotVal;
         }
         else {
-            manualCommandTarget = position;
+            autonomousTarget = position;
         }
-    }
-
-    public void setManualCommandMode() {
-        manualCommandMode = true;
-    }
-
-    public void setUserCommandMode() {
-        manualCommandMode = false;
     }
 
     public void atUpperLimit() {
@@ -109,8 +100,8 @@ public class Wrist {
 
     private void run() {
         double driveTarget;
-        if (manualCommandMode) {
-            driveTarget = manualCommandTarget;
+        if (DriverStation.getInstance().isAutonomous()) {
+            driveTarget = autonomousTarget;
         }
         else {
             driveTarget = (getUserInput() * Constants.Wrist.potRange +

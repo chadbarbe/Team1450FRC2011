@@ -73,6 +73,7 @@ public class Elevator implements PIDSource {
     }
 
     public void start() {
+        setAutonomousTarget(Constants.Elevator.initialPosition);
         encoder.reset();
         //encoder.setReverseDirection(true);
         encoder.start();
@@ -81,8 +82,6 @@ public class Elevator implements PIDSource {
         pid.enable();
         pidTuner.start();
         elevatorPIDOutput.start();
-
-        setAutonomousPosition(Constants.Elevator.initialPosition);
     }
 
     private double getUserInput() {
@@ -93,7 +92,7 @@ public class Elevator implements PIDSource {
         pid.setSetpoint(target);
     }
 
-    public void setAutonomousPosition(double position) {
+    public void setAutonomousTarget(double position) {
         if (position < Constants.Elevator.lowerLimit) {
             autonomousTarget = Constants.Elevator.lowerLimit;
         }

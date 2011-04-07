@@ -7,6 +7,7 @@ package Robot.Devices;
 
 import Robot2011.Constants;
 import Robot2011.IODefines;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
@@ -23,7 +24,6 @@ public class DrivePlatform {
     private Thread m_thread;
     private Joystick joy;
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
-    private boolean userMode;
 
     private SpeedController leftDrive = new Jaguar(IODefines.LEFT_DRIVE);
     private SpeedController rightDrive = new Jaguar(IODefines.RIGHT_DRIVE);
@@ -81,7 +81,7 @@ public class DrivePlatform {
     }
 
     private void run() {
-        if (userMode) {
+        if (!DriverStation.getInstance().isAutonomous()) {
             drives.arcadeDrive(joy);
         }
     }
@@ -118,10 +118,6 @@ public class DrivePlatform {
             myStationLCD.updateLCD();
         }
         drives.stopMotor();
-    }
-
-    public void setUserCommandMode() {
-        userMode = true;
     }
 
     public void disable() {
