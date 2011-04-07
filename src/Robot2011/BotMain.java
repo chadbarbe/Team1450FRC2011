@@ -81,22 +81,20 @@ public class BotMain extends SimpleRobot {
      */
     public void autonomous() {
         System.out.println("Entering autonomous control.");
-        elevator.setAutonomousTarget(Constants.Elevator.initialPosition);
-        wrist.setAutonomousTarget(500);
-        System.out.println("Wrist and elevator set to initial positions.");
         elevator.setAutonomousTarget(Constants.Elevator.scoringPosition);
         System.out.println("Elevator in scoring position");
-       // wrist.setManualPosition(Constants.Wrist.upPosition);
         drives.goToScoringRack();
         System.out.println("At scoring rack");
-       // wrist.setManualPosition(Constants.Wrist.scoringPosition);
-        System.out.println("Wrist in scoring position.");
+        wrist.setAutonomousTarget(600);
         try {
-            Thread.sleep(300);
+            Thread.sleep(3000);
         } catch (InterruptedException ex) {
             System.out.println("Sleep timer caught some exception.");
         }
+        System.out.println("Wrist in scoring position.");
+        
         System.out.println("Dropping yellow tube!");
+
         gripperGuy.actuate(gripperRelease);
         try {
             Thread.sleep(1000);
@@ -105,8 +103,7 @@ public class BotMain extends SimpleRobot {
         }
         System.out.println("Backing up the bot.");
         drives.backOffScoringRack();
-        System.out.println("Setting wrist and elevator back to initial positions.");
-       // wrist.setManualPosition(Constants.Wrist.initialPosition);
+        System.out.println("Setting elevator back to initial position.");
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -129,6 +126,7 @@ public class BotMain extends SimpleRobot {
     }
 
     public void disabled() {
+        System.out.println("Disable!!!");
         drives.disable();
         wrist.disable();
         elevator.disable();

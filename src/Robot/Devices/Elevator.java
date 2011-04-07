@@ -44,7 +44,7 @@ public class Elevator implements PIDSource {
         stick = _stick;
         encoder.setDistancePerPulse(Constants.Elevator.distancePerPulse);
 
-        pid = new PIDController(0.16, 0, 0, this, elevatorPIDOutput);
+        pid = new PIDController(0.2, 0, 0, this, elevatorPIDOutput);
         pid.setTolerance(1);
         pid.setOutputRange(-1, 1);
         pidTuner = new PIDTuner(pid, stick, .04, 0, 0);
