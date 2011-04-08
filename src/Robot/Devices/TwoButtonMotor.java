@@ -72,6 +72,9 @@ public class TwoButtonMotor {
                 motor.set(0);
             }
         }
+        else {
+            motor.set(0);
+        }
 
     }
 
@@ -81,6 +84,11 @@ public class TwoButtonMotor {
         m_task.start();
     }
 
+
+    public void resetStartTime()
+    {
+        startTime = System.currentTimeMillis();
+    }
 
 
 }

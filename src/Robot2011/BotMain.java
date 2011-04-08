@@ -82,9 +82,15 @@ public class BotMain extends SimpleRobot {
         System.out.println("Elevator in scoring position");
         drives.goToScoringRack();
         System.out.println("At scoring rack");
-        wrist.setAutonomousTarget(600);
         try {
             Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            System.out.println("Sleep timer caught some exception.");
+        }
+        System.out.println("Done waiting for wrist movement");
+        wrist.setAutonomousTarget(600);
+        try {
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             System.out.println("Sleep timer caught some exception.");
         }
@@ -119,6 +125,7 @@ public class BotMain extends SimpleRobot {
             elevator.rehome();
         }
         miniBotDeploy.start();
+        miniBotDeploy.resetStartTime();
         
         System.out.println("Operator Control!");
     }
