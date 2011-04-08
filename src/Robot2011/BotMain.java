@@ -10,12 +10,15 @@ import Robot.Devices.DrivePlatform;
 import Robot.Devices.SolenoidSwitcher;
 import Robot.Devices.Elevator;
 import Robot.Devices.SingleButtonSolenoidSwitcher;
+import Robot.Devices.TwoButtonMotor;
 import Robot.Devices.Wrist;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -64,14 +67,8 @@ public class BotMain extends SimpleRobot {
             IODefines.GRIPPER_GRAB_BUTTON,
             IODefines.GRIPPER_RELEASE_BUTTON);
 
-//    //Minibot
-//    private Solenoid miniBotDeploy = new Solenoid(IODefines.MINI_BOT_DEPLOY);
-//    private Solenoid miniBotRetract = new Solenoid(IODefines.MINI_BOT_RETRACT);
-//    SolenoidSwitcher miniBotGuy = new SolenoidSwitcher(miniBotDeploy,
-//            miniBotRetract,
-//            joy2,
-//            IODefines.MINI_BOT_DEPLOY_BUTTON,
-//            IODefines.MINI_BOT_RETRACT_BUTTON);
+    private SpeedController miniBotDeployMotor = new Jaguar(IODefines.MINI_BOT_MOTOR);
+    private TwoButtonMotor miniBotDeploy = new TwoButtonMotor(miniBotDeployMotor, joy2, IODefines.MINI_BOT_DEPLOY_BUTTON, IODefines.MINI_BOT_RETRACT_BUTTON);
     
     public BotMain() {
     }
@@ -121,7 +118,8 @@ public class BotMain extends SimpleRobot {
         {
             elevator.rehome();
         }
-
+        miniBotDeploy.start();
+        
         System.out.println("Operator Control!");
     }
 
@@ -158,5 +156,7 @@ public class BotMain extends SimpleRobot {
         System.out.println("Compressor started");
         drives.start();
         System.out.println("Drives started");
+
+        miniBotDeploy.start();
     }
 }

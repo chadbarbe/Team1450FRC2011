@@ -74,5 +74,11 @@ public class Constants {
         public static final long loopTime = 50;
     }
 
+    public class MiniBotDeployment
+    {
+        public static final long loopTime = 50;
+        public static final double speed = 0.5;
+    }
+
 }
 

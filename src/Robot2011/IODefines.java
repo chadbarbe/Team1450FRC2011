@@ -31,6 +31,7 @@ public class IODefines {
     public static final int RIGHT_DRIVE = 2;
     public static final int WRIST_DRIVE = 3;
     public static final int ELEVATOR_DRIVE = 4;
+    public static final int MINI_BOT_MOTOR = 5;
 
     //Analog Ins
     public static final int WRIST_POT = 1;
@@ -53,7 +54,7 @@ public class IODefines {
     public static final int DRIVE_HIGH_BUTTON = 9;
     public static final int DRIVE_LOW_BUTTON = 8;
     public static final int DRIVE_TRANSMISSION_BUTTON = 1;
-    public static final int MINI_BOT_DEPLOY_BUTTON = 2;
-    public static final int MINI_BOT_RETRACT_BUTTON = 3;
+    public static final int MINI_BOT_DEPLOY_BUTTON = 3;
+    public static final int MINI_BOT_RETRACT_BUTTON = 2;
 
 }
