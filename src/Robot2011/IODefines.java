@@ -25,6 +25,7 @@ public class IODefines {
     public static final int ELEVATOR_LIMIT_UP = 9;
     public static final int ELEVATOR_LIMIT_DOWN = 10;
     public static final int PRESSURE_SWITCH = 7;
+    public static final int MINI_BOT_LIMIT = 5;
 
     //PWMs
     public static final int LEFT_DRIVE = 1;

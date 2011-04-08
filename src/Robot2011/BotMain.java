@@ -13,6 +13,7 @@ import Robot.Devices.SingleButtonSolenoidSwitcher;
 import Robot.Devices.TwoButtonMotor;
 import Robot.Devices.Wrist;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
@@ -68,7 +69,8 @@ public class BotMain extends SimpleRobot {
             IODefines.GRIPPER_RELEASE_BUTTON);
 
     private SpeedController miniBotDeployMotor = new Jaguar(IODefines.MINI_BOT_MOTOR);
-    private TwoButtonMotor miniBotDeploy = new TwoButtonMotor(miniBotDeployMotor, joy2, IODefines.MINI_BOT_DEPLOY_BUTTON, IODefines.MINI_BOT_RETRACT_BUTTON);
+    private DigitalInput miniBotLimit = new DigitalInput(IODefines.MINI_BOT_LIMIT);
+    private TwoButtonMotor miniBotDeploy = new TwoButtonMotor(miniBotDeployMotor, joy2, IODefines.MINI_BOT_DEPLOY_BUTTON, IODefines.MINI_BOT_RETRACT_BUTTON, miniBotLimit);
     
     public BotMain() {
     }

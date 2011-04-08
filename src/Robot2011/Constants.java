@@ -17,7 +17,7 @@ public class Constants {
     public class Elevator {
         // Private constants
         private static final double inchesPerShaftRotation = 0.5;
-        private static final double encoderTicksPerRev = 360.0;
+        private static final double encoderTicksPerRev = 250.0;
         private static final double encoderGearTeeth = 16.0;
         private static final double shaftGearTeeth = 21.0;
 

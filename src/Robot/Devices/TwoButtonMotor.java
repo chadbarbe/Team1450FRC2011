@@ -6,6 +6,7 @@
 package Robot.Devices;
 
 import Robot2011.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -17,10 +18,11 @@ public class TwoButtonMotor {
 
     private SpeedController motor;
     private Joystick joystick;
-    int forwardButton;
-    int backButton;
-    long startTime;
+    private int forwardButton;
+    private int backButton;
+    private long startTime;
     private Thread m_task;
+    private DigitalInput limit;
 
         private class TwoButtonMotorThread extends Thread {
 
@@ -45,20 +47,23 @@ public class TwoButtonMotor {
     public TwoButtonMotor(SpeedController _motor,
             Joystick _joystick,
             int _forwardButton,
-            int _backButton) {
+            int _backButton,
+            DigitalInput _limit) {
 
         System.out.println("Mini bot constuct");
         motor = _motor;
         joystick = _joystick;
         forwardButton = _forwardButton;
         backButton = _backButton;
+        limit = _limit;
         m_task = new TwoButtonMotorThread(this);
 
     }
 
     private void checkAndActuate() {
 
-        if((System.currentTimeMillis() - startTime) > Constants.MiniBotDeployment.enableAfterTime)
+        if((System.currentTimeMillis() - startTime) > Constants.MiniBotDeployment.enableAfterTime &&
+          limit.get())
         {
             if (joystick.getRawButton(forwardButton)) {
                 System.out.println("MINI BOT FORWARD!");

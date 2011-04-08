@@ -47,7 +47,7 @@ public class Elevator implements PIDSource {
         pid = new PIDController(0.2, 0, 0, this, elevatorPIDOutput);
         pid.setTolerance(1);
         pid.setOutputRange(-1, 1);
-        pidTuner = new PIDTuner(pid, stick, .04, 0, 0);
+        pidTuner = new PIDTuner(pid, stick, .06, 0, 0);
         m_task = new ElevatorThread(this);
     }
 
