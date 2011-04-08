@@ -78,6 +78,7 @@ public class Constants {
     {
         public static final long loopTime = 50;
         public static final double speed = 0.5;
+        public static final long enableAfterTime = 105000;
     }
 
 }

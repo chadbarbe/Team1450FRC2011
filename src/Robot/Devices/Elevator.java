@@ -106,18 +106,13 @@ public class Elevator implements PIDSource {
 
     public void rehome() {
         pid.disable();
-        pid.setOutputRange(-0.3, 0.3);
-        autonomousTarget = -Constants.Elevator.upperLimit * 2;
-        pid.enable();
+       
 
         while (limitDown.get()) {
-
+            drives.set(0.5);
         }
 
         encoder.reset();
-        pid.disable();
-        autonomousTarget = 0;
-        pid.setOutputRange(-1, 1);
         pid.enable();
     }
 
@@ -169,15 +164,13 @@ public class Elevator implements PIDSource {
         pid.enable();
     }
 
-    public void atUpperLimit() {
-        System.out.println("Elevator Upper Limit.");
-    }
-
-    public void atLowerLimit() {
-        System.out.println("Elevator Lower Limit.");
-    }
-
     private void run() {
+
+        if(!limitDown.get())
+        {
+            encoder.reset();
+        }
+        
         double driveTarget;
         if (DriverStation.getInstance().isAutonomous()) {
             driveTarget = autonomousTarget;

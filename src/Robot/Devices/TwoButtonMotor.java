@@ -19,6 +19,7 @@ public class TwoButtonMotor {
     private Joystick joystick;
     int forwardButton;
     int backButton;
+    long startTime;
     private Thread m_task;
 
         private class TwoButtonMotorThread extends Thread {
@@ -56,24 +57,27 @@ public class TwoButtonMotor {
     }
 
     private void checkAndActuate() {
-        System.out.println("Mini bot check and actuate");
-        if (joystick.getRawButton(forwardButton)) {
-            System.out.println("MINI BOT FORWARD!");
-            motor.set(Constants.MiniBotDeployment.speed);
-        } else if (joystick.getRawButton(backButton)) {
-            System.out.println("MINI BOT BACKWARD!");
-            motor.set(-Constants.MiniBotDeployment.speed);
-        }
-        else
+
+        if((System.currentTimeMillis() - startTime) > Constants.MiniBotDeployment.enableAfterTime)
         {
-            System.out.println("MINI BOT NOTHING");
-            motor.set(0);
+            if (joystick.getRawButton(forwardButton)) {
+                System.out.println("MINI BOT FORWARD!");
+                motor.set(Constants.MiniBotDeployment.speed);
+            } else if (joystick.getRawButton(backButton)) {
+                System.out.println("MINI BOT BACKWARD!");
+                motor.set(-Constants.MiniBotDeployment.speed);
+            }
+            else
+            {
+                motor.set(0);
+            }
         }
 
     }
 
     public void start() {
         System.out.println("Mini bot start");
+        startTime = System.currentTimeMillis();
         m_task.start();
     }
 
