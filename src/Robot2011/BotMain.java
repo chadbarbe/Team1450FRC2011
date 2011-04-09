@@ -90,7 +90,7 @@ public class BotMain extends SimpleRobot {
             System.out.println("Sleep timer caught some exception.");
         }
         System.out.println("Done waiting for wrist movement");
-        wrist.setAutonomousTarget(600);
+        wrist.setAutonomousTarget(550);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {

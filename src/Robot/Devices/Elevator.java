@@ -31,7 +31,6 @@ public class Elevator implements PIDSource {
     private PIDTuner pidTuner;
     private double autonomousTarget;
     private boolean autoCommandMode;
-    private boolean pidMode;
 
     private DigitalInput limitUp = new DigitalInput(IODefines.ELEVATOR_LIMIT_UP);
     private DigitalInput limitDown = new DigitalInput(IODefines.ELEVATOR_LIMIT_DOWN);
@@ -75,13 +74,11 @@ public class Elevator implements PIDSource {
     public void start() {
         setAutonomousTarget(Constants.Elevator.initialPosition);
         encoder.reset();
-        //encoder.setReverseDirection(true);
         encoder.start();
-        m_task.start();
-        pidMode = true;
-        pid.enable();
         pidTuner.start();
         elevatorPIDOutput.start();
+        m_task.start();
+        pid.enable();
     }
 
     private double getUserInput() {

@@ -28,7 +28,7 @@ public class Constants {
         public static final double initialPosition = 0;
         public static final double distancePerPulse = (inchesPerShaftRotation /
                 encoderTicksPerRev) * (encoderGearTeeth/shaftGearTeeth);
-        public static final double scoringPosition = 12;
+        public static final double scoringPosition = 19;
         public static final long loopTime = 50;
     }
 
