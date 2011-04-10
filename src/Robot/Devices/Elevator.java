@@ -175,6 +175,12 @@ public class Elevator implements PIDSource {
         else {
             driveTarget = (getUserInput() * Constants.Elevator.distanceToTop);
         }
+
+        if(driveTarget < 0.01)
+        {
+            driveTarget = -1;
+        }
+
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4,
                 1, "Elevator Target = " + driveTarget);
         DriverStationLCD.getInstance().updateLCD();

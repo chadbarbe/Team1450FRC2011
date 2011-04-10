@@ -71,8 +71,8 @@ public class Wrist {
     public void start() {
         setAutonomousTarget(Constants.Wrist.initialPosition);
         pot.resetAccumulator();
-        pid.enable();
         m_thread.start();
+        pid.enable();
         
     }
 
