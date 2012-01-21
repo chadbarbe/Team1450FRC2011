@@ -6,8 +6,8 @@
 nbproject/private/
 
 #netbeans build directories
-build
 suite
+build
 
 
 ## generic files to ignore
