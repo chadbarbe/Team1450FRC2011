@@ -5,8 +5,8 @@
 
 package Robot.Devices;
 
-import Robot2011.Constants;
-import Robot2011.IODefines;
+import RobotMain.Constants;
+import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;

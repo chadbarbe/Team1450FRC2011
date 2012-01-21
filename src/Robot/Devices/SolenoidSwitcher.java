@@ -4,7 +4,7 @@
  */
 package Robot.Devices;
 
-import Robot2011.Constants;
+import RobotMain.Constants;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 

@@ -6,8 +6,8 @@ package Robot.Devices;
 
 import Robot.Utils.DrivePIDOutput;
 import Robot.Utils.PIDTuner;
-import Robot2011.Constants;
-import Robot2011.IODefines;
+import RobotMain.Constants;
+import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.DriverStation;

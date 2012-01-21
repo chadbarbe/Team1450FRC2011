@@ -4,7 +4,7 @@
  */
 
 package Robot.Utils;
-import Robot2011.Constants;
+import RobotMain.Constants;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
