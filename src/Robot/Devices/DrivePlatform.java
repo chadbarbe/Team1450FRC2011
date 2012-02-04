@@ -7,13 +7,7 @@ package Robot.Devices;
 
 import RobotMain.Constants;
 import RobotMain.IODefines;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStationLCD;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.*;
 
 /**
  *
@@ -32,6 +26,9 @@ public class DrivePlatform {
     private Encoder rightDriveEncoder = new Encoder(IODefines.RIGHT_DRIVE_ENCODER_A,
             IODefines.RIGHT_DRIVE_ENCODER_B);
     private RobotDrive drives = new RobotDrive(leftDrive, rightDrive);
+    
+    private double leftFiltered = 0;
+    private double rightFiltered = 0;
 
     public DrivePlatform(Joystick _joy){
         m_thread = new DrivesThread(this);
@@ -82,7 +79,8 @@ public class DrivePlatform {
 
     private void run() {
         if (!DriverStation.getInstance().isAutonomous()) {
-            drives.arcadeDrive(joy);
+           // drives.arcadeDrive(joy);
+            arcadeDrive(joy.getY(), -joy.getX());
         }
     }
 
@@ -123,5 +121,64 @@ public class DrivePlatform {
     public void disable() {
         leftDrive.disable();
         rightDrive.disable();
+    }
+    
+    
+    public void arcadeDrive(double moveValue, double rotateValue) {
+        // local variables to hold the computed PWM values for the motors
+        double leftMotorSpeed;
+        double rightMotorSpeed;
+
+        moveValue = limit(moveValue);
+        rotateValue = limit(rotateValue);
+
+       
+        // square the inputs (while preserving the sign) to increase fine control while permitting full power
+        if (moveValue >= 0.0) {
+            moveValue = (moveValue * moveValue);
+        } else {
+            moveValue = -(moveValue * moveValue);
+        }
+        if (rotateValue >= 0.0) {
+            rotateValue = (rotateValue * rotateValue);
+        } else {
+            rotateValue = -(rotateValue * rotateValue);
+        }
+
+        if (moveValue > 0.0) {
+            if (rotateValue > 0.0) {
+                leftMotorSpeed = moveValue - rotateValue;
+                rightMotorSpeed = Math.max(moveValue, rotateValue);
+            } else {
+                leftMotorSpeed = Math.max(moveValue, -rotateValue);
+                rightMotorSpeed = moveValue + rotateValue;
+            }
+        } else {
+            if (rotateValue > 0.0) {
+                leftMotorSpeed = -Math.max(-moveValue, rotateValue);
+                rightMotorSpeed = moveValue + rotateValue;
+            } else {
+                leftMotorSpeed = moveValue - rotateValue;
+                rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
+            }
+        }
+        
+        
+        leftFiltered += (leftMotorSpeed - leftFiltered) * Constants.Drives.kFilter;
+        rightFiltered += (rightMotorSpeed - rightFiltered) * Constants.Drives.kFilter;
+        drives.setLeftRightMotorOutputs(-leftFiltered, rightFiltered);
+    }
+    
+        /**
+     * Limit motor values to the -1.0 to +1.0 range.
+     */
+    protected static double limit(double num) {
+        if (num > 1.0) {
+            return 1.0;
+        }
+        if (num < -1.0) {
+            return -1.0;
+        }
+        return num;
     }
 }

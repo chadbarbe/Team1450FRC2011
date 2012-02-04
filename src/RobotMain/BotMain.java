@@ -7,6 +7,8 @@
 package RobotMain;
 
 import Robot.Devices.DrivePlatform;
+import Robot.Devices.VelocityControlMotor;
+import edu.wpi.first.wpilibj.Jaguar;
 //import Robot.Devices.SolenoidSwitcher;
 //import Robot.Devices.Elevator;
 //import Robot.Devices.SingleButtonSolenoidSwitcher;
@@ -17,6 +19,7 @@ import Robot.Devices.DrivePlatform;
 //import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
+import edu.wpi.first.wpilibj.SpeedController;
 
 //import edu.wpi.first.wpilibj.Solenoid;
 //import edu.wpi.first.wpilibj.SpeedController;
@@ -32,9 +35,12 @@ public class BotMain extends SimpleRobot {
     //Joystick Instantiation (shared between devices)
     private Joystick joy1 = new Joystick(1);
     private Joystick joy2 = new Joystick(2);
+    
+    SpeedController shooterMotor = new Jaguar(IODefines.SHOOTER_DRIVE);
 
     //Device Instantiation
     DrivePlatform drives = new DrivePlatform(joy1);
+    VelocityControlMotor shooter = new VelocityControlMotor(shooterMotor, joy1);
   /*  Wrist wrist = new Wrist(joy2);
     Elevator elevator = new Elevator(joy1);
 
@@ -164,6 +170,7 @@ public class BotMain extends SimpleRobot {
         compressor.start();
         System.out.println("Compressor started");*/
         drives.start();
+        shooter.start();
         System.out.println("Drives started");
 
         //miniBotDeploy.start();

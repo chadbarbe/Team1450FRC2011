@@ -41,6 +41,7 @@ public class Constants {
         private static final double startToDriverStation = 216.4;
         private static final double scoringPegLength = 19.5;
         private static final double robotPegClearance = 10;
+        
 
         // Public constants
         public static final double distancePerPulse = (inchesPerWheelRotation /
@@ -51,7 +52,7 @@ public class Constants {
                 (scoringPegLength + robotPegClearance));
         public static final long loopTime = 50;
         public static final double distanceBackFromScoringRack = distanceToScoringRack - 36;
-
+        public static final double kFilter = 0.3;
     }
 
     public class Wrist {

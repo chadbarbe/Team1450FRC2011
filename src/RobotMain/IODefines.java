@@ -30,7 +30,7 @@ public class IODefines {
     //PWMs
     public static final int LEFT_DRIVE = 1;
     public static final int RIGHT_DRIVE = 2;
-    public static final int WRIST_DRIVE = 3;
+    public static final int SHOOTER_DRIVE = 3;
     public static final int ELEVATOR_DRIVE = 4;
     public static final int MINI_BOT_MOTOR = 5;
 
