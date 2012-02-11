@@ -12,6 +12,7 @@ package RobotMain;
 public class IODefines {
     //Digitals Outs
     public static final int COMPRESSOR_POWER = 7;
+    public static final int TONGUE_RELAY = 4;
 
     //Digital Ins
     public static final int LEFT_DRIVE_ENCODER_A = 13;
@@ -33,6 +34,7 @@ public class IODefines {
     public static final int SHOOTER_DRIVE = 3;
     public static final int ELEVATOR_DRIVE = 4;
     public static final int MINI_BOT_MOTOR = 5;
+    
 
     //Analog Ins
     public static final int WRIST_POT = 1;
@@ -57,5 +59,6 @@ public class IODefines {
     public static final int DRIVE_TRANSMISSION_BUTTON = 1;
     public static final int MINI_BOT_DEPLOY_BUTTON = 3;
     public static final int MINI_BOT_RETRACT_BUTTON = 2;
+    
 
 }

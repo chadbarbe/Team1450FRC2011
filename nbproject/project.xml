@@ -86,7 +86,7 @@
                 <classpath mode="boot">${sunspot.bootclasspath}</classpath>
                 <classpath mode="compile">${wpilibj.home}/classes.jar</classpath>
                 <built-to>build</built-to>
-                <source-level>1.4</source-level>
+                <source-level>1.6</source-level>
             </compilation-unit>
         </java-data>
     </configuration>
