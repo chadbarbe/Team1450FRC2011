@@ -16,6 +16,10 @@ public class VelocityControlMotor {
     private SpeedController motor;
     private Joystick joystick;
     private Thread m_task;
+
+    public void disable() {
+        motor.disable();
+    }
     
         private class VelocityControlMotorThread extends Thread {
 
