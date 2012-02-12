@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DriverStationLCD;
  * station in RPM.
  * 
  */
-public class RotationalSpeedSensor {
+public class ShooterSpeedSensor {
     
     private DigitalInput digitalInput;
     private long lastTimestamp = 0;
@@ -36,7 +36,7 @@ public class RotationalSpeedSensor {
         }
     };
     
-    public RotationalSpeedSensor() {
+    public ShooterSpeedSensor() {
         digitalInput = new DigitalInput(IODefines.SHOOTER_PHOTO_INTERUPTER);
         digitalInput.setUpSourceEdge(false, true);
         digitalInput.enableInterrupts();

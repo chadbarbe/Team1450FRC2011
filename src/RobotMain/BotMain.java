@@ -7,7 +7,7 @@
 package RobotMain;
 
 import Robot.Devices.DrivePlatform;
-import Robot.Utils.RotationalSpeedSensor;
+import Robot.Utils.ShooterSpeedSensor;
 import Robot.Devices.Tongue;
 import Robot.Devices.VelocityControlMotor;
 import Robot.Utils.BallReadySwitch;
@@ -41,7 +41,7 @@ public class BotMain extends SimpleRobot {
     };
     BallReadySwitch ballReadySwitch = new BallReadySwitch();
     
-    RotationalSpeedSensor rotationalSpeedSensor = new RotationalSpeedSensor();
+    ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
 
     /**
      * This function is called once each time the robot enters autonomous mode.
