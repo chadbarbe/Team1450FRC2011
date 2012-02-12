@@ -19,6 +19,8 @@ public class IODefines {
     public static final int LEFT_DRIVE_ENCODER_B = 14;
     public static final int RIGHT_DRIVE_ENCODER_A = 11;
     public static final int RIGHT_DRIVE_ENCODER_B = 12;
+    public static final int BALL_READY_SWITCH_DI = 4;
+    public static final int SHOOTER_PHOTO_INTERUPTER = 3;
     public static final int WRIST_LIMIT_UP = 2;
     public static final int WRIST_LIMIT_DOWN = 1;
     public static final int ELEVATOR_DRIVE_ENCODER_A = 3;

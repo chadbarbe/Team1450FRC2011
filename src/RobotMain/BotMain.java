@@ -7,10 +7,10 @@
 package RobotMain;
 
 import Robot.Devices.DrivePlatform;
+import Robot.Utils.RotationalSpeedSensor;
 import Robot.Devices.Tongue;
 import Robot.Devices.VelocityControlMotor;
-import Robot.Utils.DigitalInputListener;
-import Robot.Utils.DigitalInputNotify;
+import Robot.Utils.BallReadySwitch;
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -33,15 +33,15 @@ public class BotMain extends SimpleRobot {
     Relay tongueRelay = new Relay(IODefines.TONGUE_RELAY);
     Tongue tongue = new Tongue(tongueRelay,rightJoystick);
   
-    DigitalInput stopAndGoDigitalInput = new DigitalInput(4);
-    private DigitalInputNotify stopAndGoNotifier = new DigitalInputNotify() {
+    BallReadySwitch.BallReadyListener ballReadyListener = new BallReadySwitch.BallReadyListener() {
 
-        public void digitalNotify(DigitalInput changedInput) {
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "StopAndGo Switch = " + changedInput.get());
+        public void ballReady(boolean ready) {
+            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "BallReadySwitch = " + ready);
         }
     };
-    DigitalInputListener stopAndGoListener = new DigitalInputListener(stopAndGoDigitalInput, stopAndGoNotifier, "stopAndGo");
+    BallReadySwitch ballReadySwitch = new BallReadySwitch();
     
+    RotationalSpeedSensor rotationalSpeedSensor = new RotationalSpeedSensor();
 
     /**
      * This function is called once each time the robot enters autonomous mode.
@@ -76,6 +76,7 @@ public class BotMain extends SimpleRobot {
         drives.start();
         shooter.start();
         tongue.enable();
+        ballReadySwitch.setBallReadyListener(ballReadyListener);
         System.out.println("Drives started");
     }
 }

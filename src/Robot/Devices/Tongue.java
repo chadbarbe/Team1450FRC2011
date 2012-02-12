@@ -5,7 +5,6 @@
 package Robot.Devices;
 
 import RobotMain.Constants;
-import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 
