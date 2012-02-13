@@ -5,7 +5,6 @@
 
 package Robot.Utils;
 import RobotMain.Constants;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
@@ -17,6 +16,9 @@ public class DigitalInputListener {
     private DigitalInputNotify myNotify;
     private Thread m_task;
     private String name;
+    private boolean notifyOnRisingEdge = true;
+    private boolean notifyOnFallingEdge = false;
+    private long samplePeriodInMs = Constants.LimitSwitches.loopTime;
 
     private class DigitalInputListenerThread extends Thread {
 
@@ -29,17 +31,18 @@ public class DigitalInputListener {
             digiInListener = _digiInListener;
             input = _input;
         }
-
+        
         public void run() {
             while (m_run) {
                if(!isHigh && !input.get()) {
                    isHigh = true;
-                   digiInListener.notifyClients();
+                   if (notifyOnRisingEdge) digiInListener.notifyClients();
                    System.out.println("InputWentHigh: " + name);
                }
                else if(isHigh && input.get() )
                {
                    isHigh = false;
+                   if (notifyOnFallingEdge) digiInListener.notifyClients();
                    System.out.println("InputWentLow: " + name);
                }
 
@@ -68,6 +71,15 @@ public class DigitalInputListener {
 
     private void notifyClients() {
         myNotify.digitalNotify(input);
+    }
+    
+    public void setTriggerEdges(boolean high, boolean low) {
+        notifyOnRisingEdge = high;
+        notifyOnFallingEdge = low;
+    }
+
+    public void setSamplePeriod(long period) {
+        samplePeriodInMs = period;
     }
 
 }

@@ -36,6 +36,7 @@ public class BotMain extends SimpleRobot {
     BallReadySwitch.BallReadyListener ballReadyListener = new BallReadySwitch.BallReadyListener() {
 
         public void ballReady(boolean ready) {
+            System.out.println("BallReadySwitch -> " + ready);
             DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "BallReadySwitch = " + ready);
         }
     };

@@ -37,7 +37,7 @@ public class BallReadySwitch {
         };
         
         digitalInputListener = new DigitalInputListener(digitalInput, diListener, "ballReadySwitch");
-
+        digitalInputListener.start();
     }
     
     public boolean isBallReady() {
