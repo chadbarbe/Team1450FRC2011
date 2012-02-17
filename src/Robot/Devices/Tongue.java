@@ -4,29 +4,26 @@
  */
 package Robot.Devices;
 
+import Robot.Utils.Threading;
+import RobotMain.ButtonMapping;
 import RobotMain.Constants;
+import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 
 /**
+ * The tongue is responsible for picking up the ball from the ground.
  *
- * @author Programer
+ * It is controlled by the driver joystick using button 3 as a press button
  */
-public class Tongue implements Runnable {
-    private final Relay tongueRelay;
-    private final Joystick joystick;
-    private boolean enabled;
-    private Thread mThread;
+public class Tongue extends AbstractRobotDevice {
 
-    public Tongue(Relay _tongueRelay, Joystick _rightJoystick) {
-        tongueRelay = _tongueRelay;
-        joystick = _rightJoystick;
-        tongueRelay.setDirection(Relay.Direction.kForward);
-        mThread = new Thread(this);
-    }
-    
-    public void checkButtonAndActivateTongue() {
-        boolean pressed = joystick.getRawButton(3);
+    private final Relay tongueRelay = new Relay(IODefines.TONGUE_RELAY);
+    private final ButtonMapping buttonMapping = IODefines.TONGUE_BUTTON;
+    private final Joystick joystick = buttonMapping.joystick;
+
+    private void checkButtonAndActivateTongue() {
+        boolean pressed = joystick.getRawButton(buttonMapping.button);
         if (pressed) {
             tongueRelay.set(Relay.Value.kOn);
         } else {
@@ -34,26 +31,19 @@ public class Tongue implements Runnable {
         }
     }
 
-    public void enable() {
-        enabled = true;
+    public void initialize() {
+        tongueRelay.setDirection(Relay.Direction.kForward);
+        Threading.runInLoop(Constants.LimitSwitches.loopTime, new TongueLoop(), "Tongue");
     }
 
     public void disable() {
-        enabled = false;
         tongueRelay.set(Relay.Value.kOff);
     }
 
-    public void run() {
-        while (true) {
-            if (enabled) {
-                checkButtonAndActivateTongue();
-            }
-            try {
-                Thread.sleep(Constants.LimitSwitches.loopTime);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+   private class TongueLoop implements Runnable {
+        public void run() {
+            checkButtonAndActivateTongue();
         }
     }
-    
+
 }

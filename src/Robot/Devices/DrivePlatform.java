@@ -5,6 +5,8 @@
 
 package Robot.Devices;
 
+import Robot.Utils.Joysticks;
+import Robot.Utils.Threading;
 import RobotMain.Constants;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.*;
@@ -15,8 +17,7 @@ import edu.wpi.first.wpilibj.*;
  */
 public class DrivePlatform {
 
-    private Thread m_thread;
-    private Joystick joy;
+    private Joystick joy = Joysticks.right();
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
 
     private SpeedController leftDrive = new Jaguar(IODefines.LEFT_DRIVE);
@@ -30,9 +31,7 @@ public class DrivePlatform {
     private double leftFiltered = 0;
     private double rightFiltered = 0;
 
-    public DrivePlatform(Joystick _joy){
-        m_thread = new DrivesThread(this);
-        joy = _joy;
+    public DrivePlatform(){        
     }
 
     public void backOffScoringRack() {
@@ -56,35 +55,16 @@ public class DrivePlatform {
         drives.stopMotor();
     }
 
-    private class DrivesThread extends Thread {
-
-        private DrivePlatform drives;
-        private boolean m_run = true;
-
-        DrivesThread(DrivePlatform _drives) {
-            drives = _drives;
-        }
-
+    private class DriveLoop implements Runnable {
         public void run() {
-            while (m_run) {
-                drives.run();
-
-                try {
-                    Thread.sleep(Constants.Drives.loopTime);
-                } catch (InterruptedException e) {
-                }
+            if (!DriverStation.getInstance().isAutonomous()) {
+                // drives.arcadeDrive(joy);
+                arcadeDrive(joy.getY(), -joy.getX());
             }
         }
     }
 
-    private void run() {
-        if (!DriverStation.getInstance().isAutonomous()) {
-           // drives.arcadeDrive(joy);
-            arcadeDrive(joy.getY(), -joy.getX());
-        }
-    }
-
-    public void start() {
+    public void initialize() {
         leftDriveEncoder.start();
         leftDriveEncoder.reset();
         leftDriveEncoder.setReverseDirection(true);
@@ -94,7 +74,7 @@ public class DrivePlatform {
         rightDriveEncoder.reset();
         rightDriveEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse);
 
-        m_thread.start();
+        Threading.runInLoop(Constants.Drives.loopTime, new DriveLoop(), "DrivePlatform");
     }
 
     public void goToScoringRack() {

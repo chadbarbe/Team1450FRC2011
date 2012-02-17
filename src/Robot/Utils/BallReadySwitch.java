@@ -8,8 +8,7 @@ import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
- *
- * @author Programer
+ * The ball read switch to determine if the ball is in shooting position.
  */
 public class BallReadySwitch {
     private final DigitalInput digitalInput;
@@ -43,7 +42,11 @@ public class BallReadySwitch {
     public boolean isBallReady() {
         return !digitalInput.get();
     }
-    
+
+    /**
+     * Set the listener.  WARNING: This class current only expects one listener at a time.
+     * @param _ballReadyListener
+     */
     public void setBallReadyListener(BallReadyListener _ballReadyListener) {
         ballReadyListener = _ballReadyListener;
     }

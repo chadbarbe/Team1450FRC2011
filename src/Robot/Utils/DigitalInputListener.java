@@ -14,46 +14,31 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class DigitalInputListener {
     private DigitalInput input;
     private DigitalInputNotify myNotify;
-    private Thread m_task;
     private String name;
     private boolean notifyOnRisingEdge = true;
     private boolean notifyOnFallingEdge = false;
     private long samplePeriodInMs = Constants.LimitSwitches.loopTime;
-
-    private class DigitalInputListenerThread extends Thread {
-
-        private DigitalInputListener digiInListener;
-        private DigitalInput input;
-        private boolean m_run = true;
-        private boolean isHigh = false;
-
-        DigitalInputListenerThread(DigitalInputListener _digiInListener, DigitalInput _input) {
-            digiInListener = _digiInListener;
-            input = _input;
-        }
-        
+    
+    private DigitalInputListener digiInListener;
+    private boolean isHigh = false;
+    
+    private class DigitalInputLoop implements Runnable {
         public void run() {
-            while (m_run) {
-               if(!isHigh && !input.get()) {
-                   isHigh = true;
-                   if (notifyOnRisingEdge) digiInListener.notifyClients();
-                   System.out.println("InputWentHigh: " + name);
-               }
-               else if(isHigh && input.get() )
-               {
-                   isHigh = false;
-                   if (notifyOnFallingEdge) digiInListener.notifyClients();
-                   System.out.println("InputWentLow: " + name);
-               }
-
-                try {
-                Thread.sleep(Constants.LimitSwitches.loopTime);
-                } catch (InterruptedException e) {
-                }
+            if(!isHigh && !input.get()) {
+                isHigh = true;
+                if (notifyOnRisingEdge) digiInListener.notifyClients();
+                System.out.println("InputWentHigh: " + name);
+            }
+            else if(isHigh && input.get() )
+            {
+                isHigh = false;
+                if (notifyOnFallingEdge) digiInListener.notifyClients();
+                System.out.println("InputWentLow: " + name);
             }
         }
     }
-
+    
+    
     public DigitalInputListener(DigitalInput _input,
                          DigitalInputNotify _myNotify,
                          String _name)
@@ -61,12 +46,11 @@ public class DigitalInputListener {
         input = _input;
         myNotify = _myNotify;
         name = _name;
-        m_task = new DigitalInputListenerThread(this, input);
     }
 
     public void start()
     {
-        m_task.start();
+        Threading.runInLoop(Constants.LimitSwitches.loopTime, new DigitalInputLoop(), name);
     }
 
     private void notifyClients() {

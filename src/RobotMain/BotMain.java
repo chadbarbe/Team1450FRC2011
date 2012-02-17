@@ -6,10 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package RobotMain;
 
-import Robot.Devices.DrivePlatform;
-import Robot.Utils.ShooterSpeedSensor;
-import Robot.Devices.Tongue;
-import Robot.Devices.VelocityControlMotor;
+import Robot.Devices.*;
 import Robot.Utils.BallReadySwitch;
 import edu.wpi.first.wpilibj.*;
 
@@ -21,18 +18,11 @@ import edu.wpi.first.wpilibj.*;
  * directory.
  */
 public class BotMain extends SimpleRobot {
-    //Joystick Instantiation (shared between devices)
-    private Joystick rightJoystick = new Joystick(1);
-    private Joystick leftJoystick = new Joystick(2);
-    
-    SpeedController shooterMotor = new Jaguar(IODefines.SHOOTER_DRIVE);
 
     //Device Instantiation
-    DrivePlatform drives = new DrivePlatform(rightJoystick);
-    VelocityControlMotor shooter = new VelocityControlMotor(shooterMotor, rightJoystick);
-    Relay tongueRelay = new Relay(IODefines.TONGUE_RELAY);
-    Tongue tongue = new Tongue(tongueRelay,rightJoystick);
-  
+    DrivePlatform drives = new DrivePlatform();
+
+    BallReadySwitch ballReadySwitch = new BallReadySwitch();
     BallReadySwitch.BallReadyListener ballReadyListener = new BallReadySwitch.BallReadyListener() {
 
         public void ballReady(boolean ready) {
@@ -40,9 +30,22 @@ public class BotMain extends SimpleRobot {
             DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "BallReadySwitch = " + ready);
         }
     };
-    BallReadySwitch ballReadySwitch = new BallReadySwitch();
-    
-    ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
+
+    /** Tongue to pick up the ball */
+    Tongue tongue = new Tongue();
+
+    /** The ramp the ball moves up to the trigger */
+    PickupRamp pickupRamp = new PickupRamp();
+
+    /** The trigger pushes the ball into the shooter */
+    Trigger trigger = new Trigger(ballReadySwitch);
+
+    /** The shoulder rotates the shooter */
+    Shoulder shoulder = new Shoulder();
+
+    /** Shooter shoots the ball */
+    Shooter shooter = new Shooter();
+
 
     /**
      * This function is called once each time the robot enters autonomous mode.
@@ -55,7 +58,6 @@ public class BotMain extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-        
     }
 
     /**
@@ -66,6 +68,9 @@ public class BotMain extends SimpleRobot {
         drives.disable();
         shooter.disable();
         tongue.disable();
+        shoulder.disable();
+        pickupRamp.disable();
+        trigger.disable();
     }
 
     /**
@@ -74,9 +79,10 @@ public class BotMain extends SimpleRobot {
     protected void robotInit() {
         System.out.println("Disabling motors.");
         drives.disable();
-        drives.start();
-        shooter.start();
-        tongue.enable();
+        drives.initialize();
+        shooter.initialize();
+        tongue.initialize();
+        trigger.initialize();
         ballReadySwitch.setBallReadyListener(ballReadyListener);
         System.out.println("Drives started");
     }

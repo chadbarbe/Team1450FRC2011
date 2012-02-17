@@ -4,6 +4,7 @@
  */
 package Robot.Devices;
 
+import Robot.Utils.Threading;
 import RobotMain.Constants;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -15,29 +16,14 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class VelocityControlMotor {
     private SpeedController motor;
     private Joystick joystick;
-    private Thread m_task;
 
     public void disable() {
         motor.disable();
     }
-    
-        private class VelocityControlMotorThread extends Thread {
 
-        private VelocityControlMotor VelocityControlMotor;
-        private boolean m_run = true;
-
-        VelocityControlMotorThread(VelocityControlMotor _VelocityControlMotor) {
-            VelocityControlMotor = _VelocityControlMotor;
-        }
-
+    private class VelocityControlLoop implements Runnable {
         public void run() {
-            while (m_run) {
-                motor.set(getUserInput());
-                try {
-                    Thread.sleep(Constants.MiniBotDeployment.loopTime);
-                } catch (InterruptedException e) {
-                }
-            }
+            motor.set(getUserInput());
         }
     }
 
@@ -47,13 +33,12 @@ public class VelocityControlMotor {
         System.out.println("Velocity motor constuct");
         motor = _motor;
         joystick = _joystick;
-        m_task = new VelocityControlMotor.VelocityControlMotorThread(this);
 
     }
 
     public void start() {
-        System.out.println("Velocity Motor Start"); 
-        m_task.start();
+        System.out.println("Velocity Motor Start");
+        Threading.runInLoop(Constants.LimitSwitches.loopTime, new VelocityControlLoop(), "VelocityControlMotor");
     }
     
     private double getUserInput() {
