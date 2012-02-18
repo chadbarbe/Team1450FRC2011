@@ -14,6 +14,8 @@ import Robot.Utils.Joysticks;
 public class IODefines {
     //Digitals Outs
     public static final int TONGUE_RELAY = 4;
+    public static final int CAMERA_XY_SERVO = 9;
+    public static final int CAMERA_Z_SERVO = 10;
 
     //Digital Ins
     public static final int LEFT_DRIVE_ENCODER_A = 13;
