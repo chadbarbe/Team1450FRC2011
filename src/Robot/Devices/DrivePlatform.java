@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.*;
  */
 public class DrivePlatform {
 
-    private Joystick joy = Joysticks.right();
     private DriverStationLCD myStationLCD = DriverStationLCD.getInstance();
 
     private SpeedController leftDrive = new Jaguar(IODefines.LEFT_DRIVE);
@@ -55,15 +54,6 @@ public class DrivePlatform {
         drives.stopMotor();
     }
 
-    private class DriveLoop implements Runnable {
-        public void run() {
-            if (!DriverStation.getInstance().isAutonomous()) {
-                // drives.arcadeDrive(joy);
-                arcadeDrive(joy.getY(), -joy.getX());
-            }
-        }
-    }
-
     public void initialize() {
         leftDriveEncoder.start();
         leftDriveEncoder.reset();
@@ -73,8 +63,6 @@ public class DrivePlatform {
         rightDriveEncoder.start();
         rightDriveEncoder.reset();
         rightDriveEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse);
-
-        Threading.runInLoop(Constants.Drives.loopTime, new DriveLoop(), "DrivePlatform");
     }
 
     public void goToScoringRack() {

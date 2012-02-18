@@ -43,10 +43,6 @@ public class OpperatorInterface {
     public double getShooterThrottle() {
         return (leftJoystick.getZ() + 1.0) / 2.0;
     }
-
-    public Joystick getDriveJoystick() {
-        return rightJoystick;
-    }
 }
 
 
