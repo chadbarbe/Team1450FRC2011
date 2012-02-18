@@ -18,6 +18,7 @@ public abstract class CommandBase extends Command {
     public static Shooter shooter = new Shooter();
     public static Shoulder shoulder = new Shoulder();
     public static Ramp ramp = new Ramp();
+    public static Camera camera = new Camera();
 
     public static void init() {
         // This MUST be here. If the OpperatorInterface creates Commands (which it very likely

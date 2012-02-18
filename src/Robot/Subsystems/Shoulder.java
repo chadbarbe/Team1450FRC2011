@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shoulder extends Subsystem {
     
     private Victor shoulderMotor = new Victor(IODefines.SHOULDER_MOTOR);
+
     protected void initDefaultCommand() {
         setDefaultCommand(new DontPivotShoulderCommand());
     }
 
     public void dontPivot() {
-        
+        shoulderMotor.set(0.0);
     }
 }
