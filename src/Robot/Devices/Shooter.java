@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.Victor;
  */
 public class Shooter extends AbstractRobotDevice {
     
-    SpeedController shooterMotor = new Jaguar(IODefines.SHOOTER_DRIVE);
+    SpeedController shooterMotor = new Jaguar(IODefines.SHOOTER_MOTOR);
     ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
     Joystick joystick = Joysticks.left();
     

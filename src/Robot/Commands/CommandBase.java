@@ -15,12 +15,16 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static Tongue tongue = new Tongue();
     public static DriveTrain driveTrain = new DriveTrain();
-    public static Shooter shooter = new Shooter();
-    public static Shoulder shoulder = new Shoulder();
-    public static Ramp ramp = new Ramp();
-    public static Camera camera = new Camera();
+    public static Shooter shooter;
+    public static Shoulder shoulder;
+    public static Ramp ramp;
+    public static Camera camera;
 
     public static void init() {
+        shooter = new Shooter();
+        shoulder = new Shoulder();
+        ramp = new Ramp();
+//        camera = new Camera();
         // This MUST be here. If the OpperatorInterface creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be
@@ -33,7 +37,7 @@ public abstract class CommandBase extends Command {
         SmartDashboard.putData(driveTrain);
         SmartDashboard.putData(shoulder);
         SmartDashboard.putData(ramp);
-        SmartDashboard.putData(camera);
+//        SmartDashboard.putData(camera);
     }
 
     public CommandBase(String name) {

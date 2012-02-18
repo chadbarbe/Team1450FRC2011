@@ -33,7 +33,7 @@ public class OpperatorInterface {
     }
 
     public double getDriveRotation() {
-        return -rightJoystick.getX();
+        return rightJoystick.getX();
     }
 
     public double getDriveThrottle() {
@@ -44,6 +44,9 @@ public class OpperatorInterface {
         return (leftJoystick.getZ() + 1.0) / 2.0;
     }
 
+    public Joystick getDriveJoystick() {
+        return rightJoystick;
+    }
 }
 
 

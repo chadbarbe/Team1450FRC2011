@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Shooter extends Subsystem {
 
-    private Jaguar shooterMotor = new Jaguar(IODefines.SHOULDER_MOTOR);
+    private Jaguar shooterMotor = new Jaguar(IODefines.SHOOTER_MOTOR);
     private Victor armMotor = new Victor(IODefines.SHOOTER_ANGLE_MOTOR);
     private ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
     private Relay triggerRelay = new Relay(IODefines.TRIGGER_RELAY);

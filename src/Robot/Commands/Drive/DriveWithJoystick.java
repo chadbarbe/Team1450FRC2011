@@ -14,7 +14,7 @@ public class DriveWithJoystick extends CommandBase {
     }
 
     protected void execute() {
-        driveTrain.arcadeDrive(oi.getDriveRotation(),oi.getDriveThrottle());
+        driveTrain.arcadeDrive(oi.getDriveJoystick());
     }
 
     protected boolean isFinished() {
