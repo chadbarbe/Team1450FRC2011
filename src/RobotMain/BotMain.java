@@ -6,9 +6,12 @@
 /*----------------------------------------------------------------------------*/
 package RobotMain;
 
-import Robot.Devices.*;
-import Robot.Utils.BallReadySwitch;
+import Robot.Commands.CommandBase;
+import Robot.Commands.ShootWithJoystickCommand;
+import Robot.Commands.ShutUpTongue;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,73 +20,39 @@ import edu.wpi.first.wpilibj.*;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class BotMain extends SimpleRobot {
+public class BotMain extends IterativeRobot {
 
-    //Device Instantiation
-    DrivePlatform drives = new DrivePlatform();
+    private Command autoCommand;
 
-    BallReadySwitch ballReadySwitch = new BallReadySwitch();
-    BallReadySwitch.BallReadyListener ballReadyListener = new BallReadySwitch.BallReadyListener() {
-
-        public void ballReady(boolean ready) {
-            System.out.println("BallReadySwitch -> " + ready);
-            DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "BallReadySwitch = " + ready);
-        }
-    };
-
-    /** Tongue to pick up the ball */
-    Tongue tongue = new Tongue();
-
-    /** The ramp the ball moves up to the trigger */
-    PickupRamp pickupRamp = new PickupRamp();
-
-    /** The trigger pushes the ball into the shooter */
-    Trigger trigger = new Trigger(ballReadySwitch);
-
-    /** The shoulder rotates the shooter */
-    Shoulder shoulder = new Shoulder();
-
-    /** Shooter shoots the ball */
-    Shooter shooter = new Shooter();
-
-
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
-    public void autonomous() {
-      
+    public void robotInit() {
+        CommandBase.init();
+        autoCommand = new ShutUpTongue();
+    }
+    public void autonomousInit() {
+        // schedule the autonomous command (example)
+        autoCommand.start();
     }
 
     /**
-     * This function is called once each time the robot enters operator control.
+     * This function is called periodically during autonomous
      */
-    public void operatorControl() {
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+    }
+
+    public void teleopInit() {
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+       autoCommand.cancel();
+       new ShootWithJoystickCommand().start();
     }
 
     /**
-     * This function is called when the competition field is disabled or inactive.
+     * This function is called periodically during operator control
      */
-    public void disabled() {
-        System.out.println("Disable!!!");
-        drives.disable();
-        shooter.disable();
-        tongue.disable();
-        shoulder.disable();
-        pickupRamp.disable();
-        trigger.disable();
-    }
-
-    /**
-     * This function is called when the robot is powered on and initialized.
-     */
-    protected void robotInit() {
-        System.out.println("Disabling motors.");
-        drives.disable();
-        drives.initialize();
-        shooter.initialize();
-        tongue.initialize();
-        trigger.initialize();
-        ballReadySwitch.setBallReadyListener(ballReadyListener);
-        System.out.println("Drives started");
+    public void teleopPeriodic() {
+        Scheduler.getInstance().run();
     }
 }
