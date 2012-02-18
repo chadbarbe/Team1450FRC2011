@@ -1,19 +1,20 @@
-package Robot.Commands;
+package Robot.Commands.Shooter;
+
+import Robot.Commands.CommandBase;
 
 /**
  */
-public class DefaultShooterCommand extends CommandBase {
+public class ShootWithJoystickCommand extends CommandBase {
 
-    public DefaultShooterCommand() {
+    public ShootWithJoystickCommand() {
         requires(shooter);
     }
 
     protected void initialize() {
-        shooter.resetSpeedSensor();
     }
 
     protected void execute() {
-        shooter.dontSpin();
+        shooter.throttle(oi.getShooterThrottle());
     }
 
     protected boolean isFinished() {

@@ -1,9 +1,8 @@
 package Robot.Subsystems;
 
-import Robot.Commands.DefaultShooterCommand;
+import Robot.Commands.Shooter.DefaultShooterCommand;
 import Robot.Utils.ShooterSpeedSensor;
 import RobotMain.IODefines;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Victor;

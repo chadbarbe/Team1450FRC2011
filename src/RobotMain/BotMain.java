@@ -7,8 +7,8 @@
 package RobotMain;
 
 import Robot.Commands.CommandBase;
-import Robot.Commands.ShootWithJoystickCommand;
-import Robot.Commands.ShutUpTongue;
+import Robot.Commands.Shooter.ShootWithJoystickCommand;
+import Robot.Commands.Tongue.ShutUpTongue;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;

@@ -1,10 +1,9 @@
 package RobotMain;
 
-import Robot.Commands.PickupWithTongue;
+import Robot.Commands.Tongue.PickupWithTongue;
 import Robot.Commands.Ramp.RampOnCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**

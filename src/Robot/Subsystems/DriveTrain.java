@@ -1,6 +1,6 @@
 package Robot.Subsystems;
 
-import Robot.Commands.DriveWithJoystick;
+import Robot.Commands.Drive.DriveWithJoystick;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;

@@ -1,5 +1,6 @@
-package Robot.Commands;
+package Robot.Commands.Shooter;
 
+import Robot.Commands.CommandBase;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**

@@ -1,6 +1,6 @@
 package Robot.Subsystems;
 
-import Robot.Commands.ShutUpTongue;
+import Robot.Commands.Tongue.ShutUpTongue;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;

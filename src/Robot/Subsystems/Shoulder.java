@@ -1,6 +1,6 @@
 package Robot.Subsystems;
 
-import Robot.Commands.DontPivotShoulderCommand;
+import Robot.Commands.Shooter.DontPivotShoulderCommand;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;

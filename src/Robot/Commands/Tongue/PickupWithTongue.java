@@ -1,4 +1,6 @@
-package Robot.Commands;
+package Robot.Commands.Tongue;
+
+import Robot.Commands.CommandBase;
 
 /**
  */
