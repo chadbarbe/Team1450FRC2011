@@ -1,5 +1,6 @@
 package RobotMain;
 
+import Robot.Commands.Shooter.ShootBallCommand;
 import Robot.Commands.Tongue.PickupWithTongue;
 import Robot.Commands.Ramp.RampOnCommand;
 import edu.wpi.first.wpilibj.Joystick;
@@ -21,15 +22,18 @@ public class OpperatorInterface {
     Button driverRampButton = new JoystickButton(rightJoystick,5);
     // the shooter uses the ramp motor to deliver balls to the trigger
     Button shooterRampButton = new JoystickButton(leftJoystick,5);
+    // shoot the ball
+    Button triggerButton = new JoystickButton(leftJoystick,1);
 
     public OpperatorInterface() {
         tongueButton.whileHeld(new PickupWithTongue());
         driverRampButton.whileHeld(new RampOnCommand());
         shooterRampButton.whileHeld(new RampOnCommand());
+        triggerButton.whileHeld(new ShootBallCommand());
     }
 
     public double getDriveRotation() {
-        return rightJoystick.getX();
+        return -rightJoystick.getX();
     }
 
     public double getDriveThrottle() {

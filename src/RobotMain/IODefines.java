@@ -13,9 +13,10 @@ import Robot.Utils.Joysticks;
  */
 public class IODefines {
     //Digitals Outs
-    public static final int TONGUE_RELAY = 4;
-    public static final int CAMERA_XY_SERVO = 9;
-    public static final int CAMERA_Z_SERVO = 10;
+    public static final int TONGUE_RELAY = 1;
+    public static final int CAMERA_XY_SERVO = 1;
+    public static final int CAMERA_Z_SERVO = 2;
+    public static final int TRIGGER_RELAY = 3;
 
     //Digital Ins
     public static final int LEFT_DRIVE_ENCODER_A = 13;
@@ -29,10 +30,9 @@ public class IODefines {
     public static final int LEFT_DRIVE = 1;
     public static final int RIGHT_DRIVE = 2;
     public static final int SHOOTER_DRIVE = 3;
-    public static final int PICKUP_SHUTE_MOTOR = 5;
-    public static final int TRIGGER_MOTOR = 6;
-    public static final int SHOOTER_ANGLE_MOTOR = 7;
-    public static final int SHOULDER_MOTOR = 8;
+    public static final int PICKUP_SHUTE_MOTOR = 4;
+    public static final int SHOOTER_ANGLE_MOTOR = 5;
+    public static final int SHOULDER_MOTOR = 6;
 
     //Analog Ins
     // <NONE>

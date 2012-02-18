@@ -15,7 +15,11 @@ public class Shooter extends Subsystem {
     private Jaguar shooterMotor = new Jaguar(IODefines.SHOULDER_MOTOR);
     private Victor armMotor = new Victor(IODefines.SHOOTER_ANGLE_MOTOR);
     private ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
-    private Relay triggerRelay = new Relay(IODefines.TRIGGER_MOTOR);
+    private Relay triggerRelay = new Relay(IODefines.TRIGGER_RELAY);
+
+    public Shooter() {
+        triggerRelay.setDirection(Relay.Direction.kForward);
+    }
 
     protected void initDefaultCommand() {
         setDefaultCommand(new DefaultShooterCommand());
@@ -31,5 +35,13 @@ public class Shooter extends Subsystem {
 
     public void throttle(double throttle) {
         shooterMotor.set(throttle);
+    }
+
+    public void triggerOn() {
+        triggerRelay.set(Relay.Value.kOn);
+    }
+    
+    public void triggerOff() {
+        triggerRelay.set(Relay.Value.kOff);
     }
 }

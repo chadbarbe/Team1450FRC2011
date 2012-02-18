@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Victor;
  */
 public class Trigger extends AbstractRobotDevice {
 
-    private Victor triggerMotor = new Victor(IODefines.TRIGGER_MOTOR);
+    private Victor triggerMotor = new Victor(IODefines.TRIGGER_RELAY);
     private ButtonMapping buttonMapping = IODefines.TRIGGER_BUTTON;
     private Joystick joystick = buttonMapping.joystick;
     private final BallReadySwitch ballReadySwitch;
