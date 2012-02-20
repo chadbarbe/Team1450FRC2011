@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Camera extends Subsystem {
 
     private AxisCamera camera = AxisCamera.getInstance();
-    private Servo cameraXYServo = new Servo(IODefines.CAMERA_XY_SERVO);
+//    private Servo cameraXYServo = new Servo(IODefines.CAMERA_XY_SERVO);
     private Servo cameraZServo = new Servo(IODefines.CAMERA_Z_SERVO);
     
     protected void initDefaultCommand() {
@@ -19,7 +19,14 @@ public class Camera extends Subsystem {
     }
 
     public void centerCamera() {
-        cameraXYServo.setAngle(90); // look straight ahead
-        cameraZServo.setAngle(100); // the camera should face slightly up
+        cameraZServo.setAngle(90);
+    }
+
+    public void lookAtBallPickup() {
+        cameraZServo.setAngle(90-15);
+    }
+
+    public void lookAtBasket() {
+        cameraZServo.setAngle(90+15);
     }
 }

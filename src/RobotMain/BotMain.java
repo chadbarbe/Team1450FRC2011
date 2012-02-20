@@ -8,6 +8,7 @@ package RobotMain;
 
 import Robot.Commands.CommandBase;
 import Robot.Commands.Shooter.ShootWithJoystickCommand;
+import Robot.Commands.Shoulder.OperatorControlShooterCommand;
 import Robot.Commands.Tongue.ShutUpTongue;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
@@ -46,7 +47,7 @@ public class BotMain extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
        autoCommand.cancel();
-       new ShootWithJoystickCommand().start();
+       new OperatorControlShooterCommand().start();
     }
 
     /**
@@ -54,5 +55,11 @@ public class BotMain extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+    }
+
+    /**
+     * Initialization of disabled code.
+     */
+    public void disabledInit() {
     }
 }

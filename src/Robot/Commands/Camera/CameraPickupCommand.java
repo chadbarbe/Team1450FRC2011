@@ -1,20 +1,20 @@
-package Robot.Commands.Ramp;
+package Robot.Commands.Camera;
 
 import Robot.Commands.CommandBase;
 
 /**
  */
-public class RampOnCommand extends CommandBase {
+public class CameraPickupCommand extends CommandBase {
 
-    public RampOnCommand() {
-        requires(ramp);
+    public CameraPickupCommand() {
+        requires(camera);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        ramp.on();
+        camera.lookAtBallPickup();
     }
 
     protected boolean isFinished() {

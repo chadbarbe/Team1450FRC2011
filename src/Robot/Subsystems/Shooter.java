@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 
     private Jaguar shooterMotor = new Jaguar(IODefines.SHOOTER_MOTOR);
-    private Victor armMotor = new Victor(IODefines.SHOOTER_ANGLE_MOTOR);
+    private Victor arcMotor = new Victor(IODefines.SHOOTER_ANGLE_MOTOR);
     private ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
     private Relay triggerRelay = new Relay(IODefines.TRIGGER_RELAY);
 
@@ -44,4 +44,9 @@ public class Shooter extends Subsystem {
     public void triggerOff() {
         triggerRelay.set(Relay.Value.kOff);
     }
+
+    public void setArc(double arc) {
+        // use half power
+        arcMotor.set(arc / 2.0);
+    } 
 }
