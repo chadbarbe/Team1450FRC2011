@@ -16,6 +16,12 @@ public class CameraTargetCommand extends CommandBase {
 
     protected void execute() {
         camera.lookAtBasket();
+        // get turn angle and distance to basket.
+        // if angle > thresh
+            // move shoulder by angle
+            // set shooter speed
+        // else
+            // done
 //        if (camera.getCamera().freshImage()) {
 //            camera.processImage();
 //        }
