@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><project basedir="." default="help" name="Team1450FRC2011">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project basedir="." default="deploy-and-run" name="Team1450FRC2011">
 
 <!-- You may freely edit this file. See commented blocks below for -->
 <!-- some examples of how to customize the build. -->
@@ -90,4 +90,5 @@
     For more information on using ant, see http://ant.apache.org.
 
     -->
+    <target name="deploy-and-run" depends="deploy,run"/>
 </project>

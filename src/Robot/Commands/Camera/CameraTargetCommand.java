@@ -16,6 +16,9 @@ public class CameraTargetCommand extends CommandBase {
 
     protected void execute() {
         camera.lookAtBasket();
+//        if (camera.getCamera().freshImage()) {
+//            camera.processImage();
+//        }
     }
 
     protected boolean isFinished() {

@@ -24,7 +24,7 @@ public abstract class CommandBase extends Command {
         shooter = new Shooter();
         shoulder = new Shoulder();
         ramp = new Ramp();
-//        camera = new Camera();
+        camera = new Camera();
         // This MUST be here. If the OpperatorInterface creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be
@@ -37,7 +37,7 @@ public abstract class CommandBase extends Command {
         SmartDashboard.putData(driveTrain);
         SmartDashboard.putData(shoulder);
         SmartDashboard.putData(ramp);
-//        SmartDashboard.putData(camera);
+        SmartDashboard.putData(camera);
     }
 
     public CommandBase(String name) {
