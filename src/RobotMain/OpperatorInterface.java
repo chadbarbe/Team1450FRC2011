@@ -40,7 +40,7 @@ public class OpperatorInterface {
         tongueButton.whileHeld(new PickupWithTongue());
         driverRampButton.whileHeld(new RampOnCommand());
         shooterRampButton.whileHeld(new RampOnCommand());
-        triggerButton.whileHeld(new ShootBallCommand());
+//        triggerButton.whileHeld(new ShootBallCommand());
         cameraPickupButton.whenPressed(new CameraPickupCommand());
         cameraTargetButton.whenPressed(new CameraTargetCommand());
     }
@@ -63,6 +63,10 @@ public class OpperatorInterface {
 
     public double getArc() {
         return leftJoystick.getY();
+    }
+
+    public boolean getTrigger() {
+        return triggerButton.get();
     }
 }
 

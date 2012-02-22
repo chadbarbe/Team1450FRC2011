@@ -14,6 +14,11 @@ public class Tongue extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+
+    public Tongue() {
+        relay.setDirection(Relay.Direction.kBoth);
+    }
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
        setDefaultCommand(new ShutUpTongue());
@@ -30,7 +35,7 @@ public class Tongue extends Subsystem {
      * Run the tongue.
      */
     public void pickUp() {
-        relay.set(Relay.Value.kOn);
+        relay.set(Relay.Value.kForward);
     }
 }
 

@@ -1,6 +1,7 @@
 package Robot.Subsystems;
 
 import Robot.Commands.Shooter.DefaultShooterCommand;
+import Robot.Utils.BallReadySwitch;
 import Robot.Utils.ShooterSpeedSensor;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Jaguar;
@@ -16,9 +17,15 @@ public class Shooter extends Subsystem {
     private Victor arcMotor = new Victor(IODefines.SHOOTER_ANGLE_MOTOR);
     private ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
     private Relay triggerRelay = new Relay(IODefines.TRIGGER_RELAY);
+    private BallReadySwitch ballReadySwitch = new BallReadySwitch();
 
     public Shooter() {
-        triggerRelay.setDirection(Relay.Direction.kForward);
+        triggerRelay.setDirection(Relay.Direction.kBoth);
+        ballReadySwitch.setBallReadyListener(new BallReadySwitch.BallReadyListener() {
+            public void ballReady(boolean ready) {
+                System.out.println("Ball ready = " + ready);
+            }
+        });
     }
 
     protected void initDefaultCommand() {
@@ -34,11 +41,11 @@ public class Shooter extends Subsystem {
     }
 
     public void throttle(double throttle) {
-        shooterMotor.set(throttle);
+        shooterMotor.set(-throttle);
     }
 
     public void triggerOn() {
-        triggerRelay.set(Relay.Value.kOn);
+        triggerRelay.set(Relay.Value.kForward);
     }
     
     public void triggerOff() {
@@ -47,6 +54,6 @@ public class Shooter extends Subsystem {
 
     public void setArc(double arc) {
         // use half power
-        arcMotor.set(arc / 2.0);
+        arcMotor.set(arc);
     } 
 }

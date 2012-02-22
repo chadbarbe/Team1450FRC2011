@@ -20,6 +20,11 @@ public class OperatorControlShooterCommand  extends CommandBase {
         shoulder.operatorControl(rotation);
         shooter.setArc(arc);
         shooter.throttle(oi.getShooterThrottle());
+        if (oi.getTrigger()) {
+            shooter.triggerOn();
+        } else {
+            shooter.triggerOff();
+        }
     }
 
     protected boolean isFinished() {

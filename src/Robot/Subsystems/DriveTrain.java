@@ -13,10 +13,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 
-    private DrivePlatform drivePlatform = new DrivePlatform();
+//    private DrivePlatform drivePlatform = new DrivePlatform();
+    private RobotDrive robotDrive = new RobotDrive(IODefines.LEFT_DRIVE, IODefines.RIGHT_DRIVE);
 
     public DriveTrain() {
-        drivePlatform.initialize();
+//        drivePlatform.initialize();
     }
 
     protected void initDefaultCommand() {
@@ -24,6 +25,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public void arcadeDrive(double rotation, double throttle) {
-        drivePlatform.arcadeDrive(throttle,rotation);
+//        drivePlatform.arcadeDrive(throttle,rotation);
+        robotDrive.arcadeDrive(throttle,rotation);
     }
 }
