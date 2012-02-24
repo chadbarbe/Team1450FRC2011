@@ -1,11 +1,9 @@
 package Robot.Subsystems;
 
 import Robot.Commands.Drive.DriveWithJoystick;
-import Robot.Devices.DrivePlatform;
+import RobotMain.Constants;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -13,19 +11,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 
-//    private DrivePlatform drivePlatform = new DrivePlatform();
     private RobotDrive robotDrive = new RobotDrive(IODefines.LEFT_DRIVE, IODefines.RIGHT_DRIVE);
+    private Encoder leftEncoder = new Encoder(IODefines.LEFT_DRIVE_ENCODER_A,IODefines.LEFT_DRIVE_ENCODER_B);
+    private Encoder rightEncoder = new Encoder(IODefines.RIGHT_DRIVE_ENCODER_A,IODefines.RIGHT_DRIVE_ENCODER_B);
 
     public DriveTrain() {
-//        drivePlatform.initialize();
+        rightEncoder.setReverseDirection(true);
+        rightEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse);
+        leftEncoder.setDistancePerPulse(Constants.Drives.distancePerPulse);
     }
 
     protected void initDefaultCommand() {
         setDefaultCommand(new DriveWithJoystick());
     }
 
-    public void arcadeDrive(double rotation, double throttle) {
-//        drivePlatform.arcadeDrive(throttle,rotation);
+    public void arcadeDrive(double throttle, double rotation) {
         robotDrive.arcadeDrive(throttle,rotation);
     }
 }

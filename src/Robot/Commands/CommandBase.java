@@ -16,13 +16,14 @@ public abstract class CommandBase extends Command {
     public static Tongue tongue = new Tongue();
     public static DriveTrain driveTrain = new DriveTrain();
     public static Shooter shooter;
-    public static Shoulder shoulder;
+    public static Waist waist;
     public static Ramp ramp;
     public static Camera camera;
+    public static Trigger trigger = new Trigger();
 
     public static void init() {
         shooter = new Shooter();
-        shoulder = new Shoulder();
+        waist = new Waist();
         ramp = new Ramp();
         camera = new Camera();
         // This MUST be here. If the OpperatorInterface creates Commands (which it very likely
@@ -35,10 +36,11 @@ public abstract class CommandBase extends Command {
         // Show what command your subsystem is running on the SmartDashboard
         SmartDashboard.putData(tongue);
         SmartDashboard.putData(driveTrain);
-        SmartDashboard.putData(shoulder);
+        SmartDashboard.putData(waist);
         SmartDashboard.putData(ramp);
         SmartDashboard.putData(camera);
         SmartDashboard.putData(shooter);
+        SmartDashboard.putData(trigger);
     }
 
     public CommandBase(String name) {

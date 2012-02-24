@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShootBallCommand extends CommandBase {
 
     public ShootBallCommand() {
-        requires(shooter);
+        requires(trigger);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        shooter.triggerOn();
+        trigger.triggerOn();
     }
 
     protected boolean isFinished() {
@@ -23,10 +23,11 @@ public class ShootBallCommand extends CommandBase {
     }
 
     protected void end() {
-        shooter.triggerOff();
+       trigger.triggerOff();
     }
 
     protected void interrupted() {
+        System.out.println(getName() + " interuppted.");
         end();
     }
 }

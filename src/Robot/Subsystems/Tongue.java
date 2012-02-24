@@ -11,16 +11,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Tongue extends Subsystem {
 
     private Relay relay = new Relay(IODefines.TONGUE_RELAY);
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
 
     public Tongue() {
         relay.setDirection(Relay.Direction.kBoth);
     }
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
        setDefaultCommand(new ShutUpTongue());
     }
 

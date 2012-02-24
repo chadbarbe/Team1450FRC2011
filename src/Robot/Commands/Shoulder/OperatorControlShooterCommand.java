@@ -7,8 +7,9 @@ import Robot.Commands.CommandBase;
 public class OperatorControlShooterCommand  extends CommandBase {
 
     public OperatorControlShooterCommand() {
-        requires(shoulder);
+        requires(waist);
         requires(shooter);
+        requires(trigger);
     }
 
     protected void initialize() {
@@ -17,13 +18,13 @@ public class OperatorControlShooterCommand  extends CommandBase {
     protected void execute() {
         double rotation = oi.getShoulderRotation();
         double arc = oi.getArc();
-        shoulder.operatorControl(rotation);
+        waist.operatorControl(rotation);
         shooter.setArc(arc);
         shooter.throttle(oi.getShooterThrottle());
         if (oi.getTrigger()) {
-            shooter.triggerOn();
+           trigger.triggerOn();
         } else {
-            shooter.triggerOff();
+           trigger.triggerOff();
         }
     }
 

@@ -18,7 +18,7 @@ public class CameraTargetCommand extends CommandBase {
         camera.lookAtBasket();
         // get turn angle and distance to basket.
         // if angle > thresh
-            // move shoulder by angle
+            // move waist by angle
             // set shooter speed
         // else
             // done

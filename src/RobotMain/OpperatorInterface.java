@@ -40,7 +40,6 @@ public class OpperatorInterface {
         tongueButton.whileHeld(new PickupWithTongue());
         driverRampButton.whileHeld(new RampOnCommand());
         shooterRampButton.whileHeld(new RampOnCommand());
-//        triggerButton.whileHeld(new ShootBallCommand());
         cameraPickupButton.whenPressed(new CameraPickupCommand());
         cameraTargetButton.whenPressed(new CameraTargetCommand());
     }

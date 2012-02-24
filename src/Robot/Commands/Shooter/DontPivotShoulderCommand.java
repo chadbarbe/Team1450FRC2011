@@ -1,21 +1,20 @@
 package Robot.Commands.Shooter;
 
 import Robot.Commands.CommandBase;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  */
 public class DontPivotShoulderCommand extends CommandBase {
 
     public DontPivotShoulderCommand() {
-        requires(shoulder);
+        requires(waist);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        shoulder.dontPivot();
+        waist.dontPivot();
     }
 
     protected boolean isFinished() {
