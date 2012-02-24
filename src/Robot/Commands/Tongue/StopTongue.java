@@ -1,14 +1,13 @@
 package Robot.Commands.Tongue;
 
 import Robot.Commands.CommandBase;
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Stop the tongue
  */
-public class ShutUpTongue extends CommandBase {
+public class StopTongue extends CommandBase {
 
-    public ShutUpTongue() {
+    public StopTongue() {
         requires(tongue);
     }
 
@@ -16,7 +15,7 @@ public class ShutUpTongue extends CommandBase {
     }
 
     protected void execute() {
-        tongue.shutUp();
+        tongue.stop();
     }
 
     protected boolean isFinished() {

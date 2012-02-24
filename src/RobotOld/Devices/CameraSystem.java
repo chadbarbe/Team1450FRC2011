@@ -1,7 +1,5 @@
-package Robot.Devices;
+package RobotOld.Devices;
 
-import RobotMain.IODefines;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.*;

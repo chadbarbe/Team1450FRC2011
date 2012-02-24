@@ -7,9 +7,8 @@
 package RobotMain;
 
 import Robot.Commands.CommandBase;
-import Robot.Commands.Shooter.ShootWithJoystickCommand;
-import Robot.Commands.Shoulder.OperatorControlShooterCommand;
-import Robot.Commands.Tongue.ShutUpTongue;
+import Robot.Commands.Waist.OperatorControlShooterCommand;
+import Robot.Commands.Tongue.StopTongue;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -27,7 +26,7 @@ public class BotMain extends IterativeRobot {
 
     public void robotInit() {
         CommandBase.init();
-        autoCommand = new ShutUpTongue();
+        autoCommand = new StopTongue();
     }
     public void autonomousInit() {
         // schedule the autonomous command (example)

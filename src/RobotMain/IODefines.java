@@ -6,6 +6,7 @@
 package RobotMain;
 
 import Robot.Utils.Joysticks;
+import RobotOld.ButtonMapping;
 
 /**
  *
@@ -23,19 +24,19 @@ public class IODefines {
     public static final int LEFT_DRIVE_ENCODER_B = 4;
     public static final int SHOOTER_PHOTO_INTERUPTER = 5;
     public static final int BALL_READY_SWITCH_DI = 6;
-    public static final int SHOULDER_ENCODER = 7;
+    public static final int WAIST_ENCODER = 7;
 
     //PWMs
     public static final int RIGHT_DRIVE = 1;
     public static final int LEFT_DRIVE = 2;
     public static final int SHOOTER_MOTOR = 3;
-    public static final int SHOULDER_MOTOR = 4;
+    public static final int WAIST_MOTOR = 4;
     public static final int SHOOTER_ANGLE_MOTOR = 5;
     public static final int PICKUP_SHUTE_MOTOR = 6;
     public static final int CAMERA_Z_SERVO = 7;
 
     //Analog Ins
-    // <NONE>
+    public static final int SHOOTER_ANGLE_POT = 1;
 
     //Solendoids
     // <NONE>

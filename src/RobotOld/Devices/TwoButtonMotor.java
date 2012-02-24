@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Robot.Devices;
+package RobotOld.Devices;
 
 import RobotMain.Constants;
 import edu.wpi.first.wpilibj.DigitalInput;

@@ -2,21 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Robot.Devices;
-
-import Robot.Utils.DrivePIDOutput;
-import Robot.Utils.PIDTuner;
-import RobotMain.Constants;
-import RobotMain.IODefines;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStationLCD;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.SpeedController;
+package RobotOld.Devices;
 
 /**
  *

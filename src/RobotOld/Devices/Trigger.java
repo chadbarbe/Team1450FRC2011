@@ -1,8 +1,8 @@
-package Robot.Devices;
+package RobotOld.Devices;
 
 import Robot.Utils.BallReadySwitch;
 import Robot.Utils.Threading;
-import RobotMain.ButtonMapping;
+import RobotOld.ButtonMapping;
 import RobotMain.Constants;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Joystick;

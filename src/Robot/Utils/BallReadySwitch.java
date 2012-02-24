@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The ball read switch to determine if the ball is in shooting position.
+ *
+ * DEPRECATED
  */
 public class BallReadySwitch {
     private final DigitalInput digitalInput;

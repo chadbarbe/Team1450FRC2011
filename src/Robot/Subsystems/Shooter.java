@@ -3,6 +3,7 @@ package Robot.Subsystems;
 import Robot.Commands.Shooter.DefaultShooterCommand;
 import Robot.Utils.ShooterSpeedSensor;
 import RobotMain.IODefines;
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 
     private Jaguar shooterMotor = new Jaguar(IODefines.SHOOTER_MOTOR);
-    private Victor arcMotor = new Victor(IODefines.SHOOTER_ANGLE_MOTOR);
     private ShooterSpeedSensor shooterSpeedSensor = new ShooterSpeedSensor();
+
 
     public Shooter() {
     }
@@ -31,12 +32,8 @@ public class Shooter extends Subsystem {
     }
 
     public void throttle(double throttle) {
+        // shooter runs in reverse direction
         shooterMotor.set(-throttle);
-    }
-
-    public void setArc(double arc) {
-        // use half power
-        arcMotor.set(arc);
     }
 
 }

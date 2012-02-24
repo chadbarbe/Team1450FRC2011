@@ -1,4 +1,4 @@
-package Robot.Commands.Shoulder;
+package Robot.Commands.Waist;
 
 import Robot.Commands.CommandBase;
 
@@ -17,9 +17,7 @@ public class OperatorControlShooterCommand  extends CommandBase {
 
     protected void execute() {
         double rotation = oi.getShoulderRotation();
-        double arc = oi.getArc();
         waist.operatorControl(rotation);
-        shooter.setArc(arc);
         shooter.throttle(oi.getShooterThrottle());
         if (oi.getTrigger()) {
            trigger.triggerOn();

@@ -27,7 +27,7 @@ public class PickupWithTongue extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        tongue.shutUp();
+        tongue.stop();
     }
 
     // Called when another command which requires one or more of the same

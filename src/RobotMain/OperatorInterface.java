@@ -2,9 +2,11 @@ package RobotMain;
 
 import Robot.Commands.Camera.CameraPickupCommand;
 import Robot.Commands.Camera.CameraTargetCommand;
+import Robot.Commands.Shooter.MoveShooterArc;
 import Robot.Commands.Shooter.ShootBallCommand;
 import Robot.Commands.Tongue.PickupWithTongue;
 import Robot.Commands.Ramp.RampOnCommand;
+import Robot.Commands.Waist.MoveWaistByAngle;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -13,13 +15,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OpperatorInterface {
+public class OperatorInterface {
     // The right joystick is the driving joystick
     Joystick rightJoystick = new Joystick(1);
     // The left joystick is the shooting joystick
     Joystick leftJoystick = new Joystick(2);
-
-    // Button button = new JoystickButton(stick, buttonNumber);
 
     // The tongue button runs the tongue motor on
     Button tongueButton = new JoystickButton(rightJoystick,3);
@@ -36,12 +36,22 @@ public class OpperatorInterface {
     Button cameraPickupButton = new JoystickButton(rightJoystick,9);
     Button cameraTargetButton = new JoystickButton(leftJoystick,9);
 
-    public OpperatorInterface() {
+    Button waistClockwiseButton = new JoystickButton(leftJoystick,2);
+    Button waistCounterClockwiseButton = new JoystickButton(leftJoystick,2);
+
+    Button shooterArcIncrementButton = new JoystickButton(leftJoystick,6);
+    Button shooterArcDecrementButton = new JoystickButton(leftJoystick,7);
+
+    public OperatorInterface() {
         tongueButton.whileHeld(new PickupWithTongue());
         driverRampButton.whileHeld(new RampOnCommand());
         shooterRampButton.whileHeld(new RampOnCommand());
         cameraPickupButton.whenPressed(new CameraPickupCommand());
         cameraTargetButton.whenPressed(new CameraTargetCommand());
+        waistClockwiseButton.whenPressed(new MoveWaistByAngle(10));
+        waistCounterClockwiseButton.whenPressed(new MoveWaistByAngle(-10));
+        shooterArcIncrementButton.whenPressed(new MoveShooterArc(0.5));
+        shooterArcDecrementButton.whenPressed(new MoveShooterArc(-0.5));
     }
 
     public double getDriveRotation() {
