@@ -19,20 +19,19 @@ public class DigitalInputListener {
     private boolean notifyOnFallingEdge = false;
     private long samplePeriodInMs = Constants.LimitSwitches.loopTime;
     
-    private DigitalInputListener digiInListener;
     private boolean isHigh = false;
     
     private class DigitalInputLoop implements Runnable {
         public void run() {
             if(!isHigh && !input.get()) {
                 isHigh = true;
-                if (notifyOnRisingEdge) digiInListener.notifyClients();
+                if (notifyOnRisingEdge) notifyClients();
                 System.out.println("InputWentHigh: " + name);
             }
             else if(isHigh && input.get() )
             {
                 isHigh = false;
-                if (notifyOnFallingEdge) digiInListener.notifyClients();
+                if (notifyOnFallingEdge) notifyClients();
                 System.out.println("InputWentLow: " + name);
             }
         }

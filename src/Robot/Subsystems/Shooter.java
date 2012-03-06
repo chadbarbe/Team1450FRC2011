@@ -36,4 +36,8 @@ public class Shooter extends Subsystem {
         shooterMotor.set(-throttle);
     }
 
+    public double rpm() {
+        return shooterSpeedSensor.rpm();
+    }
+
 }

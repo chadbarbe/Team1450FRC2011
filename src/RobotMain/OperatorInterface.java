@@ -2,11 +2,12 @@ package RobotMain;
 
 import Robot.Commands.Camera.CameraPickupCommand;
 import Robot.Commands.Camera.CameraTargetCommand;
+import Robot.Commands.Camera.MoveCameraByAngleCommand;
 import Robot.Commands.Shooter.MoveShooterArc;
-import Robot.Commands.Shooter.ShootBallCommand;
 import Robot.Commands.Tongue.PickupWithTongue;
 import Robot.Commands.Ramp.RampOnCommand;
 import Robot.Commands.Waist.MoveWaistByAngle;
+import Robot.Commands.WaitForTargetCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -22,7 +23,7 @@ public class OperatorInterface {
     Joystick leftJoystick = new Joystick(2);
 
     // The tongue button runs the tongue motor on
-    Button tongueButton = new JoystickButton(rightJoystick,3);
+    Button tongueButton = new JoystickButton(rightJoystick,1);
 
     // the driver uses the ramp motor to pick up balls
     Button driverRampButton = new JoystickButton(rightJoystick,5);
@@ -42,6 +43,11 @@ public class OperatorInterface {
     Button shooterArcIncrementButton = new JoystickButton(leftJoystick,6);
     Button shooterArcDecrementButton = new JoystickButton(leftJoystick,7);
 
+    Button cameraButton = new JoystickButton(rightJoystick,8);
+    
+    Button cameraIncButton = new JoystickButton(leftJoystick,6);
+    Button cameraDecButton = new JoystickButton(leftJoystick,7);
+
     public OperatorInterface() {
         tongueButton.whileHeld(new PickupWithTongue());
         driverRampButton.whileHeld(new RampOnCommand());
@@ -52,6 +58,9 @@ public class OperatorInterface {
         waistCounterClockwiseButton.whenPressed(new MoveWaistByAngle(-10));
         shooterArcIncrementButton.whenPressed(new MoveShooterArc(0.5));
         shooterArcDecrementButton.whenPressed(new MoveShooterArc(-0.5));
+        cameraButton.whenPressed(new WaitForTargetCommand());
+        cameraIncButton.whenPressed(new MoveCameraByAngleCommand(10));
+        cameraDecButton.whenPressed(new MoveCameraByAngleCommand(-10));
     }
 
     public double getDriveRotation() {

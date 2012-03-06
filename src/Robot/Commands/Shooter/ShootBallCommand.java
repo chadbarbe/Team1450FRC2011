@@ -9,6 +9,8 @@ public class ShootBallCommand extends CommandBase {
 
     public ShootBallCommand() {
         requires(trigger);
+        requires(ramp);
+        setInterruptible(true);
     }
 
     protected void initialize() {
@@ -16,6 +18,7 @@ public class ShootBallCommand extends CommandBase {
 
     protected void execute() {
         trigger.triggerOn();
+        ramp.on();
     }
 
     protected boolean isFinished() {

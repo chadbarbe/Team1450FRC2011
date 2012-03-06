@@ -4,6 +4,9 @@ import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardNamedData;
 
 /**
  * Measures the rotation speed of the shooter and reports it to the driver
@@ -47,7 +50,7 @@ public class ShooterSpeedSensor {
 
     private void updateRpm(double _rpm) {
         rpm = _rpm;
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kMain6, 1, "RPM=" + rpm);
+        SmartDashboard.putDouble("RPM",rpm);
         System.out.println("RPM=" + rpm);
     }
 
