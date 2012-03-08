@@ -13,12 +13,10 @@ public class FaceTargetCommand extends CommandBase implements TargetProvider {
         requires(driveTrain);
     }
 
-    @Override
     protected void initialize() {
         camera.resetTarget();
     }
 
-    @Override
     protected void execute() {
         if (camera.hasNewTarget()) {
             target = camera.getTarget();
@@ -41,17 +39,14 @@ public class FaceTargetCommand extends CommandBase implements TargetProvider {
         return Math.abs(target.angleX) <= ANGLE_THRESHOLD_DEG;
     }
 
-    @Override
     protected boolean isFinished() {
         return facingTarget();
     }
 
-    @Override
     protected void end() {
         driveTrain.drive(0.0, 0.0);
     }
 
-    @Override
     protected void interrupted() {
         // always stop the drives if autonomous is interrupted
         end();
