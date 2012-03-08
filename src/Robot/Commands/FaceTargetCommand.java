@@ -8,6 +8,7 @@ public class FaceTargetCommand extends CommandBase implements TargetProvider {
     private Target target;
 
     private static final double ANGLE_THRESHOLD_DEG = 2.0;
+    public static final double MAG = 0.15;
 
     public FaceTargetCommand() {
         requires(driveTrain);
@@ -22,16 +23,15 @@ public class FaceTargetCommand extends CommandBase implements TargetProvider {
             target = camera.getTarget();
             camera.resetTarget();
         }
-        double mag = 0.25;
         if (facingTarget()) {
             // don't turn
             driveTrain.drive(0.0, 0.0);
         } else if (target.angleX < 0) {
             // turn left
-            driveTrain.drive(-mag, mag);
+            driveTrain.drive(-MAG, MAG);
         } else {
             // turn right
-            driveTrain.drive(mag, -mag);
+            driveTrain.drive(MAG, -MAG);
         }
     }
 

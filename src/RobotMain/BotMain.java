@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package RobotMain;
 
+import Robot.Commands.AutonomousJustShootCommandGroup;
 import Robot.Commands.AutonomousShootBallCommandGroup;
 import Robot.Commands.AutonomousTurnAndShootCommandGroup;
 import Robot.Commands.CommandBase;
@@ -33,7 +34,8 @@ public class BotMain extends IterativeRobot {
         NetworkTable.initialize();
 
         autoChooser = new SendableChooser();
-        autoChooser.addDefault("Just Shoot", new AutonomousShootBallCommandGroup());
+        autoChooser.addDefault("Just Shoot", new AutonomousJustShootCommandGroup());
+        autoChooser.addObject("Shoot At Target", new AutonomousShootBallCommandGroup());
         autoChooser.addObject("Turn And Shoot", new AutonomousTurnAndShootCommandGroup());
     }
 
