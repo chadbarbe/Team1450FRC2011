@@ -1,11 +1,10 @@
 package Robot.Commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  */
 public class WaitForTargetCommand extends CommandBase {
-   public static Target target;
+
+    public Target target;
 
     protected void initialize() {
         target = null;
