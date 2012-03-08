@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
  */
 public class Camera extends Subsystem {
 
+    private static final int CAM_MIDDLE = 90-15;
     private Servo cameraZServo = new Servo(IODefines.CAMERA_Z_SERVO);
     private final NetworkTable targetTable;
     private boolean newTarget;
@@ -43,15 +44,17 @@ public class Camera extends Subsystem {
     }
 
     public void centerCamera() {
-        cameraZServo.setAngle(90);
+        cameraZServo.setAngle(CAM_MIDDLE);
     }
 
     public void lookAtBallPickup() {
-        cameraZServo.setAngle(90-15);
+        cameraZServo.setAngle(CAM_MIDDLE-35);
+        NetworkTable.getTable("TARGET").putBoolean("detectRectangles",false);
     }
 
     public void lookAtBasket() {
-        cameraZServo.setAngle(90+15);
+        cameraZServo.setAngle(CAM_MIDDLE+15);
+        NetworkTable.getTable("TARGET").putBoolean("detectRectangles",true);
     }
 
     public void resetTarget() {

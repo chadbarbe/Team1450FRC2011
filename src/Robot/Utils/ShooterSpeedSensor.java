@@ -1,12 +1,8 @@
 package Robot.Utils;
 
 import RobotMain.IODefines;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStationLCD;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardNamedData;
 
 /**
  * Measures the rotation speed of the shooter and reports it to the driver
@@ -17,15 +13,28 @@ public class ShooterSpeedSensor {
 
     private long lastTimestamp = 0;
     private static final long MS_PER_MIN = 1000 * 60;
+    private static final long MS_PER_SECOND = 1000;
     private double rpm = 0;
+    private Counter counter = new Counter(IODefines.SHOOTER_PHOTO_INTERUPTER);
+    private int lastCount = 0;
     
     public ShooterSpeedSensor() {
-        DigitalInput digitalInput = new DigitalInput(IODefines.SHOOTER_PHOTO_INTERUPTER);
-        DigitalInputListener digitalInputListener = new DigitalInputListener(
-                digitalInput, new SpeedSensorRisingEdgeListener(), "ShooterSpeedSensor");
-        digitalInputListener.setTriggerEdges(true, true);
-        digitalInputListener.setSamplePeriod(25L);
-        digitalInputListener.start();
+        counter.setUpSourceEdge(true,false);
+        counter.start();
+        Threading.runInLoop(25L,new Runnable() {
+            public void run() {
+                int count = counter.get();
+                long timestamp = System.currentTimeMillis();
+                if (lastCount != count) {
+                    System.out.println("Count = " + (count - lastCount));
+                    double rev_per_ms = (double) (count - lastCount) / (double) (timestamp - lastTimestamp);
+                    updateRpm(rev_per_ms * MS_PER_SECOND);
+                    System.out.println("--------");
+                    lastTimestamp = timestamp;
+                    lastCount = count;
+                }
+            }
+        }, "RPM");
     }
     
     public double rpm() {
@@ -35,34 +44,12 @@ public class ShooterSpeedSensor {
     public void reset() {
         lastTimestamp = 0;
         rpm = 0;
+        counter.reset();
     }
     
-    private void interruptHandler(long currentTimeMillis) {
-        if (lastTimestamp != currentTimeMillis) {
-            if (lastTimestamp != 0.0) {
-                // this is NOT the first reading     
-                long periodInMs = currentTimeMillis - lastTimestamp;
-                double rpm = MS_PER_MIN / (double)periodInMs;
-                updateRpm(rpm);
-            }
-        }
-    }
-
     private void updateRpm(double _rpm) {
         rpm = _rpm;
-        SmartDashboard.putDouble("RPM",rpm);
+        NetworkTable.getTable("RPM").putDouble("rpm",_rpm);
         System.out.println("RPM=" + rpm);
-    }
-
-    private class SpeedSensorRisingEdgeListener implements DigitalInputNotify {
-
-        public void digitalNotify(DigitalInput changedInput) {
-            //no-op
-            if (changedInput.get()) {
-                final long currentTimeMillis = System.currentTimeMillis();
-                interruptHandler(currentTimeMillis);
-                lastTimestamp = currentTimeMillis;
-            }
-        }
     }
 }
