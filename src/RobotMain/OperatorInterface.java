@@ -3,11 +3,11 @@ package RobotMain;
 import Robot.Commands.Camera.CameraPickupCommand;
 import Robot.Commands.Camera.CameraTargetCommand;
 import Robot.Commands.Camera.MoveCameraByAngleCommand;
+import Robot.Commands.Camera.WaitForTargetCommand;
+import Robot.Commands.Ramp.RampOnCommand;
 import Robot.Commands.Shooter.MoveShooterArc;
 import Robot.Commands.Tongue.PickupWithTongue;
-import Robot.Commands.Ramp.RampOnCommand;
 import Robot.Commands.Waist.MoveWaistByAngle;
-import Robot.Commands.WaitForTargetCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -23,30 +23,30 @@ public class OperatorInterface {
     Joystick leftJoystick = new Joystick(2);
 
     // The tongue button runs the tongue motor on
-    Button tongueButton = new JoystickButton(rightJoystick,1);
+    Button tongueButton = new JoystickButton(rightJoystick, 1);
 
     // the driver uses the ramp motor to pick up balls
-    Button driverRampButton = new JoystickButton(rightJoystick,5);
+    Button driverRampButton = new JoystickButton(rightJoystick, 5);
 
     // the shooter uses the ramp motor to deliver balls to the trigger
-    Button shooterRampButton = new JoystickButton(leftJoystick,5);
+    Button shooterRampButton = new JoystickButton(leftJoystick, 5);
 
     // shoot the ball
-    Button triggerButton = new JoystickButton(leftJoystick,1);
-    
-    Button cameraPickupButton = new JoystickButton(rightJoystick,9);
-    Button cameraTargetButton = new JoystickButton(leftJoystick,9);
+    Button triggerButton = new JoystickButton(leftJoystick, 1);
 
-    Button waistClockwiseButton = new JoystickButton(leftJoystick,2);
-    Button waistCounterClockwiseButton = new JoystickButton(leftJoystick,2);
+    Button cameraPickupButton = new JoystickButton(rightJoystick, 9);
+    Button cameraTargetButton = new JoystickButton(leftJoystick, 9);
 
-    Button shooterArcIncrementButton = new JoystickButton(leftJoystick,6);
-    Button shooterArcDecrementButton = new JoystickButton(leftJoystick,7);
+    Button waistClockwiseButton = new JoystickButton(leftJoystick, 2);
+    Button waistCounterClockwiseButton = new JoystickButton(leftJoystick, 2);
 
-    Button cameraButton = new JoystickButton(rightJoystick,8);
-    
-    Button cameraIncButton = new JoystickButton(leftJoystick,6);
-    Button cameraDecButton = new JoystickButton(leftJoystick,7);
+    Button shooterArcIncrementButton = new JoystickButton(leftJoystick, 6);
+    Button shooterArcDecrementButton = new JoystickButton(leftJoystick, 7);
+
+    Button cameraButton = new JoystickButton(rightJoystick, 8);
+
+    Button cameraIncButton = new JoystickButton(leftJoystick, 6);
+    Button cameraDecButton = new JoystickButton(leftJoystick, 7);
 
     public OperatorInterface() {
         tongueButton.whileHeld(new PickupWithTongue());
@@ -74,7 +74,7 @@ public class OperatorInterface {
     public double getShooterThrottle() {
         return (leftJoystick.getZ() + 1.0) / 2.0;
     }
-    
+
     public double getShoulderRotation() {
         return leftJoystick.getX();
     }

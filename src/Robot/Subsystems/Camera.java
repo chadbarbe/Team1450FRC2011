@@ -1,7 +1,7 @@
 package Robot.Subsystems;
 
 import Robot.Commands.Camera.CameraPickupCommand;
-import Robot.Commands.Target;
+import Robot.Utils.Target;
 import RobotMain.IODefines;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,11 +13,10 @@ import edu.wpi.first.wpilibj.networktables.NetworkTableKeyNotDefined;
  */
 public class Camera extends Subsystem {
 
-    private static final int CAM_MIDDLE = 90-15;
+    private static final int CAM_MIDDLE = 90 - 15;
     private Servo cameraZServo = new Servo(IODefines.CAMERA_Z_SERVO);
     private final NetworkTable targetTable;
     private boolean newTarget;
-    private Target target;
 
     public Camera() {
         targetTable = NetworkTable.getTable("TARGET");
@@ -48,13 +47,13 @@ public class Camera extends Subsystem {
     }
 
     public void lookAtBallPickup() {
-        cameraZServo.setAngle(CAM_MIDDLE-35);
-        NetworkTable.getTable("TARGET").putBoolean("detectRectangles",false);
+        cameraZServo.setAngle(CAM_MIDDLE - 35);
+        NetworkTable.getTable("TARGET").putBoolean("detectRectangles", false);
     }
 
     public void lookAtBasket() {
-        cameraZServo.setAngle(CAM_MIDDLE+15);
-        NetworkTable.getTable("TARGET").putBoolean("detectRectangles",true);
+        cameraZServo.setAngle(CAM_MIDDLE + 15);
+        NetworkTable.getTable("TARGET").putBoolean("detectRectangles", true);
     }
 
     public void resetTarget() {
@@ -75,10 +74,11 @@ public class Camera extends Subsystem {
     }
 
     public void incCameraPosition() {
-        cameraZServo.setAngle(cameraZServo.getAngle()+10);
+        cameraZServo.setAngle(cameraZServo.getAngle() + 10);
     }
+
     public void decCameraPosition() {
-        cameraZServo.setAngle(cameraZServo.getAngle()-10);
+        cameraZServo.setAngle(cameraZServo.getAngle() - 10);
     }
 
     public int getPosition() {

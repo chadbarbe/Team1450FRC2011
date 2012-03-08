@@ -1,6 +1,8 @@
 package Robot.Commands;
 
+import Robot.Commands.Camera.WaitForTargetCommand;
 import Robot.Commands.Ramp.RampOnCommand;
+import Robot.Commands.Shooter.RampUpShooterForTargetCommand;
 import Robot.Commands.Trigger.PullTriggerCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

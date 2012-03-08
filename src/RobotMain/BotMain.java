@@ -7,11 +7,14 @@
 package RobotMain;
 
 import Robot.Commands.AutonomousShootBallCommandGroup;
+import Robot.Commands.AutonomousTurnAndShootCommandGroup;
 import Robot.Commands.CommandBase;
 import Robot.Commands.Waist.OperatorControlShooterCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,14 +26,20 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class BotMain extends IterativeRobot {
 
     private Command autoCommand;
+    private SendableChooser autoChooser;
 
     public void robotInit() {
         CommandBase.init();
-        autoCommand = new AutonomousShootBallCommandGroup();
+        NetworkTable.initialize();
+
+        autoChooser = new SendableChooser();
+        autoChooser.addDefault("Just Shoot", new AutonomousShootBallCommandGroup());
+        autoChooser.addObject("Turn And Shoot", new AutonomousTurnAndShootCommandGroup());
     }
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+        autoCommand = (Command) autoChooser.getSelected();
         autoCommand.start();
     }
 

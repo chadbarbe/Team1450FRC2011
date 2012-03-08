@@ -1,4 +1,8 @@
-package Robot.Commands;
+package Robot.Commands.Shooter;
+
+import Robot.Commands.CommandBase;
+import Robot.Utils.Target;
+import Robot.Utils.TargetProvider;
 
 /**
  */
@@ -9,15 +13,15 @@ public class RampUpShooterForTargetCommand extends CommandBase {
     private Target target;
     private static final double ANGLE_THRESHOLD = 5.0; // degrees
     private boolean lookingAtTarget = false;
-    private final WaitForTargetCommand waitForTargetCommand;
+    private final TargetProvider targetProvider;
 
-    public RampUpShooterForTargetCommand(WaitForTargetCommand waitForTargetCommand) {
+    public RampUpShooterForTargetCommand(TargetProvider targetProvider) {
         requires(shooter);
-        this.waitForTargetCommand = waitForTargetCommand;
+        this.targetProvider = targetProvider;
     }
 
     protected void initialize() {
-        target = waitForTargetCommand.target;
+        target = targetProvider.getTarget();
         if (target != null) {
             lookingAtTarget = (Math.abs(target.angleX) < ANGLE_THRESHOLD);
         }

@@ -1,10 +1,14 @@
-package Robot.Commands;
+package Robot.Commands.Camera;
+
+import Robot.Commands.CommandBase;
+import Robot.Utils.Target;
+import Robot.Utils.TargetProvider;
 
 /**
  */
-public class WaitForTargetCommand extends CommandBase {
+public class WaitForTargetCommand extends CommandBase implements TargetProvider {
 
-    public Target target;
+    private Target target;
 
     protected void initialize() {
         target = null;
@@ -27,5 +31,9 @@ public class WaitForTargetCommand extends CommandBase {
     }
 
     protected void interrupted() {
+    }
+
+    public Target getTarget() {
+        return target;
     }
 }

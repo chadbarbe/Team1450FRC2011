@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrain extends Subsystem {
 
     private RobotDrive robotDrive = new RobotDrive(IODefines.LEFT_DRIVE, IODefines.RIGHT_DRIVE);
-    private Encoder leftEncoder = new Encoder(IODefines.LEFT_DRIVE_ENCODER_A,IODefines.LEFT_DRIVE_ENCODER_B);
-    private Encoder rightEncoder = new Encoder(IODefines.RIGHT_DRIVE_ENCODER_A,IODefines.RIGHT_DRIVE_ENCODER_B);
+    private Encoder leftEncoder = new Encoder(IODefines.LEFT_DRIVE_ENCODER_A, IODefines.LEFT_DRIVE_ENCODER_B);
+    private Encoder rightEncoder = new Encoder(IODefines.RIGHT_DRIVE_ENCODER_A, IODefines.RIGHT_DRIVE_ENCODER_B);
 
     public DriveTrain() {
         rightEncoder.setReverseDirection(true);
@@ -26,6 +26,10 @@ public class DriveTrain extends Subsystem {
     }
 
     public void arcadeDrive(double throttle, double rotation) {
-        robotDrive.arcadeDrive(throttle,rotation);
+        robotDrive.arcadeDrive(throttle, rotation);
+    }
+
+    public void drive(double left, double right) {
+        robotDrive.setLeftRightMotorOutputs(left, right);
     }
 }
