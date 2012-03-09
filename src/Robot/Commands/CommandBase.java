@@ -22,6 +22,7 @@ public abstract class CommandBase extends Command {
     public static Camera camera = new Camera();
     public static Trigger trigger = new Trigger();
     public static ShooterArc shooterArc = new ShooterArc();
+    public static Arm arm = new Arm();
 
     public static void init() {
         // This MUST be here. If the OperatorInterface creates Commands (which it very likely
@@ -40,6 +41,7 @@ public abstract class CommandBase extends Command {
         SmartDashboard.putData(shooter);
         SmartDashboard.putData(trigger);
         SmartDashboard.putData(shooterArc);
+        SmartDashboard.putData(arm);
     }
 
     public CommandBase(String name) {

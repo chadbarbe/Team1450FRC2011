@@ -1,5 +1,7 @@
 package Robot.Commands;
 
+import Robot.Commands.Camera.CameraPickupCommand;
+import Robot.Commands.Camera.CameraTargetCommand;
 import Robot.Commands.Camera.WaitForTargetCommand;
 import Robot.Commands.Ramp.RampOnCommand;
 import Robot.Commands.Shooter.RampUpShooterForTargetCommand;
@@ -9,6 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutonomousShootBallCommandGroup extends CommandGroup {
     public AutonomousShootBallCommandGroup() {
         // get target from camera
+        addParallel(new CameraTargetCommand());
         WaitForTargetCommand waitForTargetCommand = new WaitForTargetCommand();
         addSequential(waitForTargetCommand);
         // todo: turn to face target instead?

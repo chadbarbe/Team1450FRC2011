@@ -83,6 +83,10 @@ public class OperatorInterface {
         return leftJoystick.getY();
     }
 
+    public double getArmPower() {
+        return leftJoystick.getY();
+    }
+
     public boolean getTrigger() {
         return triggerButton.get();
     }

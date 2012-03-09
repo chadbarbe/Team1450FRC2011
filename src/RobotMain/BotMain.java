@@ -10,12 +10,15 @@ import Robot.Commands.AutonomousJustShootCommandGroup;
 import Robot.Commands.AutonomousShootBallCommandGroup;
 import Robot.Commands.AutonomousTurnAndShootCommandGroup;
 import Robot.Commands.CommandBase;
+import Robot.Commands.Shooter.DefaultShooterCommand;
+import Robot.Commands.Tongue.StopTongue;
 import Robot.Commands.Waist.OperatorControlShooterCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,15 +35,19 @@ public class BotMain extends IterativeRobot {
     public void robotInit() {
         CommandBase.init();
         NetworkTable.initialize();
+        CommandBase.shooter.dontSpin();
 
+        autoCommand = new DefaultShooterCommand();
         autoChooser = new SendableChooser();
-        autoChooser.addDefault("Just Shoot", new AutonomousJustShootCommandGroup());
-        autoChooser.addObject("Shoot At Target", new AutonomousShootBallCommandGroup());
+//        autoChooser.addDefault("Do Nothing", new StopTongue());
+        autoChooser.addDefault("Shoot At Target", new AutonomousShootBallCommandGroup());
+        autoChooser.addObject("Just Shoot", new AutonomousJustShootCommandGroup());
         autoChooser.addObject("Turn And Shoot", new AutonomousTurnAndShootCommandGroup());
+        SmartDashboard.putData("Autonomous Chooser", autoChooser);
     }
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
+//        schedule the autonomous command (example)
         autoCommand = (Command) autoChooser.getSelected();
         autoCommand.start();
     }
@@ -66,6 +73,9 @@ public class BotMain extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+    }
+
+    public void disabledPeriodic() {
     }
 
     /**

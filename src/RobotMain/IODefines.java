@@ -14,7 +14,7 @@ import RobotOld.ButtonMapping;
  */
 public class IODefines {
     //Relays
-    public static final int TONGUE_RELAY = 3;
+    public static final int TONGUE_RELAY = 8;
     public static final int TRIGGER_RELAY = 5;
 
     //Digital Ins
@@ -31,9 +31,10 @@ public class IODefines {
     public static final int LEFT_DRIVE = 2;
     public static final int SHOOTER_MOTOR = 3;
     public static final int WAIST_MOTOR = 4;
-    public static final int SHOOTER_ANGLE_MOTOR = 5;
+    public static final int SHOOTER_ANGLE_MOTOR = 8;
     public static final int PICKUP_SHUTE_MOTOR = 6;
-    public static final int CAMERA_Z_SERVO = 7;
+    public static final int CAMERA_Z_SERVO = 5;
+    public static final int ARM_MOTOR = 7;
 
     //Analog Ins
     public static final int SHOOTER_ANGLE_POT = 1;

@@ -10,6 +10,7 @@ public class OperatorControlShooterCommand  extends CommandBase {
         requires(waist);
         requires(shooter);
         requires(trigger);
+        requires(arm);
     }
 
     protected void initialize() {
@@ -24,6 +25,7 @@ public class OperatorControlShooterCommand  extends CommandBase {
         } else {
            trigger.triggerOff();
         }
+        arm.operatorControl(oi.getArmPower());
     }
 
     protected boolean isFinished() {

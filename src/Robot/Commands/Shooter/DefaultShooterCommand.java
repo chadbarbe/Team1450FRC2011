@@ -8,6 +8,7 @@ public class DefaultShooterCommand extends CommandBase {
 
     public DefaultShooterCommand() {
         requires(shooter);
+        setInterruptible(true);
     }
 
     protected void initialize() {
