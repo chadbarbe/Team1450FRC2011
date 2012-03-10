@@ -11,7 +11,6 @@ import Robot.Commands.AutonomousShootBallCommandGroup;
 import Robot.Commands.AutonomousTurnAndShootCommandGroup;
 import Robot.Commands.CommandBase;
 import Robot.Commands.Shooter.DefaultShooterCommand;
-import Robot.Commands.Tongue.StopTongue;
 import Robot.Commands.Waist.OperatorControlShooterCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -39,8 +38,8 @@ public class BotMain extends IterativeRobot {
 
         autoCommand = new DefaultShooterCommand();
         autoChooser = new SendableChooser();
-//        autoChooser.addDefault("Do Nothing", new StopTongue());
-        autoChooser.addDefault("Shoot At Target", new AutonomousShootBallCommandGroup());
+        autoChooser.addDefault("Do Nothing", new DefaultShooterCommand());
+        autoChooser.addObject("Shoot At Target", new AutonomousShootBallCommandGroup());
         autoChooser.addObject("Just Shoot", new AutonomousJustShootCommandGroup());
         autoChooser.addObject("Turn And Shoot", new AutonomousTurnAndShootCommandGroup());
         SmartDashboard.putData("Autonomous Chooser", autoChooser);

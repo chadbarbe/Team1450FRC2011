@@ -18,7 +18,7 @@ public class Arm extends Subsystem {
         if (armPower < 0) {
             armPower /= 6;
         } else {
-            armPower /= 6;
+//            armPower /= 6;
         }
         armMotor.set(armPower);
     }
