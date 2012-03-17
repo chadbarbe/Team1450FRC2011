@@ -47,7 +47,7 @@ public class Camera extends Subsystem {
     }
 
     public void lookAtBallPickup() {
-        cameraZServo.setAngle(CAM_MIDDLE - 35);
+        cameraZServo.setAngle(CAM_MIDDLE - 75);
         NetworkTable.getTable("TARGET").putBoolean("detectRectangles", false);
     }
 

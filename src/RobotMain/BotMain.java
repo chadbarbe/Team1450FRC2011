@@ -36,18 +36,19 @@ public class BotMain extends IterativeRobot {
         NetworkTable.initialize();
         CommandBase.shooter.dontSpin();
 
-        autoCommand = new DefaultShooterCommand();
+        autoCommand = new AutonomousJustShootCommandGroup();
         autoChooser = new SendableChooser();
-        autoChooser.addDefault("Do Nothing", new DefaultShooterCommand());
+        autoChooser.addDefault("Just Shoot", new AutonomousJustShootCommandGroup());
+        autoChooser.addObject("Do Nothing", new DefaultShooterCommand());
         autoChooser.addObject("Shoot At Target", new AutonomousShootBallCommandGroup());
-        autoChooser.addObject("Just Shoot", new AutonomousJustShootCommandGroup());
         autoChooser.addObject("Turn And Shoot", new AutonomousTurnAndShootCommandGroup());
         SmartDashboard.putData("Autonomous Chooser", autoChooser);
     }
 
     public void autonomousInit() {
 //        schedule the autonomous command (example)
-        autoCommand = (Command) autoChooser.getSelected();
+//        autoCommand = (Command) autoChooser.getSelected();
+        System.out.println("Auto Command: " + autoCommand);
         autoCommand.start();
     }
 

@@ -11,6 +11,7 @@ public class OperatorControlShooterCommand  extends CommandBase {
         requires(shooter);
         requires(trigger);
         requires(arm);
+        setInterruptible(true);
     }
 
     protected void initialize() {
