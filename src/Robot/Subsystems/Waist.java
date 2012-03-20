@@ -19,7 +19,6 @@ public class Waist extends Subsystem {
     }
 
     protected void initDefaultCommand() {
-        setDefaultCommand(new OperatorControlShooterCommand());
     }
 
     public void dontPivot() {

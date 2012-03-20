@@ -16,7 +16,7 @@ public class Arm extends Subsystem {
     public void operatorControl(double armPower) {
         armPower = -armPower;
         if (armPower < 0) {
-            armPower /= 6;
+            armPower /= 2;
         } else {
 //            armPower /= 6;
         }

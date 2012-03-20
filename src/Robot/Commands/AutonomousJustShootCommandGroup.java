@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class AutonomousJustShootCommandGroup extends CommandGroup {
     public AutonomousJustShootCommandGroup() {
         // ramp up shooter to speed
-        addSequential(new RampUpShooterForPowerCommand(0.75));
+        addSequential(new RampUpShooterForPowerCommand(0.7));
         // then shoot all the balls
         addParallel(new PullTriggerCommand());
         addSequential(new WaitCommand(4));
