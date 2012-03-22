@@ -33,5 +33,9 @@ public class Tongue extends Subsystem {
     public void pickUp() {
         relay.set(Relay.Value.kForward);
     }
+
+    public void reverse() {
+        relay.set(Relay.Value.kReverse);
+    }
 }
 

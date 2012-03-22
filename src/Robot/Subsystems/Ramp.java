@@ -22,4 +22,8 @@ public class Ramp extends Subsystem {
     public void on() {
         pickupMotor.set(1.0);
     }
+
+    public void reverse() {
+        pickupMotor.set(-1.0);
+    }
 }
