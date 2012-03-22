@@ -1,7 +1,6 @@
 package Robot.Commands.Shooter;
 
 import Robot.Commands.CommandBase;
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  */
@@ -17,7 +16,7 @@ public class ShootBallCommand extends CommandBase {
     }
 
     protected void execute() {
-        trigger.triggerOn();
+        trigger.on();
         ramp.on();
     }
 
@@ -26,7 +25,7 @@ public class ShootBallCommand extends CommandBase {
     }
 
     protected void end() {
-       trigger.triggerOff();
+       trigger.off();
     }
 
     protected void interrupted() {

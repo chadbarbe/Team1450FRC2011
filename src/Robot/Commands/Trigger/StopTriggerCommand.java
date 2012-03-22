@@ -14,7 +14,7 @@ public class StopTriggerCommand extends CommandBase {
     }
 
     protected void execute() {
-        trigger.triggerOff();
+        trigger.off();
     }
 
     protected boolean isFinished() {

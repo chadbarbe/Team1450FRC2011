@@ -19,15 +19,19 @@ public class Trigger extends Subsystem {
     protected void initDefaultCommand() {
     }
 
-    public void triggerOn() {
+    public void on() {
         triggerRelay.set(Relay.Value.kForward);
     }
 
-    public void triggerOff() {
+    public void off() {
         triggerRelay.set(Relay.Value.kOff);
     }
 
     public boolean ballReady() {
         return ! ballReadySwitch.get();
+    }
+
+    public void reverse() {
+        triggerRelay.set(Relay.Value.kReverse);
     }
 }

@@ -6,10 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package RobotMain;
 
-import Robot.Commands.AutonomousJustShootCommandGroup;
-import Robot.Commands.AutonomousShootBallCommandGroup;
-import Robot.Commands.AutonomousTurnAndShootCommandGroup;
-import Robot.Commands.CommandBase;
+import Robot.Commands.*;
 import Robot.Commands.Shooter.DefaultShooterCommand;
 import Robot.Commands.Waist.OperatorControlShooterCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -40,8 +37,7 @@ public class BotMain extends IterativeRobot {
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Just Shoot", new AutonomousJustShootCommandGroup());
         autoChooser.addObject("Do Nothing", new DefaultShooterCommand());
-        autoChooser.addObject("Shoot At Target", new AutonomousShootBallCommandGroup());
-        autoChooser.addObject("Turn And Shoot", new AutonomousTurnAndShootCommandGroup());
+        autoChooser.addObject("Feed Balls", new AutonomousFeedBallsCommandGroup());
         SmartDashboard.putData("Autonomous Chooser", autoChooser);
     }
 

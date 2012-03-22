@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  */
@@ -31,7 +32,22 @@ public class Shooter extends Subsystem {
         shooterMotor.set(0.0);
     }
 
+    /**
+     *
+     * @param throttle where throttle is between 0 and 1
+     */
     public void throttle(double throttle) {
+        // if throttle is very small then make it off
+        if (throttle < 0.1) {
+            shooterMotor.set(0.0);
+            return;
+        }
+        // make sure that throttle is between 0 and 1
+        if (throttle < 0) throttle = 0;
+        if (throttle > 1) throttle = 1;
+        throttle = throttle / 2.0;
+        throttle = .5 + throttle;
+        System.out.println("Shooter throttle = " + throttle);
         // shooter runs in reverse direction
         shooterMotor.set(-throttle);
     }

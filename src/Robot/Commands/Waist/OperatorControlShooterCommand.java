@@ -22,9 +22,9 @@ public class OperatorControlShooterCommand  extends CommandBase {
         waist.operatorControl(rotation);
         shooter.throttle(oi.getShooterThrottle());
         if (oi.getTrigger()) {
-           trigger.triggerOn();
+           trigger.on();
         } else {
-           trigger.triggerOff();
+           trigger.off();
         }
         arm.operatorControl(oi.getArmPower());
     }

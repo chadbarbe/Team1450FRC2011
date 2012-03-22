@@ -4,6 +4,7 @@ import Robot.Commands.Camera.CameraPickupCommand;
 import Robot.Commands.Camera.CameraTargetCommand;
 import Robot.Commands.Camera.MoveCameraByAngleCommand;
 import Robot.Commands.Camera.WaitForTargetCommand;
+import Robot.Commands.OperatorControlReverseCommand;
 import Robot.Commands.Ramp.RampOnCommand;
 import Robot.Commands.Shooter.MoveShooterArc;
 import Robot.Commands.Tongue.PickupWithTongue;
@@ -40,13 +41,15 @@ public class OperatorInterface {
     Button waistClockwiseButton = new JoystickButton(leftJoystick, 2);
     Button waistCounterClockwiseButton = new JoystickButton(leftJoystick, 2);
 
-    Button shooterArcIncrementButton = new JoystickButton(leftJoystick, 6);
-    Button shooterArcDecrementButton = new JoystickButton(leftJoystick, 7);
+//    Button shooterArcIncrementButton = new JoystickButton(leftJoystick, 6);
+//    Button shooterArcDecrementButton = new JoystickButton(leftJoystick, 7);
 
     Button cameraButton = new JoystickButton(rightJoystick, 8);
 
-    Button cameraIncButton = new JoystickButton(leftJoystick, 6);
-    Button cameraDecButton = new JoystickButton(leftJoystick, 7);
+//    Button cameraIncButton = new JoystickButton(leftJoystick, 6);
+//    Button cameraDecButton = new JoystickButton(leftJoystick, 7);
+
+    Button reverseButton = new JoystickButton(rightJoystick, 6);
 
     public OperatorInterface() {
         tongueButton.whileHeld(new PickupWithTongue());
@@ -56,11 +59,12 @@ public class OperatorInterface {
         cameraTargetButton.whenPressed(new CameraTargetCommand());
         waistClockwiseButton.whenPressed(new MoveWaistByAngle(10));
         waistCounterClockwiseButton.whenPressed(new MoveWaistByAngle(-10));
-        shooterArcIncrementButton.whenPressed(new MoveShooterArc(0.5));
-        shooterArcDecrementButton.whenPressed(new MoveShooterArc(-0.5));
+//        shooterArcIncrementButton.whenPressed(new MoveShooterArc(0.5));
+//        shooterArcDecrementButton.whenPressed(new MoveShooterArc(-0.5));
         cameraButton.whenPressed(new WaitForTargetCommand());
-        cameraIncButton.whenPressed(new MoveCameraByAngleCommand(10));
-        cameraDecButton.whenPressed(new MoveCameraByAngleCommand(-10));
+//        cameraIncButton.whenPressed(new MoveCameraByAngleCommand(10));
+//        cameraDecButton.whenPressed(new MoveCameraByAngleCommand(-10));
+        reverseButton.whenPressed(new OperatorControlReverseCommand());
     }
 
     public double getDriveRotation() {
@@ -72,6 +76,7 @@ public class OperatorInterface {
     }
 
     public double getShooterThrottle() {
+        // convert joystick values from [-1.0:1.0] to [0.0:1.0]
         return (leftJoystick.getZ() + 1.0) / 2.0;
     }
 

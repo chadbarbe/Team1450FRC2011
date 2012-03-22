@@ -2,18 +2,18 @@ package Robot.Commands.Trigger;
 
 import Robot.Commands.CommandBase;
 
-public class PullTriggerCommand extends CommandBase {
-
-    public PullTriggerCommand() {
+/**
+ */
+public class ReverseTrigger extends CommandBase {
+    public ReverseTrigger() {
         requires(trigger);
-        setInterruptible(true);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        trigger.on();
+        trigger.reverse();
     }
 
     protected boolean isFinished() {
@@ -21,8 +21,10 @@ public class PullTriggerCommand extends CommandBase {
     }
 
     protected void end() {
+        trigger.off();
     }
 
     protected void interrupted() {
+        end();
     }
 }
