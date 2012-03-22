@@ -6,9 +6,9 @@ public class RampUpShooterForPowerCommand extends CommandBase {
 
     private final double power;
 
-    public RampUpShooterForPowerCommand(double power) {
+    public RampUpShooterForPowerCommand(double power, int timeout) {
         this.power = power;
-        setTimeout(4);
+        setTimeout(timeout);
         setInterruptible(true);
     }
 
