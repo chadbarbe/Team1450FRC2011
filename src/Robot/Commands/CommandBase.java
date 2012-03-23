@@ -17,11 +17,9 @@ public abstract class CommandBase extends Command {
     public static Tongue tongue = new Tongue();
     public static DriveTrain driveTrain = new DriveTrain();
     public static Shooter shooter = new Shooter();
-    public static Waist waist = new Waist();
     public static Ramp ramp = new Ramp();
     public static Camera camera = new Camera();
     public static Trigger trigger = new Trigger();
-    public static ShooterArc shooterArc = new ShooterArc();
     public static Arm arm = new Arm();
 
     public static void init() {
@@ -35,12 +33,10 @@ public abstract class CommandBase extends Command {
         // Show what command your subsystem is running on the SmartDashboard
         SmartDashboard.putData(tongue);
         SmartDashboard.putData(driveTrain);
-        SmartDashboard.putData(waist);
         SmartDashboard.putData(ramp);
         SmartDashboard.putData(camera);
         SmartDashboard.putData(shooter);
         SmartDashboard.putData(trigger);
-        SmartDashboard.putData(shooterArc);
         SmartDashboard.putData(arm);
     }
 

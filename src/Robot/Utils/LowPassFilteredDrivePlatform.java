@@ -16,6 +16,8 @@ public class LowPassFilteredDrivePlatform extends RobotDrive {
     }
 
     public void setLeftRightMotorOutputs(double leftOutput, double rightOutput) {
+        leftFiltered = leftOutput;
+        rightFiltered = rightOutput;
         leftFiltered += (leftOutput - leftFiltered) * Constants.Drives.kFilter;
         rightFiltered += (rightOutput - rightFiltered) * Constants.Drives.kFilter;
         super.setLeftRightMotorOutputs(leftFiltered, rightFiltered);

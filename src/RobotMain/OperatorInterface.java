@@ -2,13 +2,9 @@ package RobotMain;
 
 import Robot.Commands.Camera.CameraPickupCommand;
 import Robot.Commands.Camera.CameraTargetCommand;
-import Robot.Commands.Camera.MoveCameraByAngleCommand;
 import Robot.Commands.Camera.WaitForTargetCommand;
-import Robot.Commands.OperatorControlReverseCommand;
 import Robot.Commands.Ramp.RampOnCommand;
-import Robot.Commands.Shooter.MoveShooterArc;
 import Robot.Commands.Tongue.PickupWithTongue;
-import Robot.Commands.Waist.MoveWaistByAngle;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -38,18 +34,10 @@ public class OperatorInterface {
     Button cameraPickupButton = new JoystickButton(rightJoystick, 9);
     Button cameraTargetButton = new JoystickButton(leftJoystick, 9);
 
-    Button waistClockwiseButton = new JoystickButton(leftJoystick, 2);
-    Button waistCounterClockwiseButton = new JoystickButton(leftJoystick, 2);
-
-//    Button shooterArcIncrementButton = new JoystickButton(leftJoystick, 6);
-//    Button shooterArcDecrementButton = new JoystickButton(leftJoystick, 7);
-
     Button cameraButton = new JoystickButton(rightJoystick, 8);
 
-//    Button cameraIncButton = new JoystickButton(leftJoystick, 6);
-//    Button cameraDecButton = new JoystickButton(leftJoystick, 7);
-
-    Button reverseButton = new JoystickButton(rightJoystick, 6);
+    Button leftReverseButton = new JoystickButton(leftJoystick, 6);
+    Button rightReverseButton = new JoystickButton(rightJoystick, 6);
 
     public OperatorInterface() {
         tongueButton.whileHeld(new PickupWithTongue());
@@ -57,14 +45,7 @@ public class OperatorInterface {
         shooterRampButton.whileHeld(new RampOnCommand());
         cameraPickupButton.whenPressed(new CameraPickupCommand());
         cameraTargetButton.whenPressed(new CameraTargetCommand());
-        waistClockwiseButton.whenPressed(new MoveWaistByAngle(10));
-        waistCounterClockwiseButton.whenPressed(new MoveWaistByAngle(-10));
-//        shooterArcIncrementButton.whenPressed(new MoveShooterArc(0.5));
-//        shooterArcDecrementButton.whenPressed(new MoveShooterArc(-0.5));
         cameraButton.whenPressed(new WaitForTargetCommand());
-//        cameraIncButton.whenPressed(new MoveCameraByAngleCommand(10));
-//        cameraDecButton.whenPressed(new MoveCameraByAngleCommand(-10));
-        reverseButton.whenPressed(new OperatorControlReverseCommand());
     }
 
     public double getDriveRotation() {
@@ -94,6 +75,12 @@ public class OperatorInterface {
 
     public boolean getTrigger() {
         return triggerButton.get();
+    }
+
+    public boolean isInReverseMode() {
+        // disable reverse mode
+//        return false;
+        return leftReverseButton.get() || rightReverseButton.get();
     }
 }
 

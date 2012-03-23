@@ -8,7 +8,7 @@ package RobotMain;
 
 import Robot.Commands.*;
 import Robot.Commands.Shooter.DefaultShooterCommand;
-import Robot.Commands.Waist.OperatorControlShooterCommand;
+import Robot.Commands.Shooter.OperatorControlShooterCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;

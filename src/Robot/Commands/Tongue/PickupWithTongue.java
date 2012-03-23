@@ -19,11 +19,20 @@ public class PickupWithTongue extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        tongue.pickUp();
+        boolean reversed = oi.isInReverseMode();
+        if (reversed) {
+            tongue.reverse();
+        } else {
+            tongue.pickUp();
+        }
         if (trigger.ballReady()) {
             ramp.off();
         } else {
-            ramp.on();
+            if (reversed) {
+                ramp.reverse();
+            } else {
+                ramp.on();
+            }
         }
     }
 

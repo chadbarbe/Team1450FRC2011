@@ -22,4 +22,8 @@ public class Arm extends Subsystem {
         }
         armMotor.set(armPower);
     }
+
+    public void off() {
+        armMotor.set(0.0);
+    }
 }

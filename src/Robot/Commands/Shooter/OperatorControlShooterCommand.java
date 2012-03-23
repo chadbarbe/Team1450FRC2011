@@ -1,4 +1,4 @@
-package Robot.Commands.Waist;
+package Robot.Commands.Shooter;
 
 import Robot.Commands.CommandBase;
 
@@ -7,7 +7,6 @@ import Robot.Commands.CommandBase;
 public class OperatorControlShooterCommand  extends CommandBase {
 
     public OperatorControlShooterCommand() {
-        requires(waist);
         requires(shooter);
         requires(trigger);
         requires(arm);
@@ -18,11 +17,14 @@ public class OperatorControlShooterCommand  extends CommandBase {
     }
 
     protected void execute() {
-        double rotation = oi.getShoulderRotation();
-        waist.operatorControl(rotation);
-        shooter.throttle(oi.getShooterThrottle());
+        shooter.operatorControlThrottle(oi.getShooterThrottle());
         if (oi.getTrigger()) {
-           trigger.on();
+            boolean reversed = oi.isInReverseMode();
+            if (reversed) {
+                trigger.reverse();
+            } else {
+                trigger.on();
+            }
         } else {
            trigger.off();
         }
@@ -34,8 +36,12 @@ public class OperatorControlShooterCommand  extends CommandBase {
     }
 
     protected void end() {
+        shooter.dontSpin();
+        trigger.off();
+        arm.off();
     }
 
     protected void interrupted() {
+        end();
     }
 }

@@ -14,7 +14,12 @@ public class RampOnCommand extends CommandBase {
     }
 
     protected void execute() {
-        ramp.on();
+        boolean reversed = oi.isInReverseMode();
+        if (reversed) {
+            ramp.reverse();
+        } else {
+            ramp.on();
+        }
     }
 
     protected boolean isFinished() {
