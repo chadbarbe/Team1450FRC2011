@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 /**
  *
- * @author keenan
+ * @author brian
  */
 public class Feeder extends Subsystem {
     
