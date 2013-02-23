@@ -32,7 +32,6 @@ public class Feeder extends Subsystem {
         if (!feeding){
             feeding = true;
             feederMotor.set(-.7);
-            //Threading.sleep(250);
             while(feederLimit.get()){
                 Threading.sleep(10);
             }
