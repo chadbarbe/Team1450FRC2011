@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+
+//CHADBARBER
 public class BotMain extends IterativeRobot {
 
     private Command autoCommand;
