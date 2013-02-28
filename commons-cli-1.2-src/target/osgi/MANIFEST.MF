@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Export-Package: org.apache.commons.cli;version="1.2"
+Tool: Bnd-0.0.238
+Bundle-Name: Commons CLI
+Created-By: 1.7.0_09-icedtea (Oracle Corporation)
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 1.2
+Bnd-LastModified: 1358705986302
+Bundle-ManifestVersion: 2
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-Description: Commons CLI provides a simple API for presenting, 
+ processing and validating a command line interface.
+Import-Package: org.apache.commons.cli;version="1.2"
+Bundle-SymbolicName: org.apache.commons.cli
+Bundle-DocURL: http://commons.apache.org/cli/
+
