@@ -9,6 +9,7 @@ package RobotMain;
 import Robot.Commands.CommandBase;
 import Robot.Commands.Shooter.OperatorControlShooterCommand;
 import Robot.Commands.Winch.WinchOffCommand;
+import Robot.Utils.Threading;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,6 +32,17 @@ public class BotMain extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         autoCommand.start();
+        Robot.Subsystems.Shooter s = new Robot.Subsystems.Shooter();
+        s.throttle(0.45);
+        Threading.sleep(1500);
+        Robot.Subsystems.Feeder f = new Robot.Subsystems.Feeder();
+        for (int x=0;x<5;x++){
+            f.feed();
+            Threading.sleep(1000);
+        }
+        s.throttle(0);
+        
+        
     }
 
     /**
