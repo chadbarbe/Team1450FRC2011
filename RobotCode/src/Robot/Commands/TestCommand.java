@@ -3,12 +3,16 @@
  * and open the template in the editor.
  */
 package Robot.Commands;
+import Robot.Utils.Threading;
 
 /**
  *
  * @author parallels
  */
 public class TestCommand extends CommandBase {
+    
+    private boolean isDone = false;
+
     
     public TestCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -23,11 +27,20 @@ public class TestCommand extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         System.out.println("**** EXECUTE TEST COMMAND");
+        shooter.throttle(-0.75);
+        Threading.sleep(2000);
+        
+        for (int x=0;x<4;x++){
+            Threading.sleep(2000);
+            feeder.feed();
+        }
+        shooter.throttle(0);
+        isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
 
     // Called once after isFinished returns true
